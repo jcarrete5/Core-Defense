@@ -68,10 +68,10 @@ public class Mob
     			ret = CoreDefense.grid[x/50][(y - speed)/50].getType() == Tile.PATH;
     		
     		else if(direction == RIGHT)
-    			ret = CoreDefense.grid[(x + speed)/50][y/50].getType() == Tile.PATH;
+    			ret = CoreDefense.grid[((x + speed)/50) + 1][y/50].getType() == Tile.PATH;
     		
     		else if(direction == DOWN)
-    			ret = CoreDefense.grid[x/50][(y + speed)/50].getType() == Tile.PATH;
+    			ret = CoreDefense.grid[x/50][((y + speed)/50) + 1].getType() == Tile.PATH;
     		
     		else if(direction == LEFT)
     			ret = CoreDefense.grid[(x - speed)/50][y/50].getType() == Tile.PATH;
