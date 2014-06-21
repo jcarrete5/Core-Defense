@@ -16,6 +16,7 @@ public class Mob
     private Image[] sprite;
     private int speed, x, y, damage, indexOfSprite, comingFrom;
     public static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
+    private boolean alive = true;
     
     public Mob(int speed, int x, int y, Image[] sprite, int damage)
     {
@@ -68,6 +69,8 @@ public class Mob
 			x -= speed;
 			ret = true;
     	}
+    	if(x > 700 || y > 700 || x < 0 || y < 0)
+    		alive = false;
     	
     	return ret;
     }
@@ -99,16 +102,19 @@ public class Mob
     
     public void draw(Graphics2D g2)
     {
-    	//g2.drawImage(sprite[indexOfSprite], x, y, null);
-    	autoMove();
-    	g2.drawRect(x, y, 50, 50);
-    	indexOfSprite = indexOfSprite >= sprite.length ? 0 : indexOfSprite + 1;
+    	if(alive)
+    	{
+    		indexOfSprite = indexOfSprite >= sprite.length ? 0 : indexOfSprite + 1;
+    		g2.drawImage(sprite[indexOfSprite], x, y, null);
+    		autoMove();
+    	}
+    	
     }
     
     public void autoMove()
     {
     	boolean works;
-    	if(comingFrom + 2 <= 4)
+    	if(comingFrom + 2 < 4)
     		works = move(comingFrom + 2);
     	else
     		works = move(comingFrom - 2);
