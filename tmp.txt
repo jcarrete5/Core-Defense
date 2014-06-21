@@ -1,5 +1,5 @@
 NOTES FOR ANYONE LOOKING AT THE maps DIRECTORY
-
+test
 0 = Path (Mobs walk on this)
 1 = Stone (Placeable tiles)
 2 = Mounds (Increase tower range)
