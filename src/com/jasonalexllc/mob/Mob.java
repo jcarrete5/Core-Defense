@@ -33,6 +33,11 @@ public class Mob
     	this(1, x, y, sprite, 1);
     }
     
+    public int getDamage()
+    {
+    	return damage;
+    }
+    
     public boolean move(int direction)
     {
     	boolean ret = true;
@@ -99,7 +104,7 @@ public class Mob
     	if(!works)
     	{
    			boolean[] directions = new boolean[4];
-   			for(int ryanC = 0; ryanC < directions.length; ryanC++) //lol
+   			for(int ryanC = 0; ryanC < directions.length; ryanC++)
     		{
     			if(canMove(ryanC) && ryanC != comingFrom)
     				directions[ryanC] = true;
