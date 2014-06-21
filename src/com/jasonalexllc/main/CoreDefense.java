@@ -25,7 +25,7 @@ public class CoreDefense
 		JFrame game = new JFrame("Core Defense");
 		game.setLayout(null);
 		game.setIconImage(new ImageIcon(CoreDefense.class.getResource("assets/icon.png")).getImage());
-		game.setResizable(true);
+		game.setResizable(false);
 		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.getContentPane().setPreferredSize(new Dimension(800, 800));
 		game.setVisible(true);

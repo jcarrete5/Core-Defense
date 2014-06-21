@@ -7,4 +7,4 @@ NOTES FOR ANYONE LOOKING AT THE maps DIRECTORY
 
 Layout:
 (Difficulty)
-(Grid)
+(yo)
