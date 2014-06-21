@@ -3,11 +3,16 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+
+import com.jasonalexllc.mob.Mob;
 import com.jasonalexllc.tower.Tower;
 
 /**
@@ -28,6 +33,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 	
 	public Tower curTower;
 	public static Point curMousePos;
+	private Mob m;
 	
 	public Game(Tile[][] grid, Shop s)
 	{
@@ -61,7 +67,8 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 				this.repaint();
 			}
 		};
-		
+		Image[] sprt = {new ImageIcon("assets/crane_idle.png").getImage()};
+		m = new Mob(0, 50, sprt);
 		new Thread(r, "Game Thread").start();
 	}
 	
@@ -85,7 +92,6 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 	{
 		Graphics2D g2 = (Graphics2D)g;
 		super.paintComponent(g2);
-		
 		//draw the grid and draw towers if any are on the grid
 		for(Tile[] row : grid)
 			for(Tile t : row)
@@ -94,11 +100,10 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 				if(t.hasTower())
 					t.getTower().drawUpgradeScreen(g2);
 			}
-		
+		m.draw(g2);
 		//drag tower when selected from the shop
 		if(curTower != null)
 			g2.drawImage(curTower.getImage(), curMousePos.x - 25, curMousePos.y - 25, this);
-		
 		//open the shop
 		shop.open(g2);
 		
@@ -106,6 +111,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		g2.setColor(Color.white);
 		g2.drawString("Lives: " + lives, 5, 10);
 		g2.drawString("Money: " + money, 5, 25);
+		
 	}
 
 	public void mouseClicked(MouseEvent e)
@@ -140,6 +146,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 				
 			}
 		}
+		
 	}
 
 	public void mousePressed(MouseEvent e)
