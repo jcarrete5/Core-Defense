@@ -1,0 +1,10 @@
+NOTES FOR ANYONE LOOKING AT THE maps DIRECTORY
+
+0 = Path (Mobs walk on this)
+1 = Stone (Placeable tiles)
+2 = Mounds (Increase tower range)
+3 = Faults (Can't place here)
+
+Layout:
+(Difficulty)
+(Grid)
