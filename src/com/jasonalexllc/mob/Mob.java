@@ -36,7 +36,7 @@ public class Mob
     
     public Mob(int x, int y, Image[] sprite)
     {
-    	this(0.25, x, y, sprite, 1);//Default speed: 0.25	Default Damage: 1
+    	this(0.5, x, y, sprite, 1);//Default speed: 0.25	Default Damage: 1
     }
     
     /**
