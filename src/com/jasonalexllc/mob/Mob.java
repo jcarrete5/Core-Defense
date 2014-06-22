@@ -124,7 +124,7 @@ public class Mob
     {
     	if(alive)
     	{
-    		indexOfSprite += .02;
+    		indexOfSprite += .05;
     		if(indexOfSprite > sprite.length)
     			indexOfSprite = 0;
     		g2.drawImage(sprite[(int)indexOfSprite], (int)x, (int)y, null);
