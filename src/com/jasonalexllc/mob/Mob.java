@@ -1,7 +1,9 @@
 package com.jasonalexllc.mob;
 
 import com.jasonalexllc.main.CoreDefense;
+import com.jasonalexllc.main.Game;
 import com.jasonalexllc.main.Tile;
+
 import java.util.Random;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -14,12 +16,14 @@ import java.awt.Image;
 public class Mob 
 {
     private Image[] sprite;
-    private int speed, x, y, damage, comingFrom;
+    private int damage, comingFrom;
+    private double speed, x, y;
     private double indexOfSprite;
     public static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
     private boolean alive = true;
+    private boolean[][][] usedDirs = new boolean[800][800][4];//Boolean 3D array of which direction has already been tried
     
-    public Mob(int speed, int x, int y, Image[] sprite, int damage)
+    public Mob(double speed, int x, int y, Image[] sprite, int damage)
     {
     	this.sprite = sprite;
     	this.x = x;
@@ -27,19 +31,19 @@ public class Mob
     	this.speed = speed;
     	this.damage = damage;
     	indexOfSprite = 0;
-    	comingFrom = LEFT;
+    	comingFrom = LEFT;//Starts moving from the left
     }
     
     public Mob(int x, int y, Image[] sprite)
     {
-    	this(1, x, y, sprite, 1);
+    	this(0.25, x, y, sprite, 1);//Default speed: 0.25	Default Damage: 1
     }
     
-    public int getDamage()
-    {
-    	return damage;
-    }
-    
+    /**
+     * Moves the mob in a direction if possible.
+     * @param direction
+     * @return Whether or not the move is successful
+     */
     public boolean move(int direction)
     {
     	boolean ret = false;
@@ -51,31 +55,42 @@ public class Mob
     	{
 			y -= speed;
 			ret = true;
+			usedDirs[(int)x/50][(int)y/50][UP] = true;
     	}
 		
     	else if(direction == RIGHT && canMove(RIGHT))
     	{
 			x += speed;
 			ret = true;
+			usedDirs[(int)x/50][(int)y/50][RIGHT] = true;
     	}
     	
     	else if(direction == DOWN && canMove(DOWN))
     	{
 			y += speed;
 			ret = true;
+			usedDirs[(int)x/50][(int)y/50][DOWN] = true;
     	}
 		
     	else if(direction == LEFT && canMove(LEFT))
     	{
 			x -= speed;
 			ret = true;
+			usedDirs[(int)x/50][(int)y/50][LEFT] = true;
     	}
-    	if(x > 700 || y > 700 || x < 0 || y < 0)
+    	if(x > 730 || y > 730 || x < 0 || y < 0)
+    	{
     		alive = false;
+    		Game.lives -= damage;
+    	}
     	
     	return ret;
     }
-    
+    /**
+     * 
+     * @param direction
+     * @return Whether it can move in the specified direction
+     */
     private boolean canMove(int direction)
     {
     	boolean ret = true;
@@ -86,16 +101,20 @@ public class Mob
     	else
     	{
     		if(direction == UP)
-    			ret = CoreDefense.grid[((y - speed)/50)][(x+1)/50].getType() == Tile.PATH;
+    			ret = CoreDefense.grid[((int)(y - speed)/50)][((int)x+1)/50].getType() == Tile.PATH 
+    				&& !usedDirs[(int)x][(int)y][UP];
     		
     		else if(direction == RIGHT)
-    			ret = CoreDefense.grid[(y+1)/50][((x + speed)/50) + 1].getType() == Tile.PATH;
+    			ret = CoreDefense.grid[((int)y + 1)/50][(((int)(x + speed)/50) + 1)].getType() == Tile.PATH 
+    				&& !usedDirs[(int)x][(int)y][RIGHT];
     		
     		else if(direction == DOWN)
-    			ret = CoreDefense.grid[((y + speed)/50) + 1][(x+1)/50].getType() == Tile.PATH;
+    			ret = CoreDefense.grid[(((int)(y + speed)/50) + 1)][((int)x+1)/50].getType() == Tile.PATH 
+    				&& !usedDirs[(int)x][(int)y][DOWN];
     		
     		else if(direction == LEFT)
-    			ret = CoreDefense.grid[(y+1)/50][(x - speed)/50].getType() == Tile.PATH;
+    			ret = CoreDefense.grid[((int)y+1)/50][((int)(x - speed)/50)].getType() == Tile.PATH 
+    					&& !usedDirs[(int)x][(int)y][LEFT];
     	}
     	
     	return ret;
@@ -105,14 +124,17 @@ public class Mob
     {
     	if(alive)
     	{
-    		indexOfSprite += .05;
+    		indexOfSprite += .02;
     		if(indexOfSprite > sprite.length)
     			indexOfSprite = 0;
-    		g2.drawImage(sprite[(int)indexOfSprite], x, y, null);
+    		g2.drawImage(sprite[(int)indexOfSprite], (int)x, (int)y, null);
     		autoMove();
     	}
     }
-    
+    /**
+     * Automatically moves the mob once in the direction it was moving if possible.
+     * Otherwise, a new direction is chosen
+     */
     public void autoMove()
     {
     	boolean works;
