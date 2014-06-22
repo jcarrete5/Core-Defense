@@ -14,7 +14,8 @@ import java.awt.Image;
 public class Mob 
 {
     private Image[] sprite;
-    private int speed, x, y, damage, indexOfSprite, comingFrom;
+    private int speed, x, y, damage, comingFrom;
+    private double indexOfSprite;
     public static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
     private boolean alive = true;
     
@@ -104,8 +105,10 @@ public class Mob
     {
     	if(alive)
     	{
-    		indexOfSprite = indexOfSprite >= sprite.length - 1 ? 0 : indexOfSprite + 1;
-    		g2.drawImage(sprite[indexOfSprite], x, y, null);
+    		indexOfSprite += .05;
+    		if(indexOfSprite > sprite.length)
+    			indexOfSprite = 0;
+    		g2.drawImage(sprite[(int)indexOfSprite], x, y, null);
     		autoMove();
     	}
     }

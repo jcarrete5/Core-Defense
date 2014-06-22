@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Scanner;
 import com.jasonalexllc.tower.CraneTower;
+import com.jasonalexllc.tower.MineTower;
 import com.jasonalexllc.tower.PickaxeTower;
 import com.jasonalexllc.tower.Tower;
 
@@ -22,6 +23,7 @@ public class Shop
 	{
 		towers[0][0] = new PickaxeTower();
 		towers[0][1] = new CraneTower();
+		towers[0][2] = new MineTower();
 	}
 	
 	public void open(Graphics2D g2)
