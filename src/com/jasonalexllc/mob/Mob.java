@@ -36,7 +36,7 @@ public class Mob
     
     public Mob(int x, int y, Image[] sprite)
     {
-    	this(0.25, x, y, sprite, 1);//Default speed: 0.25	Default Damage: 1
+    	this(0.5, x, y, sprite, 1);//Default speed: 0.25	Default Damage: 1
     }
     
     /**
@@ -124,7 +124,7 @@ public class Mob
     {
     	if(alive)
     	{
-    		indexOfSprite += .02;
+    		indexOfSprite += .05;
     		if(indexOfSprite > sprite.length)
     			indexOfSprite = 0;
     		g2.drawImage(sprite[(int)indexOfSprite], (int)x, (int)y, null);
