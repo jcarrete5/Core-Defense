@@ -35,6 +35,7 @@ public class Shop
 			//update the info screen depending on which tower is currently being hovered over
 			if(row >= 0 && col >= 0 && towers[row][col] != null)
 			{
+				//TODO update this when adding new towers
 				if(towers[row][col] instanceof PickaxeTower)
 					drawInfo(g2, "Pickaxe Tower", towers[row][col].getCost(), "This tower will throw pickaxes at its foes.");
 				else if(towers[row][col] instanceof CraneTower)
@@ -89,7 +90,7 @@ public class Shop
 	public Tower buyTower(int row, int col)
 	{
 		if(Game.money >= towers[row][col].getCost())
-			return towers[row][col];
+			return towers[row][col].getInstance();
 		else
 			return null;
 	}

@@ -1,17 +1,8 @@
  package com.jasonalexllc.main;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 import com.jasonalexllc.mob.Mob;
 import com.jasonalexllc.tower.Tower;
 
@@ -67,7 +58,13 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 				this.repaint();
 			}
 		};
-		Image[] sprt = {new ImageIcon(CoreDefense.class.getResource("assets/stoneman_1.png")).getImage(), new ImageIcon(CoreDefense.class.getResource("assets/stoneman_2.png")).getImage()};
+		
+		Image[] sprt =
+			{
+				new ImageIcon(CoreDefense.class.getResource("assets/stoneman_1.png")).getImage(),
+				new ImageIcon(CoreDefense.class.getResource("assets/stoneman_2.png")).getImage()
+			};
+		
 		m = new Mob(0, 50, sprt);
 		new Thread(r, "Game Thread").start();
 	}
@@ -91,11 +88,15 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D)g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		super.paintComponent(g2);
+		
 		//draw the grid and draw towers if any are on the grid
 		for(Tile[] row : grid)
 			for(Tile t : row)
 				t.draw(g2);
+
+		m.draw(g2);
 		
 		//draw upgrade screens if they are needed
 		outer: for(Tile[] row : grid)
@@ -106,11 +107,10 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 					if(b) break outer;
 				}
 		
-		m.draw(g2);
-		
 		//drag tower when selected from the shop
 		if(curTower != null)
 			g2.drawImage(curTower.getImage(), curMousePos.x - 25, curMousePos.y - 25, this);
+		
 		//open the shop
 		shop.open(g2);
 		
@@ -130,7 +130,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 			if(col >= 0 && row >= 0)
 			{
 				curTower = shop.buyTower(row, col);
-
+				
 				//if you have less money than the tower is worth after clicking, then leave the shop open
 				shop.opened = money < shop.towers[row][col].getCost() ? true : false;
 			}
@@ -158,24 +158,24 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 						break outer;
 					}
 			
-			//if the clicked tile has a tower and is not showing its update screen
-			if(grid[row][col].hasTower())
+			if(grid[row][col].hasTower()) //if the clicked tile has a tower
 			{
-				if(!grid[row][col].getTower().viewUpgradeScreen)
-					if(already == null)
+				if(!grid[row][col].getTower().viewUpgradeScreen) //and the clicked tower isn't showing an upgrade screen
+					if(already == null) //and there isn't a tower already showing an upgrade screen, then show the upgrade screen for the clicked tower
 						grid[row][col].getTower().viewUpgradeScreen = true;
-					else
+					else //if there is an upgrade screen already showing, then show the upgrade screen for the clicked tower and not for the one already showing
 					{
 						already.viewUpgradeScreen = false;
 						grid[row][col].getTower().viewUpgradeScreen = true;
-					}				
+					}
 			}
-			else if(already != null)
+			else if(already != null) //if another tower is showing an upgrade screen and your mouse is on the X, then close the update screen
 			{
-				already.viewUpgradeScreen = false;
+				Point p = e.getPoint();
+				if(p.x >= 675 && p.x <= 695 && p.y >= 5 && p.y <= 25)
+					already.viewUpgradeScreen = false;
 			}
 		}
-		
 	}
 
 	public void mousePressed(MouseEvent e)

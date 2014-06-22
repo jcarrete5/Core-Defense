@@ -18,4 +18,9 @@ public class PickaxeTower extends Tower
 	{
 		
 	}
+	
+	public Tower getInstance()
+	{
+		return new PickaxeTower();
+	}
 }

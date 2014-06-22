@@ -18,4 +18,9 @@ public class CraneTower extends Tower
 	{
 		
 	}
+	
+	public Tower getInstance()
+	{
+		return new CraneTower();
+	}
 }

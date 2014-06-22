@@ -1,7 +1,9 @@
 package com.jasonalexllc.tower;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import javax.swing.ImageIcon;
 import com.jasonalexllc.main.CoreDefense;
 import com.jasonalexllc.main.Game;
@@ -73,12 +75,26 @@ public abstract class Tower extends ImageIcon
 	{
 		if(viewUpgradeScreen)
 		{
+			Stroke s = g2.getStroke();
+			
+			//draw the background
 			g2.setColor(new Color(0, 0, 0, 100));
-			g2.fillRect(200, 200, 400, 400);
+			g2.fillRect(100, 0, 600, 200);
+			
+			//draw the X
+			g2.setColor(Color.white);
+			g2.setStroke(new BasicStroke(3));
+			g2.drawLine(675, 5, 695, 25); // \
+			g2.drawLine(695, 5, 675, 25); // /
+			
+			//reset the stroke change from drawing any upgrade screens
+			g2.setStroke(s);
 		}
 		
 		return viewUpgradeScreen;
 	}
+	
+	public abstract Tower getInstance();
 	
 	public int getCost()
 	{
