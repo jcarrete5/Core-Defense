@@ -1,5 +1,6 @@
 package com.jasonalexllc.tower;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import javax.swing.ImageIcon;
 import com.jasonalexllc.main.CoreDefense;
@@ -16,6 +17,7 @@ public abstract class Tower extends ImageIcon
 	
 	protected int range, dmg, cost, p1Next = -1, p2Next = -1;
 	protected double atkSpeed;
+	public boolean viewUpgradeScreen = false;
 	protected Upgrade[] path1, path2;
 	
 	/**
@@ -67,9 +69,15 @@ public abstract class Tower extends ImageIcon
 			return false;
 	}
 	
-	public void drawUpgradeScreen(Graphics2D g2)
+	public boolean drawUpgradeScreen(Graphics2D g2)
 	{
+		if(viewUpgradeScreen)
+		{
+			g2.setColor(new Color(0, 0, 0, 100));
+			g2.fillRect(200, 200, 400, 400);
+		}
 		
+		return viewUpgradeScreen;
 	}
 	
 	public int getCost()

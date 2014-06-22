@@ -89,11 +89,16 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		//draw the grid and draw towers if any are on the grid
 		for(Tile[] row : grid)
 			for(Tile t : row)
-			{
 				t.draw(g2);
+		
+		//draw upgrade screens if they are needed
+		outer: for(Tile[] row : grid)
+			for(Tile t : row)
 				if(t.hasTower())
-					t.getTower().drawUpgradeScreen(g2);
-			}
+				{
+					boolean b = t.getTower().drawUpgradeScreen(g2);
+					if(b) break outer;
+				}
 		
 		//drag tower when selected from the shop
 		if(curTower != null)
@@ -135,9 +140,31 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		{
 			int col = e.getPoint().x / 50, row = e.getPoint().y / 50;
 			
+			//if a tower is showing an upgrade screen already it is bound to 'already'
+			Tower already = null;
+			outer: for(Tile[] r : grid)
+				for(Tile t : r)
+					if(t.hasTower() && t.getTower().viewUpgradeScreen)
+					{
+						already = t.getTower();
+						break outer;
+					}
+			
+			//if the clicked tile has a tower and is not showing its update screen
 			if(grid[row][col].hasTower())
 			{
-				
+				if(!grid[row][col].getTower().viewUpgradeScreen)
+					if(already == null)
+						grid[row][col].getTower().viewUpgradeScreen = true;
+					else
+					{
+						already.viewUpgradeScreen = false;
+						grid[row][col].getTower().viewUpgradeScreen = true;
+					}				
+			}
+			else if(already != null)
+			{
+				already.viewUpgradeScreen = false;
 			}
 		}
 	}
