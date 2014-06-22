@@ -48,9 +48,9 @@ public class Mob
     {
     	boolean ret = false;
     	
-    	if(direction < 0 || direction > 3)
+		if(direction < 0 || direction > 3)
     		ret = false;
-    	
+		
     	else if(direction == UP && canMove(UP))
     	{
 			y -= speed;
@@ -71,18 +71,13 @@ public class Mob
 			ret = true;
 			usedDirs[(int)x/50][(int)y/50][DOWN] = true;
     	}
-		
-    	else if(direction == LEFT && canMove(LEFT))
-    	{
+	
+		else if(direction == LEFT && canMove(LEFT))
+		{
 			x -= speed;
 			ret = true;
 			usedDirs[(int)x/50][(int)y/50][LEFT] = true;
-    	}
-    	if(x > 730 || y > 730 || x < 0 || y < 0)
-    	{
-    		alive = false;
-    		Game.lives -= damage;
-    	}
+		}
     	
     	return ret;
     }
@@ -94,27 +89,35 @@ public class Mob
     private boolean canMove(int direction)
     {
     	boolean ret = true;
-    	
-    	if(direction < 0 || direction > 3)
-    		ret = false;
-    	
-    	else
+    	try
     	{
-    		if(direction == UP)
-    			ret = CoreDefense.grid[((int)(y - speed)/50)][((int)x+1)/50].getType() == Tile.PATH 
-    				&& !usedDirs[(int)x][(int)y][UP];
-    		
-    		else if(direction == RIGHT)
-    			ret = CoreDefense.grid[((int)y + 1)/50][(((int)(x + speed)/50) + 1)].getType() == Tile.PATH 
-    				&& !usedDirs[(int)x][(int)y][RIGHT];
-    		
-    		else if(direction == DOWN)
-    			ret = CoreDefense.grid[(((int)(y + speed)/50) + 1)][((int)x+1)/50].getType() == Tile.PATH 
-    				&& !usedDirs[(int)x][(int)y][DOWN];
-    		
-    		else if(direction == LEFT)
-    			ret = CoreDefense.grid[((int)y+1)/50][((int)(x - speed)/50)].getType() == Tile.PATH 
-    					&& !usedDirs[(int)x][(int)y][LEFT];
+	    	if(direction < 0 || direction > 3)
+	    		ret = false;
+	    	
+	    	else
+	    	{
+	    		if(direction == UP)
+	    			ret = CoreDefense.grid[((int)(y - speed)/50)][((int)x+1)/50].getType() == Tile.PATH 
+	    				&& !usedDirs[(int)x][(int)y][UP];
+	    		
+	    		else if(direction == RIGHT)
+	    			ret = CoreDefense.grid[((int)y + 1)/50][(((int)(x + speed)/50) + 1)].getType() == Tile.PATH 
+	    				&& !usedDirs[(int)x][(int)y][RIGHT];
+	    		
+	    		else if(direction == DOWN)
+	    			ret = CoreDefense.grid[(((int)(y + speed)/50) + 1)][((int)x+1)/50].getType() == Tile.PATH 
+	    				&& !usedDirs[(int)x][(int)y][DOWN];
+	    		
+	    		else if(direction == LEFT)
+	    			ret = CoreDefense.grid[((int)y+1)/50][((int)(x - speed)/50)].getType() == Tile.PATH 
+	    					&& !usedDirs[(int)x][(int)y][LEFT];
+	    	}
+    	}
+    	catch(ArrayIndexOutOfBoundsException ex)
+    	{
+    		if(x >= 800 || y >= 800)
+    			alive = false;
+    			Game.lives -= damage;
     	}
     	
     	return ret;
@@ -127,7 +130,19 @@ public class Mob
     		indexOfSprite += .05;
     		if(indexOfSprite > sprite.length)
     			indexOfSprite = 0;
+    		
+    		double rotate = 0;
+    		if(comingFrom == UP)
+    			rotate = Math.toRadians(90);
+    		else if(comingFrom == RIGHT)
+    			rotate = Math.toRadians(180);
+    		else if(comingFrom == DOWN)
+    			rotate = Math.toRadians(270);
+    		g2.rotate(rotate, (int)x + 25, (int)y + 25);
+    		
     		g2.drawImage(sprite[(int)indexOfSprite], (int)x, (int)y, null);
+    		
+    		g2.rotate((-1 * rotate), (int)x + 25, (int)y + 25);
     		autoMove();
     	}
     }
