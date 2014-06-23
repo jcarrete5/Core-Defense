@@ -140,7 +140,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 				curTower = shop.buyTower(row, col);
 				
 				//if you have less money than the tower is worth after clicking, then leave the shop open
-				shop.opened = money < shop.towers[row][col].getCost() ? true : false;
+				shop.opened = shop.towers[row][col] != null && money < shop.towers[row][col].getCost() ? true : false;
 			}
 		}
 		else if(curTower != null)

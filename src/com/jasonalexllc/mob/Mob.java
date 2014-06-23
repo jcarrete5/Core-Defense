@@ -143,7 +143,7 @@ public class Mob
     {
     	if(alive)
     	{
-    		indexOfSprite += .035;
+    		indexOfSprite += 0.035;
     		if(indexOfSprite > sprite.length)
     			indexOfSprite = 0;
     		

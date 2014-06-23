@@ -33,7 +33,7 @@ public class Shop
 			int col = Game.curMousePos.x / 50 - 4, row = Game.curMousePos.y / 50 - 14;
 			
 			//update the info screen depending on which tower is currently being hovered over
-			if(row >= 0 && col >= 0 && towers[row][col] != null)
+			if(row >= 0 && col >= 0 && row < towers.length && col < towers[0].length && towers[row][col] != null)
 			{
 				//TODO update this when adding new towers
 				if(towers[row][col] instanceof PickaxeTower)
@@ -89,7 +89,7 @@ public class Shop
 	
 	public Tower buyTower(int row, int col)
 	{
-		if(Game.money >= towers[row][col].getCost())
+		if(towers[row][col] != null && Game.money >= towers[row][col].getCost())
 			return towers[row][col].getInstance();
 		else
 			return null;

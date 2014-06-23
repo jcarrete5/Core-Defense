@@ -17,25 +17,30 @@ public class PickaxeTower extends Tower
 
 	public PickaxeTower()
 	{
-		super(3, 5, .01, 250, "assets/pickaxeTower_idle.png");
+		super(2, 5, .01, 250, "assets/pickaxeTower_idle.png");
 		pickaxe = new Projectile(new String[] {"assets/pickaxeP.png"}, 1, 2);
 	}
 	
 	public void attack(Mob m, Graphics2D g2, Tile tile)
 	{
+//		System.out.println("Mob's (x, y): (" + m.getX() + ", " + m.getY() + ")");
+//		System.out.println("Tower's (x, y): (" + tile.getX() + ", " + tile.getY() + ")" + " range: " + tile.getTower().getRangePixels());
+		
 		if
 		(
-			m.getX() <= tile.getX() + super.getRangePixels() + 50 &&
+			m.getX() <= tile.getX() + super.getRangePixels() &&
 			m.getX() >= tile.getX() - super.getRangePixels() &&
-			m.getY() <= tile.getY() + super.getRangePixels() + 50 &&
+			m.getY() <= tile.getY() + super.getRangePixels() &&
 			m.getY() >= tile.getY() - super.getRangePixels()
 		)
 		{
 			if((int)atk == 1)
 				pickaxe.anim(m, g2, tile);
-			
+
+			System.out.println("in rng");
 			atk = atk < 1 ? atk + atkSpeed : 0;
 		}
+		
 	}
 	
 	public Tower getInstance()
