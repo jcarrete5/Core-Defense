@@ -7,6 +7,8 @@ import java.awt.Stroke;
 import javax.swing.ImageIcon;
 import com.jasonalexllc.main.CoreDefense;
 import com.jasonalexllc.main.Game;
+import com.jasonalexllc.main.Tile;
+import com.jasonalexllc.mob.Mob;
 
 /**
  * Abstract class that defines how all towers in the game should function
@@ -19,6 +21,7 @@ public abstract class Tower extends ImageIcon
 	
 	protected int range, dmg, cost, p1Next = -1, p2Next = -1;
 	protected double atkSpeed;
+	protected double atk = 1;
 	public boolean viewUpgradeScreen = false;
 	protected Upgrade[] path1, path2;
 	
@@ -44,7 +47,7 @@ public abstract class Tower extends ImageIcon
 	 * @param x
 	 * @param y
 	 */
-	public abstract void attack(int x, int y);
+	public abstract void attack(Mob m, Graphics2D g2, Tile tile);
 	
 	/**
 	 * 
@@ -69,6 +72,11 @@ public abstract class Tower extends ImageIcon
 		}
 		else
 			return false;
+	}
+	
+	public int getRangePixels()
+	{
+		return range * 50;
 	}
 	
 	public boolean drawUpgradeScreen(Graphics2D g2)

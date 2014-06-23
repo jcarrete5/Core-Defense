@@ -34,9 +34,25 @@ public class Mob
     	comingFrom = LEFT;//Starts moving from the left
     }
     
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param sprite
+     */
     public Mob(int x, int y, Image[] sprite)
     {
     	this(0.5, x, y, sprite, 1);//Default speed: 0.25	Default Damage: 1
+    }
+    
+    public int getX()
+    {
+    	return (int)x;
+    }
+    
+    public int getY()
+    {
+    	return (int)y;
     }
     
     /**
@@ -127,7 +143,7 @@ public class Mob
     {
     	if(alive)
     	{
-    		indexOfSprite += .05;
+    		indexOfSprite += .035;
     		if(indexOfSprite > sprite.length)
     			indexOfSprite = 0;
     		
@@ -162,14 +178,15 @@ public class Mob
     	{
    			boolean[] directions = new boolean[4];
    			for(int ryanC = 0; ryanC < directions.length; ryanC++)
-    		{
     			if(canMove(ryanC) && ryanC != comingFrom && ryanC != (comingFrom + 2 <= 4 ? comingFrom + 2 : comingFrom - 2))
     				directions[ryanC] = true;
-   			}
+   			
    			Random rand = new Random();
        		int randIndex = rand.nextInt(directions.length);
+       		
        		while(!directions[randIndex])
         		randIndex = rand.nextInt(directions.length);
+       		
        		comingFrom = randIndex+2 >= 4 ? randIndex - 2 : randIndex + 2;
        		move(randIndex);
     	}

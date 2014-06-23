@@ -96,7 +96,13 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		//draw the grid and draw towers if any are on the grid
 		for(Tile[] row : grid)
 			for(Tile t : row)
+			{
 				t.draw(g2);
+				
+				//draw projectiles moving towards a mob if it is within a towers range
+				if(t.hasTower())
+					t.getTower().attack(m, g2, t);
+			}
 
 		m.draw(g2);
 		
