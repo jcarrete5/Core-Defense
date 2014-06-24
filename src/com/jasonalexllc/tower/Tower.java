@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import com.jasonalexllc.main.CoreDefense;
 import com.jasonalexllc.main.Game;
@@ -18,11 +19,16 @@ import com.jasonalexllc.mob.Mob;
 public abstract class Tower extends ImageIcon
 {
 	private static final long serialVersionUID = -3346762436378513557L;
-	
+
+	public ArrayList<Attack> attackQueue = new ArrayList<>();
+	public boolean viewUpgradeScreen = false;
+
+	/**
+	 * Denotes when the next attack should start from the tower 1 = should attack, {x in R | 0 <= x < 1} = shouldn't attack
+	 */
+	protected double atk = 1;
 	protected int range, dmg, cost, p1Next = -1, p2Next = -1;
 	protected double atkSpeed;
-	protected double atk = 1;
-	public boolean viewUpgradeScreen = false;
 	protected Upgrade[] path1, path2;
 	
 	/**

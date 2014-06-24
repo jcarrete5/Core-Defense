@@ -13,34 +13,29 @@ public class PickaxeTower extends Tower
 {
 	private static final long serialVersionUID = -5222779550089892274L;
 	
-	private Projectile pickaxe;
-
 	public PickaxeTower()
 	{
 		super(2, 5, .01, 250, "assets/pickaxeTower_idle.png");
-		pickaxe = new Projectile(new String[] {"assets/pickaxeP.png"}, 1, 2);
 	}
 	
 	public void attack(Mob m, Graphics2D g2, Tile tile)
-	{
-//		System.out.println("Mob's (x, y): (" + m.getX() + ", " + m.getY() + ")");
-//		System.out.println("Tower's (x, y): (" + tile.getX() + ", " + tile.getY() + ")" + " range: " + tile.getTower().getRangePixels());
-		
+	{		
 		if
 		(
-			m.getX() <= tile.getX() + super.getRangePixels() &&
-			m.getX() >= tile.getX() - super.getRangePixels() &&
-			m.getY() <= tile.getY() + super.getRangePixels() &&
-			m.getY() >= tile.getY() - super.getRangePixels()
+			m.getX() <= tile.getX() + super.getRangePixels() + 51 &&
+			m.getX() >= tile.getX() - super.getRangePixels() - 1 &&
+			m.getY() <= tile.getY() + super.getRangePixels() + 51 &&
+			m.getY() >= tile.getY() - super.getRangePixels() - 1
 		)
 		{
+			//throw a new Attack
 			if((int)atk == 1)
-				pickaxe.anim(m, g2, tile);
-
-			System.out.println("in rng");
+			{
+				attackQueue.add(new Attack(new String[] {"assets/pickaxeP.png"}, tile.getX() + 25, tile.getY() + 25, m));
+			}
+			
 			atk = atk < 1 ? atk + atkSpeed : 0;
 		}
-		
 	}
 	
 	public Tower getInstance()
