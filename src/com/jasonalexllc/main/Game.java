@@ -1,9 +1,18 @@
  package com.jasonalexllc.main;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 import com.jasonalexllc.mob.Mob;
+import com.jasonalexllc.tower.Attack;
 import com.jasonalexllc.tower.Tower;
 
 /**
@@ -99,9 +108,13 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 			{
 				t.draw(g2);
 				
-				//draw projectiles moving towards a mob if it is within a towers range
+				//draw attacks moving towards a mob if it is within a towers range
 				if(t.hasTower())
+				{
 					t.getTower().attack(m, g2, t);
+					for(Attack a : t.getTower().attackQueue)
+						a.draw(g2);
+				}
 			}
 
 		m.draw(g2);
