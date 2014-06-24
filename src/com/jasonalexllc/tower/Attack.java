@@ -26,17 +26,17 @@ public class Attack
 		x1 = x;
 		y1 = y;
 		
-		//sqrt((x2 - x1)^2 + (y2 - y1)^2) -- distance formula
-		/*
+		/*sqrt((x2 - x1)^2 + (y2 - y1)^2) -- distance formula
+		 *
 		 * 800 pixels = 160 iterations of moving the attack 5 pixels **every 10ms
 		 * m.getX() - x **
 		 */
 		int yPrime = (m.getY() + 25) - y1, xPrime = (m.getX() + 25) - x1;
 		int d = (int)Math.sqrt(Math.pow(xPrime, 2) + Math.pow(yPrime, 2)); // distance between the center of the mob and the center of the tower
-		int iterate = d / 5 + (d % 5 == 0 ? 0 : 1);
+		int iterate = d / 7 + (d % 7 == 0 ? 0 : 1);
 		
-		xSpeed = d / (double)iterate;
-		ySpeed = d / (double)iterate;
+		xSpeed = xPrime / (double)iterate;
+		ySpeed = yPrime / (double)iterate;
 	}
 	
 	public void draw(Graphics2D g2)

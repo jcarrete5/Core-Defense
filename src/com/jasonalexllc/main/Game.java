@@ -107,8 +107,12 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 			for(Tile t : row)
 			{
 				t.draw(g2);
-				
-				//draw attacks moving towards a mob if it is within a towers range
+			}
+
+		//draw attacks moving towards a mob if it is within a towers range
+		for(Tile[] row : grid)
+			for(Tile t : row)
+			{
 				if(t.hasTower())
 				{
 					t.getTower().attack(m, g2, t);
