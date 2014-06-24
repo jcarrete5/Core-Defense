@@ -59,15 +59,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 			}
 		};
 		
-		Image[] sprt =
-			{
-				new ImageIcon(CoreDefense.class.getResource("assets/stoneman_1.png")).getImage(),
-				new ImageIcon(CoreDefense.class.getResource("assets/stoneman_2_4.png")).getImage(),
-				new ImageIcon(CoreDefense.class.getResource("assets/stoneman_3.png")).getImage(),
-				new ImageIcon(CoreDefense.class.getResource("assets/stoneman_2_4.png")).getImage()
-			};
-		
-		m = new Mob(0, 50, sprt);
+		m = new Mob(0, 50, 1);
 		new Thread(r, "Game Thread").start();
 	}
 	
