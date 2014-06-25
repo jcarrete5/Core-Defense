@@ -15,23 +15,25 @@ public class PickaxeTower extends Tower
 	
 	public PickaxeTower()
 	{
-		super(2, 5, .01, 250, "assets/pickaxeTower_idle.png");
+		super(2, 5, .01, 250, "assets/towers/pickaxeTower_idle.png");
 	}
 	
 	public void attack(Mob m, Graphics2D g2, Tile tile)
 	{		
 		if
 		(
-			m.getX() <= tile.getX() + super.getRangePixels() + 51 &&
-			m.getX() >= tile.getX() - super.getRangePixels() - 1 &&
-			m.getY() <= tile.getY() + super.getRangePixels() + 51 &&
-			m.getY() >= tile.getY() - super.getRangePixels() - 1
+			m.getX() < tile.getX() + super.getRangePixels() + 49 &&
+			m.getX() >= tile.getX() - super.getRangePixels() &&
+			m.getY() < tile.getY() + super.getRangePixels() + 49 &&
+			m.getY() >= tile.getY() - super.getRangePixels()
 		)
 		{
 			//throw a new Attack
 			if((int)atk == 1)
 			{
-				attackQueue.add(new Attack(new String[] {"assets/pickaxeP.png"}, tile.getX(), tile.getY(), m));
+				attackQueue.add(new Attack(new String[] {"assets/attacks/pickaxe_1.png", "assets/attacks/pickaxe_2.png", "assets/attacks/pickaxe_3.png",
+						"assets/attacks/pickaxe_4.png"}, tile.getX(), tile.getY(), m));
+				System.out.println(m.getX() + " " + m.getY());
 			}
 			
 			atk = atk < 1 ? atk + atkSpeed : 0;
