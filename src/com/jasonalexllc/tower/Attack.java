@@ -14,7 +14,6 @@ import com.jasonalexllc.mob.Mob;
 public class Attack
 {
 	private Image[] anim;
-	private double[] rotation = {0, Math.toRadians(90), Math.toRadians(180), Math.toRadians(270)};
 	
 	/**
 	 * Attack's current coordinates
@@ -44,18 +43,16 @@ public class Attack
 		int yPrime = (m.getY() + 25) - (y1 + 25), xPrime = (m.getX() + 25) - (x1 + 25); //find the slope of the line between the mob and the tower
 		
 		//higher numbers = slower movement
-		float pPerIteration = 10f;
-		xSpeed = xPrime / pPerIteration;
-		ySpeed = yPrime / pPerIteration;
+		float pPer10ms = 10f;
+		xSpeed = xPrime / pPer10ms;
+		ySpeed = yPrime / pPer10ms;
 	}
 	
 	public void draw(Graphics2D g2)
 	{
-		g2.rotate(rotation[(int)r], x1 + 12, y1 + 12);
-		g2.drawImage(anim[0], x1, y1, null);
-		g2.rotate(-1 * rotation[(int)r], x1 + 12, y1 + 12);
+		g2.drawImage(anim[(int)r], x1 + 6, y1 + 6, null);
+		r = r > anim.length - 0.8 ? 0 : r + 0.2; //controls how long each rotation is visible for. lower numbers = slower rotation
 		
-		r = r >= 3.0 ? 0 : r + 0.2; //controls how long each rotation is visible for. lower numbers = slower rotation
 		x1 += (int)xSpeed;
 		y1 += (int)ySpeed;
 		
