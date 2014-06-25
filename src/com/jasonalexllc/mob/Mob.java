@@ -82,11 +82,12 @@ public class Mob
     			rotate = Math.toRadians(180);
     		else if(comingFrom == DOWN)
     			rotate = Math.toRadians(270);
-    		g2.rotate(rotate, (int)x + 26, (int)y + 26);
+    		
+    		g2.rotate(rotate, (int)x + 25, (int)y + 25);
     		
     		g2.drawImage(sprite[(int)indexOfSprite], (int)x, (int)y, null);
     		
-    		g2.rotate((-1 * rotate), (int)x + 26, (int)y + 26);
+    		g2.rotate((-1 * rotate), (int)x + 25, (int)y + 25);
     		autoMove();
     	}
     }
