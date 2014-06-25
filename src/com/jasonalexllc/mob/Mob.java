@@ -217,11 +217,9 @@ public class Mob
        		
        		comingFrom = randIndex+2 >= 4 ? randIndex - 2 : randIndex + 2;
        		move(randIndex);
-<<<<<<< HEAD
-=======
+       		
        		x += 0.5;
        		y += 0.5;
->>>>>>> 7f217d34abe96015810d4ed46d74e50d7dcd90d9
     	}
     }
     
