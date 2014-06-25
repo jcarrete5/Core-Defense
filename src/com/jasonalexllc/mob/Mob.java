@@ -20,7 +20,7 @@ public class Mob
 	public static Image[][] sprites = 
 		{
 			{
-				
+				new ImageIcon(CoreDefense.class.getResource("assets/crane_idle.png")).getImage()
 			},
 			{
 				new ImageIcon(CoreDefense.class.getResource("assets/stoneman_1.png")).getImage(),
@@ -213,6 +213,7 @@ public class Mob
     public void hit(Mob m)
     {
     	alive = false;
-    	m = new Mob(x, y, level-1);
+    	level--;
+    	sprite = sprites[level];
     }
 }
