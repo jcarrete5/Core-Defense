@@ -37,6 +37,7 @@ public class Mob
     private boolean alive = true;
     private boolean[][][] usedDirs = new boolean[800][800][4];//Boolean 3D array of which direction has already been tried
     private int level;
+    private boolean diedOnce = true;
     
     public Mob(double speed, double x, double y, int damage, int level)
     {
@@ -173,7 +174,11 @@ public class Mob
     	{
     		if(x >= 800 || y >= 800)
     			alive = false;
+    		if(diedOnce)
+    		{
     			Game.lives -= damage;
+    			diedOnce = false;
+    		}
     	}
     	
     	return ret;
@@ -210,10 +215,12 @@ public class Mob
     	}
     }
     
-    public void hit(Mob m)
+    public void hit()
     {
-    	alive = false;
     	level--;
-    	sprite = sprites[level];
+    	if(level == -1)
+    		alive = false;
+    	else
+    		sprite = sprites[level];
     }
 }
