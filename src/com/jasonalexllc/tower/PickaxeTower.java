@@ -31,7 +31,7 @@ public class PickaxeTower extends Tower
 			//throw a new Attack
 			if((int)atk == 1)
 			{
-				attackQueue.add(new Attack(new String[] {"assets/pickaxeP.png"}, tile.getX() + 25, tile.getY() + 25, m));
+				attackQueue.add(new Attack(new String[] {"assets/pickaxeP.png"}, tile.getX(), tile.getY(), m));
 			}
 			
 			atk = atk < 1 ? atk + atkSpeed : 0;
