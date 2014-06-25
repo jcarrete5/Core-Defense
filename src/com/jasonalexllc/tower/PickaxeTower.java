@@ -22,9 +22,9 @@ public class PickaxeTower extends Tower
 	{		
 		if
 		(
-			m.getX() < tile.getX() + super.getRangePixels() + 49 &&
+			m.getX() <= tile.getX() + super.getRangePixels() + 49 &&
 			m.getX() >= tile.getX() - super.getRangePixels() &&
-			m.getY() < tile.getY() + super.getRangePixels() + 49 &&
+			m.getY() <= tile.getY() + super.getRangePixels() + 49 &&
 			m.getY() >= tile.getY() - super.getRangePixels()
 		)
 		{
