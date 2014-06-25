@@ -8,6 +8,8 @@ import java.util.Random;
 import java.awt.Graphics2D;
 import java.awt.Image;
 
+import javax.swing.ImageIcon;
+
 /**
  * Handles mob generation in game
  * @author Jason Carrete, Alex Berman
@@ -15,6 +17,18 @@ import java.awt.Image;
  */
 public class Mob 
 {
+	public static Image[][] sprites = 
+		{
+			{
+				new ImageIcon(CoreDefense.class.getResource("assets/towers/crane_idle.png")).getImage()
+			},
+			{
+				new ImageIcon(CoreDefense.class.getResource("assets/mobs/stoneman_1.png")).getImage(),
+				new ImageIcon(CoreDefense.class.getResource("assets/mobs/stoneman_2_4.png")).getImage(),
+				new ImageIcon(CoreDefense.class.getResource("assets/mobs/stoneman_3.png")).getImage(),
+				new ImageIcon(CoreDefense.class.getResource("assets/mobs/stoneman_2_4.png")).getImage()
+			}
+		};
     private Image[] sprite;
     private int damage, comingFrom;
     private double speed, x, y;
@@ -22,14 +36,17 @@ public class Mob
     public static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
     private boolean alive = true;
     private boolean[][][] usedDirs = new boolean[800][800][4];//Boolean 3D array of which direction has already been tried
+    private int level;
+    private boolean diedOnce = true;
     
-    public Mob(double speed, int x, int y, Image[] sprite, int damage)
+    public Mob(double speed, double x, double y, int damage, int level)
     {
-    	this.sprite = sprite;
+    	this.sprite = sprites[level];
     	this.x = x;
     	this.y = y;
     	this.speed = speed;
     	this.damage = damage;
+    	this.level = level;
     	indexOfSprite = 0;
     	comingFrom = LEFT;//Starts moving from the left
     }
@@ -40,9 +57,9 @@ public class Mob
      * @param y
      * @param sprite
      */
-    public Mob(int x, int y, Image[] sprite)
+    public Mob(double x, double y,  int level)
     {
-    	this(0.5, x, y, sprite, 1);//Default speed: 0.25	Default Damage: 1
+    	this(0.5, x, y, 1, level);//Default speed: 0.25	Default Damage: 1
     }
     
     public void draw(Graphics2D g2)
@@ -157,7 +174,11 @@ public class Mob
     	{
     		if(x >= 800 || y >= 800)
     			alive = false;
+    		if(diedOnce)
+    		{
     			Game.lives -= damage;
+    			diedOnce = false;
+    		}
     	}
     	
     	return ret;
@@ -190,6 +211,16 @@ public class Mob
        		
        		comingFrom = randIndex+2 >= 4 ? randIndex - 2 : randIndex + 2;
        		move(randIndex);
+       		System.gc();
     	}
+    }
+    
+    public void hit()
+    {
+    	level--;
+    	if(level == -1)
+    		alive = false;
+    	else
+    		sprite = sprites[level];
     }
 }

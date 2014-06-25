@@ -3,13 +3,11 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import com.jasonalexllc.mob.Mob;
 import com.jasonalexllc.tower.Attack;
@@ -68,15 +66,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 			}
 		};
 		
-		Image[] sprt =
-			{
-				new ImageIcon(CoreDefense.class.getResource("assets/mobs/stoneman_1.png")).getImage(),
-				new ImageIcon(CoreDefense.class.getResource("assets/mobs/stoneman_2_4.png")).getImage(),
-				new ImageIcon(CoreDefense.class.getResource("assets/mobs/stoneman_3.png")).getImage(),
-				new ImageIcon(CoreDefense.class.getResource("assets/mobs/stoneman_2_4.png")).getImage()
-			};
-		
-		m = new Mob(0, 50, sprt);
+		m = new Mob(0, 50, 1);
 		new Thread(r, "Game Thread").start();
 	}
 	
