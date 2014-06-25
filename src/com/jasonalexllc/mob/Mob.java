@@ -61,6 +61,30 @@ public class Mob
     	this(0.5, x, y, 1, level);//Default speed: 0.25	Default Damage: 1
     }
     
+    public void draw(Graphics2D g2)
+    {
+    	if(alive)
+    	{
+    		indexOfSprite += 0.035;
+    		if(indexOfSprite > sprite.length)
+    			indexOfSprite = 0;
+    		
+    		double rotate = 0;
+    		if(comingFrom == UP)
+    			rotate = Math.toRadians(90);
+    		else if(comingFrom == RIGHT)
+    			rotate = Math.toRadians(180);
+    		else if(comingFrom == DOWN)
+    			rotate = Math.toRadians(270);
+    		g2.rotate(rotate, (int)x + 25, (int)y + 25);
+    		
+    		g2.drawImage(sprite[(int)indexOfSprite], (int)x, (int)y, null);
+    		
+    		g2.rotate((-1 * rotate), (int)x + 25, (int)y + 25);
+    		autoMove();
+    	}
+    }
+    
     public int getX()
     {
     	return (int)x;
@@ -154,30 +178,7 @@ public class Mob
     	
     	return ret;
     }
-    
-    public void draw(Graphics2D g2)
-    {
-    	if(alive)
-    	{
-    		indexOfSprite += 0.035;
-    		if(indexOfSprite > sprite.length)
-    			indexOfSprite = 0;
-    		
-    		double rotate = 0;
-    		if(comingFrom == UP)
-    			rotate = Math.toRadians(90);
-    		else if(comingFrom == RIGHT)
-    			rotate = Math.toRadians(180);
-    		else if(comingFrom == DOWN)
-    			rotate = Math.toRadians(270);
-    		g2.rotate(rotate, (int)x + 25, (int)y + 25);
-    		
-    		g2.drawImage(sprite[(int)indexOfSprite], (int)x, (int)y, null);
-    		
-    		g2.rotate((-1 * rotate), (int)x + 25, (int)y + 25);
-    		autoMove();
-    	}
-    }
+       
     /**
      * Automatically moves the mob once in the direction it was moving if possible.
      * Otherwise, a new direction is chosen

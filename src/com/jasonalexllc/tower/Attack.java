@@ -14,7 +14,8 @@ import com.jasonalexllc.mob.Mob;
 public class Attack
 {
 	private Image[] anim;
-	private int x1, y1;
+	private double[] rotation = {0, Math.toRadians(90), Math.toRadians(180), Math.toRadians(270)};
+	private int x1, y1, r;
 	private double ySpeed, xSpeed;
 	
 	public Attack(String[] anim, int x, int y, Mob m)
@@ -41,7 +42,11 @@ public class Attack
 	
 	public void draw(Graphics2D g2)
 	{
+		g2.rotate(/*rotation[r]*/Math.toRadians(180), x1, y1);
 		g2.drawImage(anim[0], x1, y1, null);
+		g2.rotate(-1 * Math.toRadians(180), x1, y1);
+		
+//		r = r == 3 ? 0 : r++;
 		x1 += (int)xSpeed;
 		y1 += (int)ySpeed;
 	}
