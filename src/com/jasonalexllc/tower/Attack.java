@@ -58,5 +58,6 @@ public class Attack
 		r = r >= 3.0 ? 0 : r + 0.2; //controls how long each rotation is visible for. lower numbers = slower rotation
 		x1 += (int)xSpeed;
 		y1 += (int)ySpeed;
+		
 	}
 }

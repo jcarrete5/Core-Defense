@@ -17,6 +17,8 @@ import javax.swing.ImageIcon;
  */
 public class Mob 
 {
+	public static Mob[] mobs = new Mob[512];
+	private static int index = 0;
 	public static Image[][] sprites = 
 		{
 			{
@@ -49,6 +51,9 @@ public class Mob
     	this.level = level;
     	indexOfSprite = 0;
     	comingFrom = LEFT;//Starts moving from the left
+    	//Adding to mob array
+    	mobs[index] = this;
+    	index++;
     }
     
     /**
@@ -77,11 +82,11 @@ public class Mob
     			rotate = Math.toRadians(180);
     		else if(comingFrom == DOWN)
     			rotate = Math.toRadians(270);
-    		g2.rotate(rotate, (int)x + 25, (int)y + 25);
+    		g2.rotate(rotate, (int)x + 26, (int)y + 26);
     		
     		g2.drawImage(sprite[(int)indexOfSprite], (int)x, (int)y, null);
     		
-    		g2.rotate((-1 * rotate), (int)x + 25, (int)y + 25);
+    		g2.rotate((-1 * rotate), (int)x + 26, (int)y + 26);
     		autoMove();
     	}
     }
@@ -211,7 +216,8 @@ public class Mob
        		
        		comingFrom = randIndex+2 >= 4 ? randIndex - 2 : randIndex + 2;
        		move(randIndex);
-       		System.gc();
+       		x += 0.5;
+       		y += 0.5;
     	}
     }
     
