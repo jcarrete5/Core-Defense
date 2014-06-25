@@ -55,5 +55,6 @@ public class Attack
 		
 		x1 += (int)xSpeed;
 		y1 += (int)ySpeed;
+		
 	}
 }

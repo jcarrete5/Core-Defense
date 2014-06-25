@@ -17,6 +17,8 @@ import javax.swing.ImageIcon;
  */
 public class Mob 
 {
+	public static Mob[] mobs = new Mob[512];
+	private static int index = 0;
 	public static Image[][] sprites = 
 		{
 			{
@@ -49,6 +51,9 @@ public class Mob
     	this.level = level;
     	indexOfSprite = 0;
     	comingFrom = LEFT;//Starts moving from the left
+    	//Adding to mob array
+    	mobs[index] = this;
+    	index++;
     }
     
     /**
@@ -212,6 +217,11 @@ public class Mob
        		
        		comingFrom = randIndex+2 >= 4 ? randIndex - 2 : randIndex + 2;
        		move(randIndex);
+<<<<<<< HEAD
+=======
+       		x += 0.5;
+       		y += 0.5;
+>>>>>>> 7f217d34abe96015810d4ed46d74e50d7dcd90d9
     	}
     }
     
