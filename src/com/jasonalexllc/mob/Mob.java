@@ -64,7 +64,7 @@ public class Mob
      */
     public Mob(double x, double y,  int level)
     {
-    	this(1, x, y, 1, level);//Default speed: 0.25	Default Damage: 1
+    	this(0.5, x, y, 1, level);//Default speed: 0.25	Default Damage: 1
     }
     
     public void draw(Graphics2D g2)

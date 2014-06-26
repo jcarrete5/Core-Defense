@@ -69,12 +69,11 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		};
 		
 		m = new Mob(0, 50, 1);
-		m.hit();
 		new Thread(r, "Game Thread").start();
 	}
 	
 	public void pause()
-	{
+	{							
 		paused = true;
 	}
 	
@@ -98,21 +97,17 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		//draw the grid and draw towers if any are on the grid
 		for(Tile[] row : grid)
 			for(Tile t : row)
-			{
 				t.draw(g2);
-			}
 
 		//draw attacks moving towards a mob if it is within a towers range
 		for(Tile[] row : grid)
 			for(Tile t : row)
-			{
 				if(t.hasTower())
 				{
 					t.getTower().attack(m, g2, t);
 					for(Attack a : t.getTower().attackQueue)
 						a.draw(g2);
 				}
-			}
 
 		m.draw(g2);
 		
