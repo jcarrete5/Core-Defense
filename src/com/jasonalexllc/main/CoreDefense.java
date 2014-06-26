@@ -1,14 +1,11 @@
 package com.jasonalexllc.main;
 
-import java.awt.Dimension;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.URL;
-import java.util.Scanner;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.net.*;
+import java.util.*;
+import javax.swing.*;
 
 /**
  * A game where rock people are trying to blow up the core of the Earth and you have to defend the core with towers.

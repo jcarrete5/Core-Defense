@@ -1,13 +1,8 @@
 package com.jasonalexllc.mob;
 
-import com.jasonalexllc.main.CoreDefense;
-import com.jasonalexllc.main.Game;
-import com.jasonalexllc.main.Tile;
-
+import com.jasonalexllc.main.*;
 import java.util.Random;
-import java.awt.Graphics2D;
-import java.awt.Image;
-
+import java.awt.*;
 import javax.swing.ImageIcon;
 
 /**
@@ -17,13 +12,18 @@ import javax.swing.ImageIcon;
  */
 public class Mob 
 {
+    private Image[] sprite;
+    private int damage, comingFrom, level;
+    private double speed, x, y, indexOfSprite;
+    public static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
+    private boolean alive = true, diedOnce = true;
+    private boolean[][][] usedDirs = new boolean[800][800][4]; //Boolean 3D array of which direction has already been tried
+    
 	public static Mob[] mobs = new Mob[512];
 	private static int index = 0;
 	public static Image[][] sprites = 
 		{
-			{
-				new ImageIcon(CoreDefense.class.getResource("assets/towers/crane_idle.png")).getImage()
-			},
+			{new ImageIcon(CoreDefense.class.getResource("assets/towers/crane_idle.png")).getImage()},
 			{
 				new ImageIcon(CoreDefense.class.getResource("assets/mobs/stoneman_1.png")).getImage(),
 				new ImageIcon(CoreDefense.class.getResource("assets/mobs/stoneman_2_4.png")).getImage(),
@@ -31,15 +31,6 @@ public class Mob
 				new ImageIcon(CoreDefense.class.getResource("assets/mobs/stoneman_2_4.png")).getImage()
 			}
 		};
-    private Image[] sprite;
-    private int damage, comingFrom;
-    private double speed, x, y;
-    private double indexOfSprite;
-    public static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
-    private boolean alive = true;
-    private boolean[][][] usedDirs = new boolean[800][800][4];//Boolean 3D array of which direction has already been tried
-    private int level;
-    private boolean diedOnce = true;
     
     public Mob(double speed, double x, double y, int damage, int level)
     {
@@ -50,21 +41,16 @@ public class Mob
     	this.damage = damage;
     	this.level = level;
     	indexOfSprite = 0;
-    	comingFrom = LEFT;//Starts moving from the left
+    	comingFrom = LEFT; //Starts moving from the left
+    	
     	//Adding to mob array
     	mobs[index] = this;
     	index++;
     }
     
-    /**
-     * 
-     * @param x
-     * @param y
-     * @param sprite
-     */
     public Mob(double x, double y,  int level)
     {
-    	this(0.5, x, y, 1, level);//Default speed: 0.25	Default Damage: 1
+    	this(0.5, x, y, 1, level); //Default speed: 0.25	Default Damage: 1
     }
     
     public void draw(Graphics2D g2)
@@ -144,6 +130,7 @@ public class Mob
     	
     	return ret;
     }
+    
     /**
      * 
      * @param direction
