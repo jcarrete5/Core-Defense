@@ -1,19 +1,10 @@
  package com.jasonalexllc.main;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import javax.swing.ImageIcon;
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.JPanel;
 import com.jasonalexllc.mob.Mob;
-import com.jasonalexllc.tower.Attack;
-import com.jasonalexllc.tower.Tower;
+import com.jasonalexllc.tower.*;
 
 /**
  * The main drawing thread
@@ -23,9 +14,11 @@ import com.jasonalexllc.tower.Tower;
 public class Game extends JPanel implements MouseListener, MouseMotionListener
 {
 	private static final long serialVersionUID = -1168167031210268222L;
+	private Thread thread;
 	
-	public static int lives = 200;
-	public static int money = 850;
+	public static final int UNLIMITED = -1, EASY = 0, MEDIUM = 1, HARD = 2, SANDBOX = 3;
+	public static int lives;
+	public static int money;
 	
 	private Tile[][] grid;
 	private Shop shop;
@@ -35,17 +28,40 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 	public static Point curMousePos;
 	private Mob m;
 	
-	public Game(Tile[][] grid, Shop s)
+	public Game(Tile[][] grid, Shop s, int difficulty)
 	{
+		this.setLayout(null);		
 		this.grid = grid;
 		shop = s;
+		
+		//apply the difficulty
+		switch(difficulty)
+		{
+		case EASY:
+			lives = 200;
+			money = 850;
+			break;
+		case MEDIUM:
+			lives = 150;
+			money = 700;
+			break;
+		case HARD:
+			lives = 100;
+			money = 500;
+			break;
+		case SANDBOX:
+			lives = UNLIMITED;
+			money = 100000000; //TODO change to UNLIMITED later
+			break;
+		}
+		
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 	}
 	
-	public Game(int interval, Tile[][] grid, Shop s)
+	public Game(int interval, Tile[][] grid, Shop s, int difficulty)
 	{
-		this(grid, s);
+		this(grid, s, difficulty);
 		
 		Runnable r = () -> 
 		{
@@ -69,11 +85,16 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		};
 		
 		m = new Mob(0, 50, 1);
-		new Thread(r, "Game Thread").start();
+		thread = new Thread(r, "Game Thread");
+	}
+	
+	public void start()
+	{
+		thread.start();
 	}
 	
 	public void pause()
-	{
+	{							
 		paused = true;
 	}
 	
@@ -97,21 +118,17 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		//draw the grid and draw towers if any are on the grid
 		for(Tile[] row : grid)
 			for(Tile t : row)
-			{
 				t.draw(g2);
-			}
 
 		//draw attacks moving towards a mob if it is within a towers range
 		for(Tile[] row : grid)
 			for(Tile t : row)
-			{
 				if(t.hasTower())
 				{
 					t.getTower().attack(m, g2, t);
 					for(Attack a : t.getTower().attackQueue)
 						a.draw(g2);
 				}
-			}
 
 		m.draw(g2);
 		
@@ -195,30 +212,15 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		}
 	}
 
-	public void mousePressed(MouseEvent e)
-	{
-		
-	}
+	public void mousePressed(MouseEvent e) {}
 
-	public void mouseReleased(MouseEvent e)
-	{
-		
-	}
+	public void mouseReleased(MouseEvent e) {}
 	
-	public void mouseEntered(MouseEvent e)
-	{
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 	
-	public void mouseExited(MouseEvent e)
-	{
-		
-	}
+	public void mouseExited(MouseEvent e) {}
 
-	public void mouseDragged(MouseEvent e)
-	{
-		
-	}
+	public void mouseDragged(MouseEvent e) {}
 
 	public void mouseMoved(MouseEvent e)
 	{

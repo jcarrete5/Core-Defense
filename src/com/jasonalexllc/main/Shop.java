@@ -1,7 +1,6 @@
 package com.jasonalexllc.main;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.util.Scanner;
 import com.jasonalexllc.tower.*;
 

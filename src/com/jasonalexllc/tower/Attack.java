@@ -1,13 +1,12 @@
 package com.jasonalexllc.tower;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.*;
 import javax.swing.ImageIcon;
 import com.jasonalexllc.main.CoreDefense;
 import com.jasonalexllc.mob.Mob;
 
 /**
- * 
+ * Represents an attack that is currently happening on the grid
  * @author Jason Carrete, Alex Berman
  * @since Jun 23, 2014
  */

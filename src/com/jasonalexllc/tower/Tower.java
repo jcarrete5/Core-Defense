@@ -1,14 +1,9 @@
 package com.jasonalexllc.tower;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
+import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
-import com.jasonalexllc.main.CoreDefense;
-import com.jasonalexllc.main.Game;
-import com.jasonalexllc.main.Tile;
+import com.jasonalexllc.main.*;
 import com.jasonalexllc.mob.Mob;
 
 /**

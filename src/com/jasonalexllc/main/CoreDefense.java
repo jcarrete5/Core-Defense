@@ -1,14 +1,11 @@
 package com.jasonalexllc.main;
 
 import java.awt.Dimension;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.awt.event.*;
+import java.io.*;
 import java.net.URL;
 import java.util.Scanner;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 /**
  * A game where rock people are trying to blow up the core of the Earth and you have to defend the core with towers.
@@ -18,17 +15,19 @@ import javax.swing.JFrame;
 public class CoreDefense
 {
 	public static Tile[][] grid;
+	private static JButton help, play;
+	private static JPanel menu;
 	
 	public static void main(String[] args)
 	{
 		//Create the game window
-		JFrame game = new JFrame("Core Defense");
-		game.setLayout(null);
-		game.setIconImage(new ImageIcon(CoreDefense.class.getResource("assets/icon.png")).getImage());
-		game.setResizable(false);
-		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		game.getContentPane().setPreferredSize(new Dimension(800, 800));
-		game.setVisible(true);
+		JFrame frame = new JFrame("Core Defense");
+		frame.setLayout(null);
+		frame.setIconImage(new ImageIcon(CoreDefense.class.getResource("assets/icon.png")).getImage());
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setPreferredSize(new Dimension(800, 800));
+		frame.setVisible(true);
 				
 		//read lvl1.txt
 		Scanner readFile = null;
@@ -42,8 +41,10 @@ public class CoreDefense
 			System.exit(-1);
 		}
 		
-		readFile.next(); //Haven't implemented difficulty yet so skip it
+		//get the difficulty
+		int difficulty = Integer.parseInt(readFile.next());
 		
+		//create the grid
 		grid = new Tile[16][16];
 		for(int row = 0; row < grid.length; row++)
 			for(int col = 0; col < grid[0].length; col++)
@@ -67,34 +68,60 @@ public class CoreDefense
 				
 				grid[row][col] = new Tile(path, col * 50, row * 50, type);
 			}
-
-		Shop shop = new Shop();
-		Game canvas = new Game(10, grid, shop);
-		canvas.setBounds(0, 0, 800, 800);
-		game.add(canvas);
 		
-		game.addKeyListener(new KeyListener()
+		//listener used for the buttons on the main menu screen
+		ActionListener menuListener = (ActionEvent e) ->
 		{
-			public void keyTyped(KeyEvent e) {}
+			JButton b = (JButton)e.getSource();
 			
-			public void keyPressed(KeyEvent e)
+			if(b == play)
 			{
-				//pause game and open the shop
-				if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+				frame.remove(play);
+				frame.remove(help);
+				frame.remove(menu);
+				Shop shop = new Shop();
+				Game game = new Game(10, grid, shop, difficulty);
+				game.start();
+				game.setBounds(0, 0, 800, 800);
+				Thread.yield();
+				
+				frame.addKeyListener(new KeyListener()
 				{
-					if(canvas.isPaused())
-						canvas.unpause();
-					else
-						canvas.pause();
-				}
-				else if(!canvas.isPaused() && canvas.curTower == null && e.getKeyCode() == KeyEvent.VK_S) //open the shop screen
-					shop.opened = !shop.opened;
+					public void keyTyped(KeyEvent e) {}
+					
+					public void keyPressed(KeyEvent e)
+					{
+						//pause game and open the shop
+						if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+							if(game.isPaused())
+								game.unpause();
+							else
+								game.pause();
+						else if(!game.isPaused() && game.curTower == null && e.getKeyCode() == KeyEvent.VK_S) //open the shop screen
+							shop.opened = !shop.opened;
+					}
+					
+					public void keyReleased(KeyEvent e) {}
+				});
+				
+				frame.add(game);
 			}
-
-			public void keyReleased(KeyEvent e) {}
-		});
+		};
 		
-		game.pack();
-		game.setLocationRelativeTo(null);
+		//set up the menu screen
+		menu = new JPanel(null);
+		menu.setBounds(0, 0, 800, 800);
+		play = new JButton("Play");
+		play.setBounds(350, 388, 100, 24);
+		play.addActionListener(menuListener);
+		menu.add(play);
+		help = new JButton("Help");
+		help.setBounds(350, 432, 100, 24);
+		help.addActionListener(menuListener);
+		menu.add(help);
+		frame.add(menu);
+		
+		frame.pack();
+		frame.setLocationRelativeTo(null);
 	}
 }
