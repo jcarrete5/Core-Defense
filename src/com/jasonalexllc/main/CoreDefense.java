@@ -1,10 +1,10 @@
 package com.jasonalexllc.main;
 
-import java.awt.*;
+import java.awt.Dimension;
 import java.awt.event.*;
 import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.net.URL;
+import java.util.Scanner;
 import javax.swing.*;
 
 /**
@@ -15,6 +15,8 @@ import javax.swing.*;
 public class CoreDefense
 {
 	public static Tile[][] grid;
+	private static JButton help, play;
+	private static JPanel menu;
 	
 	public static void main(String[] args)
 	{
@@ -42,6 +44,7 @@ public class CoreDefense
 		//get the difficulty
 		int difficulty = Integer.parseInt(readFile.next());
 		
+		//create the grid
 		grid = new Tile[16][16];
 		for(int row = 0; row < grid.length; row++)
 			for(int col = 0; col < grid[0].length; col++)
@@ -65,32 +68,58 @@ public class CoreDefense
 				
 				grid[row][col] = new Tile(path, col * 50, row * 50, type);
 			}
-
-		Shop shop = new Shop();
-		Game game = new Game(10, grid, shop, difficulty);
-		game.setBounds(0, 0, 800, 800);
-		frame.add(game);
 		
-		frame.addKeyListener(new KeyListener()
+		//listener used for the buttons on the main menu screen
+		ActionListener menuListener = (ActionEvent e) ->
 		{
-			public void keyTyped(KeyEvent e) {}
+			JButton b = (JButton)e.getSource();
 			
-			public void keyPressed(KeyEvent e)
+			if(b == play)
 			{
-				//pause game and open the shop
-				if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+				frame.remove(play);
+				frame.remove(help);
+				frame.remove(menu);
+				Shop shop = new Shop();
+				Game game = new Game(10, grid, shop, difficulty);
+				game.start();
+				game.setBounds(0, 0, 800, 800);
+				Thread.yield();
+				
+				frame.addKeyListener(new KeyListener()
 				{
-					if(game.isPaused())
-						game.unpause();
-					else
-						game.pause();
-				}
-				else if(!game.isPaused() && game.curTower == null && e.getKeyCode() == KeyEvent.VK_S) //open the shop screen
-					shop.opened = !shop.opened;
+					public void keyTyped(KeyEvent e) {}
+					
+					public void keyPressed(KeyEvent e)
+					{
+						//pause game and open the shop
+						if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+							if(game.isPaused())
+								game.unpause();
+							else
+								game.pause();
+						else if(!game.isPaused() && game.curTower == null && e.getKeyCode() == KeyEvent.VK_S) //open the shop screen
+							shop.opened = !shop.opened;
+					}
+					
+					public void keyReleased(KeyEvent e) {}
+				});
+				
+				frame.add(game);
 			}
-
-			public void keyReleased(KeyEvent e) {}
-		});
+		};
+		
+		//set up the menu screen
+		menu = new JPanel(null);
+		menu.setBounds(0, 0, 800, 800);
+		play = new JButton("Play");
+		play.setBounds(350, 388, 100, 24);
+		play.addActionListener(menuListener);
+		menu.add(play);
+		help = new JButton("Help");
+		help.setBounds(350, 432, 100, 24);
+		help.addActionListener(menuListener);
+		menu.add(help);
+		frame.add(menu);
 		
 		frame.pack();
 		frame.setLocationRelativeTo(null);

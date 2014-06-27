@@ -14,6 +14,7 @@ import com.jasonalexllc.tower.*;
 public class Game extends JPanel implements MouseListener, MouseMotionListener
 {
 	private static final long serialVersionUID = -1168167031210268222L;
+	private Thread thread;
 	
 	public static final int UNLIMITED = -1, EASY = 0, MEDIUM = 1, HARD = 2, SANDBOX = 3;
 	public static int lives;
@@ -29,8 +30,11 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 	
 	public Game(Tile[][] grid, Shop s, int difficulty)
 	{
+		this.setLayout(null);		
 		this.grid = grid;
 		shop = s;
+		
+		//apply the difficulty
 		switch(difficulty)
 		{
 		case EASY:
@@ -81,7 +85,12 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		};
 		
 		m = new Mob(0, 50, 1);
-		new Thread(r, "Game Thread").start();
+		thread = new Thread(r, "Game Thread");
+	}
+	
+	public void start()
+	{
+		thread.start();
 	}
 	
 	public void pause()
