@@ -15,8 +15,9 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 {
 	private static final long serialVersionUID = -1168167031210268222L;
 	
-	public static int lives = 200;
-	public static int money = 850;
+	public static final int UNLIMITED = -1, EASY = 0, MEDIUM = 1, HARD = 2, SANDBOX = 3;
+	public static int lives;
+	public static int money;
 	
 	private Tile[][] grid;
 	private Shop shop;
@@ -26,17 +27,37 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 	public static Point curMousePos;
 	private Mob m;
 	
-	public Game(Tile[][] grid, Shop s)
+	public Game(Tile[][] grid, Shop s, int difficulty)
 	{
 		this.grid = grid;
 		shop = s;
+		switch(difficulty)
+		{
+		case EASY:
+			lives = 200;
+			money = 850;
+			break;
+		case MEDIUM:
+			lives = 150;
+			money = 700;
+			break;
+		case HARD:
+			lives = 100;
+			money = 500;
+			break;
+		case SANDBOX:
+			lives = UNLIMITED;
+			money = 100000000; //TODO change to UNLIMITED later
+			break;
+		}
+		
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 	}
 	
-	public Game(int interval, Tile[][] grid, Shop s)
+	public Game(int interval, Tile[][] grid, Shop s, int difficulty)
 	{
-		this(grid, s);
+		this(grid, s, difficulty);
 		
 		Runnable r = () -> 
 		{

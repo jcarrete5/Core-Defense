@@ -19,13 +19,13 @@ public class CoreDefense
 	public static void main(String[] args)
 	{
 		//Create the game window
-		JFrame game = new JFrame("Core Defense");
-		game.setLayout(null);
-		game.setIconImage(new ImageIcon(CoreDefense.class.getResource("assets/icon.png")).getImage());
-		game.setResizable(false);
-		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		game.getContentPane().setPreferredSize(new Dimension(800, 800));
-		game.setVisible(true);
+		JFrame frame = new JFrame("Core Defense");
+		frame.setLayout(null);
+		frame.setIconImage(new ImageIcon(CoreDefense.class.getResource("assets/icon.png")).getImage());
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setPreferredSize(new Dimension(800, 800));
+		frame.setVisible(true);
 				
 		//read lvl1.txt
 		Scanner readFile = null;
@@ -39,7 +39,8 @@ public class CoreDefense
 			System.exit(-1);
 		}
 		
-		readFile.next(); //Haven't implemented difficulty yet so skip it
+		//get the difficulty
+		int difficulty = Integer.parseInt(readFile.next());
 		
 		grid = new Tile[16][16];
 		for(int row = 0; row < grid.length; row++)
@@ -66,11 +67,11 @@ public class CoreDefense
 			}
 
 		Shop shop = new Shop();
-		Game canvas = new Game(10, grid, shop);
-		canvas.setBounds(0, 0, 800, 800);
-		game.add(canvas);
+		Game game = new Game(10, grid, shop, difficulty);
+		game.setBounds(0, 0, 800, 800);
+		frame.add(game);
 		
-		game.addKeyListener(new KeyListener()
+		frame.addKeyListener(new KeyListener()
 		{
 			public void keyTyped(KeyEvent e) {}
 			
@@ -79,19 +80,19 @@ public class CoreDefense
 				//pause game and open the shop
 				if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
 				{
-					if(canvas.isPaused())
-						canvas.unpause();
+					if(game.isPaused())
+						game.unpause();
 					else
-						canvas.pause();
+						game.pause();
 				}
-				else if(!canvas.isPaused() && canvas.curTower == null && e.getKeyCode() == KeyEvent.VK_S) //open the shop screen
+				else if(!game.isPaused() && game.curTower == null && e.getKeyCode() == KeyEvent.VK_S) //open the shop screen
 					shop.opened = !shop.opened;
 			}
 
 			public void keyReleased(KeyEvent e) {}
 		});
 		
-		game.pack();
-		game.setLocationRelativeTo(null);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
 	}
 }
