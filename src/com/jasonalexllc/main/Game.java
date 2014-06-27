@@ -69,7 +69,6 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		};
 		
 		m = new Mob(0, 50, 1);
-		m.hit();
 		new Thread(r, "Game Thread").start();
 	}
 	

@@ -64,7 +64,7 @@ public class Mob
      */
     public Mob(double x, double y,  int level)
     {
-    	this(1, x, y, 1, level);//Default speed: 0.25	Default Damage: 1
+    	this(0.5, x, y, 1, level);//Default speed: 0.25	Default Damage: 1
     }
     
     public void draw(Graphics2D g2)
@@ -217,9 +217,8 @@ public class Mob
        		
        		comingFrom = randIndex+2 >= 4 ? randIndex - 2 : randIndex + 2;
        		move(randIndex);
-       		
-       		x += 0.5;
-       		y += 0.5;
+       		x = (int)(x+0.5);
+       		y = (int)(y+0.5);
     	}
     }
     
