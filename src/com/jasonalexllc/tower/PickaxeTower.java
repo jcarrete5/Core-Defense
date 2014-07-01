@@ -1,6 +1,9 @@
 package com.jasonalexllc.tower;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import com.jasonalexllc.main.CoreDefense;
 import com.jasonalexllc.main.Tile;
 import com.jasonalexllc.mob.Mob;
 
@@ -28,13 +31,22 @@ public class PickaxeTower extends Tower
 			m.getY() >= tile.getY() - super.getRangePixels()
 		)
 		{
+			Image tmp = this.getImage();
+			
 			//throw a new Attack
 			if((int)atk == 1)
 			{
+				this.setImage(new ImageIcon(CoreDefense.class.getResource("assets/towers/pickaxeTower_atk.png")).getImage());
+				
 				attackQueue.add(new Attack(new String[] {"assets/attacks/pickaxe_1.png", "assets/attacks/pickaxe_2.png", "assets/attacks/pickaxe_3.png",
 						"assets/attacks/pickaxe_4.png"}, tile.getX(), tile.getY(), m));
 				System.out.println(m.getX() + " " + m.getY());
 			}
+			
+			if((int)imgSwap == 0.2)
+				this.setImage(tmp);
+			
+			imgSwap = imgSwap < 0.2 ? imgSwap += 0.05 : 0;
 			
 			atk = atk < 1 ? atk + atkSpeed : 0;
 		}

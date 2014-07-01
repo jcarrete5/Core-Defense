@@ -21,7 +21,7 @@ public abstract class Tower extends ImageIcon
 	/**
 	 * Denotes when the next attack should start from the tower 1 = should attack, {x in R | 0 <= x < 1} = shouldn't attack
 	 */
-	protected double atk = 1;
+	protected double atk = 1, imgSwap;
 	protected int range, dmg, cost, p1Next = -1, p2Next = -1;
 	protected double atkSpeed;
 	protected Upgrade[] path1, path2;

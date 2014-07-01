@@ -25,10 +25,10 @@ public class Mob
 		{
 			{new ImageIcon(CoreDefense.class.getResource("assets/towers/crane_idle.png")).getImage()},
 			{
-				new ImageIcon(CoreDefense.class.getResource("assets/mobs/stoneman_1.png")).getImage(),
-				new ImageIcon(CoreDefense.class.getResource("assets/mobs/stoneman_2_4.png")).getImage(),
-				new ImageIcon(CoreDefense.class.getResource("assets/mobs/stoneman_3.png")).getImage(),
-				new ImageIcon(CoreDefense.class.getResource("assets/mobs/stoneman_2_4.png")).getImage()
+				new ImageIcon(CoreDefense.class.getResource("assets/mobs/dirtman_1.png")).getImage(),
+				new ImageIcon(CoreDefense.class.getResource("assets/mobs/dirtman_2_4.png")).getImage(),
+				new ImageIcon(CoreDefense.class.getResource("assets/mobs/dirtman_3.png")).getImage(),
+				new ImageIcon(CoreDefense.class.getResource("assets/mobs/dirtman_2_4.png")).getImage()
 			}
 		};
     
