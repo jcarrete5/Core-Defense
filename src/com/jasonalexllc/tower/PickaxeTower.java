@@ -18,7 +18,7 @@ public class PickaxeTower extends Tower
 	
 	public PickaxeTower()
 	{
-		super(2, 5, .01, 250, "assets/towers/pickaxeTower_idle.png");
+		super(2, 5, .05, 250, "assets/towers/pickaxeTower_idle.png");
 	}
 	
 	public void attack(Mob m, Graphics2D g2, Tile tile)
@@ -31,8 +31,6 @@ public class PickaxeTower extends Tower
 			m.getY() >= tile.getY() - super.getRangePixels()
 		)
 		{
-			Image tmp = this.getImage();
-			
 			//throw a new Attack
 			if((int)atk == 1)
 			{
@@ -40,16 +38,18 @@ public class PickaxeTower extends Tower
 				
 				attackQueue.add(new Attack(new String[] {"assets/attacks/pickaxe_1.png", "assets/attacks/pickaxe_2.png", "assets/attacks/pickaxe_3.png",
 						"assets/attacks/pickaxe_4.png"}, tile.getX(), tile.getY(), m));
-				System.out.println(m.getX() + " " + m.getY());
 			}
 			
-			if((int)imgSwap == 0.2)
-				this.setImage(tmp);
+			if(imgSwap >= 0.2)
+				this.setImage(new ImageIcon(CoreDefense.class.getResource("assets/towers/pickaxeTower_idle.png")).getImage());
 			
-			imgSwap = imgSwap < 0.2 ? imgSwap += 0.05 : 0;
+			float f = 0.007f; //lower value = longer duration of the atk image
+			imgSwap = imgSwap < 0.2 ? imgSwap += f : 0;
 			
 			atk = atk < 1 ? atk + atkSpeed : 0;
 		}
+		else
+			this.setImage(new ImageIcon(CoreDefense.class.getResource("assets/towers/pickaxeTower_idle.png")).getImage());
 	}
 	
 	public Tower getInstance()
