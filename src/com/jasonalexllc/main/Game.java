@@ -3,7 +3,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JPanel;
-import com.jasonalexllc.mob.Mob;
+import com.jasonalexllc.level.Mob;
 import com.jasonalexllc.tower.*;
 
 /**
@@ -19,6 +19,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 	public static final int UNLIMITED = -1, EASY = 0, MEDIUM = 1, HARD = 2, SANDBOX = 3;
 	public static int lives;
 	public static int money;
+	public static int fps;
 	
 	private Tile[][] grid;
 	private Shop shop;
@@ -152,6 +153,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		g2.setColor(Color.white);
 		g2.drawString("Lives: " + lives, 5, 10);
 		g2.drawString("Money: " + money, 5, 25);
+		g2.drawString("fps: " + fps, 5, 40);
 		
 	}
 

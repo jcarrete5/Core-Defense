@@ -1,9 +1,8 @@
-package com.jasonalexllc.mob;
+package com.jasonalexllc.level;
 
 import com.jasonalexllc.main.*;
 import java.util.Random;
 import java.awt.*;
-import javax.swing.ImageIcon;
 
 /**
  * Handles mob generation in game
@@ -23,12 +22,10 @@ public class Mob
 	private static int index = 0;
 	public static Image[][] sprites = 
 		{
-			{new ImageIcon(CoreDefense.class.getResource("assets/towers/crane_idle.png")).getImage()},
+			{CoreDefense.getImage("assets/towers/crane_idle.png")},
 			{
-				new ImageIcon(CoreDefense.class.getResource("assets/mobs/dirtman_1.png")).getImage(),
-				new ImageIcon(CoreDefense.class.getResource("assets/mobs/dirtman_2_4.png")).getImage(),
-				new ImageIcon(CoreDefense.class.getResource("assets/mobs/dirtman_3.png")).getImage(),
-				new ImageIcon(CoreDefense.class.getResource("assets/mobs/dirtman_2_4.png")).getImage()
+				CoreDefense.getImage("assets/mobs/dirtman_1.png"), CoreDefense.getImage("assets/mobs/dirtman_2_4.png"), CoreDefense.getImage("assets/mobs/dirtman_3.png"),
+				CoreDefense.getImage("assets/mobs/dirtman_2_4.png")
 			}
 		};
     

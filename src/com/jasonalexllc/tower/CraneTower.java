@@ -1,8 +1,8 @@
 package com.jasonalexllc.tower;
 
 import java.awt.Graphics2D;
+import com.jasonalexllc.level.Mob;
 import com.jasonalexllc.main.Tile;
-import com.jasonalexllc.mob.Mob;
 
 /**
  * A tower that swings its wrecking ball to attack foes

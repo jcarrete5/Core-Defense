@@ -1,6 +1,6 @@
 package com.jasonalexllc.main;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.URL;
@@ -21,7 +21,7 @@ public class CoreDefense
 		//Create the game window
 		JFrame frame = new JFrame("Core Defense");
 		frame.setLayout(null);
-		frame.setIconImage(new ImageIcon(CoreDefense.class.getResource("assets/icon.png")).getImage());
+		frame.setIconImage(getImage("assets/icon.png"));
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setPreferredSize(new Dimension(800, 800));
@@ -67,35 +67,6 @@ public class CoreDefense
 				grid[row][col] = new Tile(path, col * 50, row * 50, type);
 			}
 		
-//		//listener used for the buttons on the main menu screen
-//		ActionListener menuListener = (ActionEvent e) ->
-//		{
-//			JButton b = (JButton)e.getSource();
-//			
-//			if(b == play)
-//			{
-//				frame.remove(play);
-//				frame.remove(help);
-//				frame.remove(menu);
-//				
-//				Thread.yield();
-//				
-//				
-//			}
-//		};
-		
-//		//set up the menu screen
-//		menu = new JPanel(null);
-//		menu.setBounds(0, 0, 800, 800);
-//		play = new JButton("Play");
-//		play.setBounds(350, 388, 100, 24);
-//		play.addActionListener(menuListener);
-//		menu.add(play);
-//		help = new JButton("Help");
-//		help.setBounds(350, 432, 100, 24);
-//		help.addActionListener(menuListener);
-//		menu.add(help);
-//		frame.add(menu);
 		Shop shop = new Shop();
 		Game game = new Game(10, grid, shop, difficulty);
 		game.start();
@@ -123,5 +94,10 @@ public class CoreDefense
 		frame.add(game);		
 		frame.pack();
 		frame.setLocationRelativeTo(null);
+	}
+	
+	public static Image getImage(String imgPath)
+	{
+		return new ImageIcon(CoreDefense.class.getResource(imgPath)).getImage();
 	}
 }

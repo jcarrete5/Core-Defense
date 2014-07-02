@@ -1,9 +1,8 @@
 package com.jasonalexllc.tower;
 
 import java.awt.*;
-import javax.swing.ImageIcon;
+import com.jasonalexllc.level.Mob;
 import com.jasonalexllc.main.CoreDefense;
-import com.jasonalexllc.mob.Mob;
 
 /**
  * Represents an attack that is currently happening on the grid
@@ -31,7 +30,7 @@ public class Attack
 	{
 		this.anim = new Image[anim.length];
 		for(int i = 0; i < anim.length; i++)
-			this.anim[i] = new ImageIcon(CoreDefense.class.getResource(anim[i])).getImage();
+			this.anim[i] = CoreDefense.getImage(anim[i]);
 		
 		x1 = x;
 		y1 = y;

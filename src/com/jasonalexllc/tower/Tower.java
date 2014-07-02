@@ -3,8 +3,8 @@ package com.jasonalexllc.tower;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import com.jasonalexllc.level.Mob;
 import com.jasonalexllc.main.*;
-import com.jasonalexllc.mob.Mob;
 
 /**
  * Abstract class that defines how all towers in the game should function
