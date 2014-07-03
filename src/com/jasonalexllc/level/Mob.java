@@ -18,11 +18,9 @@ public class Mob
     private boolean alive = true, diedOnce = true;
     private boolean[][][] usedDirs = new boolean[800][800][4]; //Boolean 3D array of which direction has already been tried
     
-	public static Mob[] mobs = new Mob[512];
-	private static int index = 0;
-	public static Image[][] sprites = 
+	private Image[][] sprites = 
 		{
-			{CoreDefense.getImage("assets/towers/crane_idle.png")},
+			{ CoreDefense.getImage("assets/towers/crane_idle.png") },
 			{
 				CoreDefense.getImage("assets/mobs/dirtman_1.png"), CoreDefense.getImage("assets/mobs/dirtman_2_4.png"), CoreDefense.getImage("assets/mobs/dirtman_3.png"),
 				CoreDefense.getImage("assets/mobs/dirtman_2_4.png")
@@ -39,10 +37,7 @@ public class Mob
     	this.level = level;
     	indexOfSprite = 0;
     	comingFrom = LEFT; //Starts moving from the left
-    	
-    	//Adding to mob array
-    	mobs[index] = this;
-    	index++;
+
     }
     
     public Mob(double x, double y,  int level)
@@ -162,13 +157,14 @@ public class Mob
     	}
     	catch(ArrayIndexOutOfBoundsException ex)
     	{
-    		if(x >= 800 || y >= 800)
-    			alive = false;
-    		if(diedOnce)
+    		if(diedOnce && alive)
     		{
     			Game.lives -= damage;
     			diedOnce = false;
     		}
+    		
+    		if(x >= 800 || y >= 800)
+    			alive = false;
     	}
     	
     	return ret;
@@ -204,6 +200,11 @@ public class Mob
        		x = (int)(x+0.5);
        		y = (int)(y+0.5);
     	}
+    }
+    
+    public boolean isAlive()
+    {
+    	return alive;
     }
     
     public void hit()

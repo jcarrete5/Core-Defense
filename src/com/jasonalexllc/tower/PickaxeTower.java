@@ -16,7 +16,7 @@ public class PickaxeTower extends Tower
 	
 	public PickaxeTower()
 	{
-		super(2, 5, .01, 250, "assets/towers/pickaxeTower_idle.png");
+		super(2, 5, .05, 250, "assets/towers/pickaxeTower_idle.png");
 	}
 	
 	public void attack(Mob m, Graphics2D g2, Tile tile)
@@ -26,7 +26,8 @@ public class PickaxeTower extends Tower
 			m.getX() <= tile.getX() + super.getRangePixels() + 49 &&
 			m.getX() >= tile.getX() - super.getRangePixels() &&
 			m.getY() <= tile.getY() + super.getRangePixels() + 49 &&
-			m.getY() >= tile.getY() - super.getRangePixels()
+			m.getY() >= tile.getY() - super.getRangePixels() &&
+			m.isAlive()
 		)
 		{
 			//throw a new Attack
@@ -45,6 +46,13 @@ public class PickaxeTower extends Tower
 			imgSwap = imgSwap < 0.2 ? imgSwap += f : 0;
 			
 			atk = atk < 1 ? atk + atkSpeed : 0;
+			
+			//remove attacks from the attackQueue that are off the screen
+			for(Attack atk : attackQueue.toArray(new Attack[attackQueue.size()])) //convert to a regular array to avoid ConcurrentModificationException
+				if(atk.getX() + 25 < 0 || atk.getX() >= 800 || atk.getY() + 25 < 0 || atk.getY() >= 800)
+					attackQueue.remove(atk);
+				else if(atk.hasHitMob() && m.isAlive())
+					m.hit();
 		}
 		else
 			this.setImage(CoreDefense.getImage("assets/towers/pickaxeTower_idle.png"));

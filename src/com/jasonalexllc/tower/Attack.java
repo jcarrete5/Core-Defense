@@ -18,6 +18,7 @@ public class Attack
 	 */
 	private int x1, y1;
 	private double r, ySpeed, xSpeed;
+	private Mob target;
 	
 	/**
 	 * Creates a new attack that can be thrown by a tower
@@ -31,6 +32,8 @@ public class Attack
 		this.anim = new Image[anim.length];
 		for(int i = 0; i < anim.length; i++)
 			this.anim[i] = CoreDefense.getImage(anim[i]);
+		
+		target = m;
 		
 		x1 = x;
 		y1 = y;
@@ -54,5 +57,26 @@ public class Attack
 		x1 += (int)xSpeed;
 		y1 += (int)ySpeed;
 		
+	}
+	
+	public int getX()
+	{
+		return x1;
+	}
+	
+	public int getY()
+	{
+		return y1;
+	}
+	
+	public boolean hasHitMob()
+	{
+		boolean result = false;
+		
+		Rectangle targetHitBox = new Rectangle(target.getX(), target.getY(), 50, 50);
+		Rectangle atkHitBox = new Rectangle(x1, y1, 25, 25);
+		result = targetHitBox.intersects(atkHitBox);
+		
+		return result;
 	}
 }
