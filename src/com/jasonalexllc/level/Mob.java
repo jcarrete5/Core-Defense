@@ -12,7 +12,7 @@ import java.awt.*;
 public class Mob 
 {
     private Image[] sprite;
-    private int damage, comingFrom, level;
+    private int damage, comingFrom, strength;
     private double speed, x, y, indexOfSprite;
     public static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
     private boolean alive = true, diedOnce = true;
@@ -37,7 +37,7 @@ public class Mob
     	this.y = y;
     	this.speed = speed;
     	this.damage = damage;
-    	this.level = level;
+    	this.strength = level;
     	indexOfSprite = 0;
     	comingFrom = LEFT; //Starts moving from the left
 
@@ -212,10 +212,10 @@ public class Mob
     
     public void hit()
     {
-    	level--;
-    	if(level == -1)
+    	strength--;
+    	if(strength == -1)
     		alive = false;
     	else
-    		sprite = sprites[level];
+    		sprite = sprites[strength];
     }
 }

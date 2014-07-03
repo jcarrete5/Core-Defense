@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import com.jasonalexllc.main.CoreDefense;
+import com.jasonalexllc.main.Game;
+import com.jasonalexllc.main.Shop;
 import com.jasonalexllc.main.Tile;
 
 /**
@@ -60,6 +62,6 @@ public class Level
 	
 	public void load()
 	{
-		
+		Game game = new Game(10, grid, new Shop(), d);
 	}
 }

@@ -74,7 +74,7 @@ public class Attack
 		boolean result = false;
 		
 		Rectangle targetHitBox = new Rectangle(target.getX(), target.getY(), 50, 50);
-		Rectangle atkHitBox = new Rectangle(x1, y1, 25, 25);
+		Rectangle atkHitBox = new Rectangle(x1 + 12, y1 + 12, 1, 1);
 		result = targetHitBox.intersects(atkHitBox);
 		
 		return result;
