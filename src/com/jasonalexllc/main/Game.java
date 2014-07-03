@@ -35,7 +35,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		this.grid = grid;
 		shop = s;
 		
-		//apply the difficulty
+		//apply the difficulty TODO eventually remove the difficulty setting in the lvl1.txt and have the user specify the level
 		switch(difficulty)
 		{
 		case EASY:
@@ -52,7 +52,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 			break;
 		case SANDBOX:
 			lives = UNLIMITED;
-			money = 100000000; //TODO change to UNLIMITED later
+			money = UNLIMITED;
 			break;
 		}
 		
@@ -151,9 +151,8 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		
 		//draw lives and money
 		g2.setColor(Color.white);
-		g2.drawString("Lives: " + lives, 5, 10);
-		g2.drawString("Money: " + money, 5, 25);
-		g2.drawString("fps: " + fps, 5, 40);
+		g2.drawString("Lives: " + (lives == UNLIMITED ? "infinite" : lives), 5, 10);
+		g2.drawString("Money: " + (money == UNLIMITED ? "infinite" : money), 5, 25);
 		
 	}
 
@@ -167,8 +166,8 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 			{
 				curTower = shop.buyTower(row, col);
 				
-				//if you have less money than the tower is worth after clicking, then leave the shop open
-				shop.opened = shop.towers[row][col] != null && money < shop.towers[row][col].getCost() ? true : false;
+				//if you have less money than the tower is worth (unless in sandbox) after clicking, then leave the shop open
+				shop.opened = shop.towers[row][col] != null && (money < shop.towers[row][col].getCost() && !(money == UNLIMITED)) ? true : false;
 			}
 		}
 		else if(curTower != null)

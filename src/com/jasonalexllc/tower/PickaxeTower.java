@@ -16,7 +16,7 @@ public class PickaxeTower extends Tower
 	
 	public PickaxeTower()
 	{
-		super(2, 5, .05, 250, "assets/towers/pickaxeTower_idle.png");
+		super(2, 5, .01, 250, "assets/towers/pickaxeTower_idle.png");
 	}
 	
 	public void attack(Mob m, Graphics2D g2, Tile tile)

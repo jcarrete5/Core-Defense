@@ -20,10 +20,13 @@ public class Mob
     
 	private Image[][] sprites = 
 		{
-			{ CoreDefense.getImage("assets/towers/crane_idle.png") },
 			{
 				CoreDefense.getImage("assets/mobs/dirtman_1.png"), CoreDefense.getImage("assets/mobs/dirtman_2_4.png"), CoreDefense.getImage("assets/mobs/dirtman_3.png"),
 				CoreDefense.getImage("assets/mobs/dirtman_2_4.png")
+			},
+			{
+				CoreDefense.getImage("assets/mobs/stoneman_1.png"), CoreDefense.getImage("assets/mobs/stoneman_2_4.png"), CoreDefense.getImage("assets/mobs/stoneman_3.png"),
+				CoreDefense.getImage("assets/mobs/stoneman_2_4.png")
 			}
 		};
     

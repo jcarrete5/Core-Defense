@@ -3,7 +3,6 @@ package com.jasonalexllc.main;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.net.URL;
 import java.util.Scanner;
 import javax.swing.*;
 
@@ -31,7 +30,7 @@ public class CoreDefense
 		Scanner readFile = null;
 		try
 		{
-			readFile = new Scanner(new File("maps/lvl1.txt"));
+			readFile = new Scanner(new File("maps/lvl1.lvl"));
 		}
 		catch(FileNotFoundException e)
 		{
@@ -48,15 +47,15 @@ public class CoreDefense
 			for(int col = 0; col < grid[0].length; col++)
 			{
 				//acquire the right image for the integer
-				URL path = null;
+				Image img = null;
 				int type = Integer.parseInt(readFile.next());
 				switch(type)
 				{
 				case Tile.PATH:
-					path = CoreDefense.class.getResource("assets/path.png");
+					img = getImage("assets/path.png");
 					break;
 				case Tile.STONE:
-					path = CoreDefense.class.getResource("assets/stone.png");
+					img = getImage("assets/stone.png");
 					break;
 				case Tile.MOUND:
 					break;
@@ -64,7 +63,7 @@ public class CoreDefense
 					break;
 				}
 				
-				grid[row][col] = new Tile(path, col * 50, row * 50, type);
+				grid[row][col] = new Tile(img, col * 50, row * 50, type);
 			}
 		
 		Shop shop = new Shop();
