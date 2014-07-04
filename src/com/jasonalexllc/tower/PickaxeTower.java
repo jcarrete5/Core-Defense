@@ -35,7 +35,7 @@ public class PickaxeTower extends Tower
 			{
 				this.setImage(CoreDefense.getImage("assets/towers/pickaxeTower_atk.png"));
 				
-				attackQueue.add(new Attack(new String[] {"assets/attacks/pickaxe_1.png", "assets/attacks/pickaxe_2.png", "assets/attacks/pickaxe_3.png",
+				attackQueue.add(new PickaxeAttack(new String[] {"assets/attacks/pickaxe_1.png", "assets/attacks/pickaxe_2.png", "assets/attacks/pickaxe_3.png",
 						"assets/attacks/pickaxe_4.png"}, tile.getX(), tile.getY(), m));
 			}
 			
@@ -48,7 +48,7 @@ public class PickaxeTower extends Tower
 			atk = atk < 1 ? atk + atkSpeed : 0;
 			
 			//remove attacks from the attackQueue that are off the screen
-			for(Attack atk : attackQueue.toArray(new Attack[attackQueue.size()])) //convert to a regular array to avoid ConcurrentModificationException
+			for(PickaxeAttack atk : attackQueue.toArray(new PickaxeAttack[attackQueue.size()])) //convert to a regular array to avoid ConcurrentModificationException
 				if(atk.getX() + 25 < 0 || atk.getX() >= 800 || atk.getY() + 25 < 0 || atk.getY() >= 800)
 					attackQueue.remove(atk);
 				else if(atk.hasHitMob() && m.isAlive())

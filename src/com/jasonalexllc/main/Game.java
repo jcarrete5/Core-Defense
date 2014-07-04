@@ -127,7 +127,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 				if(t.hasTower())
 				{
 					t.getTower().attack(m, g2, t);
-					for(Attack a : t.getTower().attackQueue)
+					for(PickaxeAttack a : t.getTower().attackQueue)
 						a.draw(g2);
 				}
 
