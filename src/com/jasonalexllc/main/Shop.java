@@ -40,9 +40,12 @@ public class Shop
 				else if(towers[row][col] instanceof CraneTower)
 					drawInfo(g2, "Crane Tower", towers[row][col].getCost(), "Redneck swings his giant wrecking ball at his foes.");
 				
-				//highlight the tower currently being hovered over
-				g2.setColor(new Color(255, 255, 255, 100));
-				g2.fillRect(col * 50 + 200, row * 50 + 700, 50, 50);
+				//highlight the tower currently being hovered over if u have enough money to buy it
+				if(Game.money >= towers[row][col].getCost())
+				{
+					g2.setColor(new Color(255, 255, 255, 100));
+					g2.fillRect(col * 50 + 200, row * 50 + 700, 50, 50);
+				}
 			}
 			
 			//draw towers in the shop

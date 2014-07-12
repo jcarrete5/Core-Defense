@@ -19,7 +19,6 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 	public static final int UNLIMITED = -1, EASY = 0, MEDIUM = 1, HARD = 2, SANDBOX = 3;
 	public static int lives;
 	public static int money;
-	public static int fps;
 	
 	private Tile[][] grid;
 	private Shop shop;
