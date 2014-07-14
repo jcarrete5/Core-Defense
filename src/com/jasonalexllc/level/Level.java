@@ -1,67 +1,88 @@
 package com.jasonalexllc.level;
 
 import java.awt.Image;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
-import com.jasonalexllc.main.CoreDefense;
-import com.jasonalexllc.main.Game;
-import com.jasonalexllc.main.Shop;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import org.w3c.dom.Element;
 import com.jasonalexllc.main.Tile;
 
 /**
- * 
+ * Levels are displayed in the order they appear in the file
  * @author Jason Carrete, Alex Berman
  * @since Jul 3, 2014
  */
 public class Level
 {
+	private Element lvlNode;
+	
 	private int d;
 	private Tile[][] grid = new Tile[16][16];
+	private Image icon;
 	
-	public Level(File lvlMap, int difficulty)
+	public Level(Element lvlNode)
 	{
-		d = difficulty;
+		this.lvlNode = lvlNode;
 		
-		Scanner scan = null;
-		try
-		{
-			scan = new Scanner(lvlMap);
-		}
-		catch(FileNotFoundException ex)
-		{
-			System.out.println("level couldn't be loaded");
-			System.exit(-1);
-		}
+		icon = new ImageIcon(lvlNode.getAttribute("img")).getImage();
 		
-		//read the file and create a 2D array of tiles specified by the layout of the lvl file
+		Scanner scanLayout = new Scanner(lvlNode.getFirstChild().getFirstChild().getNodeValue());
 		for(int row = 0; row < grid.length; row++)
+		{
 			for(int col = 0; col < grid[0].length; col++)
 			{
-				int type = Integer.parseInt(scan.next());
-				Image img = null;
+				int type = Integer.parseInt(scanLayout.next());
 				switch(type)
 				{
 				case Tile.PATH:
-					img = CoreDefense.getImage("assets/path.png"); 
 					break;
 				case Tile.STONE:
-					img = CoreDefense.getImage("assets/stone.png");
 					break;
-				case Tile.MOUND:
-					img = CoreDefense.getImage("assets/mound.png");
+				case Tile.PLATE:
 					break;
 				case Tile.FAULT:
-					img = CoreDefense.getImage("assets/fault.png");
+					break;
+				default:
+					JOptionPane.showMessageDialog(null, "Invalid XML Level Element - lvlName=\"" + this + "\":\nRogue Tile type of: " + type, "Error", JOptionPane.ERROR_MESSAGE);
+					System.exit(1);
 					break;
 				}
-				
-				grid[row][col] = new Tile(img, col * 50, row * 50, type);
 			}
+			
+			System.out.println();
+		}
+		
+		scanLayout.close();
 	}
 	
+	public void setDifficulty(int d)
+	{
+		this.d = d;
+	}
+	
+	public int getDifficulty()
+	{
+		return d;
+	}
+	
+	public Image getImage()
+	{
+		return icon;
+	}
+	
+	/**
+	 * Loads the level and starts the game
+	 */
 	public void load()
 	{
-		Game game = new Game(10, grid, new Shop(), d);
+		
+	}
+	
+	/**
+	 * @return the name of the Level
+	 */
+	public String toString()
+	{
+		return lvlNode.getAttribute("lvlName");
 	}
 }

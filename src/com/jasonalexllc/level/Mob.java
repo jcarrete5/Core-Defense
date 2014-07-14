@@ -86,7 +86,7 @@ public class Mob
     /**
      * Moves the mob in a direction if possible.
      * @param direction
-     * @return Whether or not the move is successful
+     * @return true if the move was successful, otherwise false
      */
     public boolean move(int direction)
     {
@@ -129,7 +129,7 @@ public class Mob
     /**
      * 
      * @param direction
-     * @return Whether it can move in the specified direction
+     * @return true if it can move in the specified direction, otherwise false
      */
     private boolean canMove(int direction)
     {

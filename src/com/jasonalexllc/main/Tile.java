@@ -13,7 +13,7 @@ import com.jasonalexllc.tower.Tower;
 public class Tile extends ImageIcon
 {
 	private static final long serialVersionUID = 2780222818493615777L;
-	public static final int PATH = 0, STONE = 1, MOUND = 2, FAULT = 3;
+	public static final int PATH = 0, STONE = 1, PLATE = 2, FAULT = 3;
 
 	private int x, y, type;
 	private Tower tower;

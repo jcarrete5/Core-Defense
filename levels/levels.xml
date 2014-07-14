@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Levels
+[
+	<!ELEMENT Levels (Level*)>
+	<!ELEMENT Level (Layout)>
+	<!ATTLIST Level lvlName ID #REQUIRED>
+	<!ATTLIST Level img CDATA #REQUIRED>
+	<!ELEMENT Layout (#PCDATA)>
+]>
+
+<!-- 
+	This file is used to define any levels in the game.
+	
+	ABOUT THE TILE TYPES:
+		PATH tiles are the tiles the mob will follow.
+		STONE tiles are default tiles that towers can be placed on.
+		PLATE tiles enhance the tower placed on them in some way.
+		FAULT tiles are tiles that cannot support a tower.
+		
+	TILE TYPES:
+		0 - Represents PATH tiles.
+		1 - Represents STONE tiles.
+		2 - Represents PLATE tiles.
+		3 - Represents FAULT tiles.
+		
+	Use the .DTD file for syntax when making a new level.
+	
+	ADDITIONAL NOTES:
+		ALL LAYOUTS MUST BE 16 by 16 AND MUST USE VALUES: {0, 1, 2, 3}!
+		ALL IMAGES MUST BE 100px by 100px!
+		
+	EXAMPLE ENTRY:
+	
+	<Level lvlName="example" img="example.png">
+		<Layout>
+		   	1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+			0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1
+			1 1 0 1 1 1 0 0 0 0 0 1 1 1 1 1
+			1 1 0 1 1 1 0 1 1 1 0 1 1 1 1 1
+			1 1 0 1 1 1 0 1 1 1 0 1 1 1 1 1
+			1 1 0 0 0 0 0 1 1 1 0 0 0 1 0 0
+			1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1
+			1 1 1 0 0 0 0 0 0 1 1 1 0 1 0 1
+			1 1 1 0 1 1 1 1 0 1 1 1 0 1 0 1
+			1 1 1 0 1 1 1 1 0 0 0 0 0 1 0 1
+			1 1 1 0 1 1 1 1 1 1 1 1 1 1 0 1
+			1 1 1 0 1 1 1 1 1 1 1 1 1 1 0 1
+			1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1
+			1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+			1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+			1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+		</Layout>
+	</Level>
+ -->
+
+<Levels>
+
+	<Level lvlName="Classic" img="images/classic.png">
+		<Layout>
+		   	1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+			0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1
+			1 1 0 1 1 1 0 0 0 0 0 1 1 1 1 1
+			1 1 0 1 1 1 0 1 1 1 0 1 1 1 1 1
+			1 1 0 1 1 1 0 1 1 1 0 1 1 1 1 1
+			1 1 0 0 0 0 0 1 1 1 0 0 0 1 0 0
+			1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1
+			1 1 1 0 0 0 0 0 0 1 1 1 0 1 0 1
+			1 1 1 0 1 1 1 1 0 1 1 1 0 1 0 1
+			1 1 1 0 1 1 1 1 0 0 0 0 0 1 0 1
+			1 1 1 0 1 1 1 1 1 1 1 1 1 1 0 1
+			1 1 1 0 1 1 1 1 1 1 1 1 1 1 0 1
+			1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1
+			1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+			1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+			1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+		</Layout>
+	</Level>
+	
+</Levels>
