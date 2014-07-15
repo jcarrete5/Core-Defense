@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- This is basically the syntax of the file -->
 <!DOCTYPE Levels
 [
-	<!ELEMENT Levels (Level*)>
+	<!ELEMENT Levels (Page+)>
+	<!ELEMENT Page ((Row, Row, Row) | (Row, Row) | (Row))>
+	<!ELEMENT Row ((Level, Level, Level) | (Level, Level) | (Level))>
 	<!ELEMENT Level (Layout)>
 	<!ATTLIST Level lvlName ID #REQUIRED>
 	<!ATTLIST Level img CDATA #REQUIRED>
@@ -9,7 +12,7 @@
 ]>
 
 <!-- 
-	This file is used to define any levels in the game.
+	This file is used to define any levels in the game and their positions on the menus.
 	
 	ABOUT THE TILE TYPES:
 		PATH tiles are the tiles the mob will follow.
@@ -23,15 +26,14 @@
 		2 - Represents PLATE tiles.
 		3 - Represents FAULT tiles.
 		
-	Use the .DTD file for syntax when making a new level.
-	
 	ADDITIONAL NOTES:
 		ALL LAYOUTS MUST BE 16 by 16 AND MUST USE VALUES: {0, 1, 2, 3}!
 		ALL IMAGES MUST BE 100px by 100px!
+		ANY TILE TYPE VALUES AFTER THE 256th POSITION WILL BE IGNORED!
 		
 	EXAMPLE ENTRY:
 	
-	<Level lvlName="example" img="example.png">
+	<Level lvlName="example" img="levels/images/example.png">
 		<Layout>
 		   	1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 			0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1
@@ -55,25 +57,33 @@
 
 <Levels>
 
-	<Level lvlName="Classic" img="images/classic.png">
-		<Layout>
-		   	1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-			0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1
-			1 1 0 1 1 1 0 0 0 0 0 1 1 1 1 1
-			1 1 0 1 1 1 0 1 1 1 0 1 1 1 1 1
-			1 1 0 1 1 1 0 1 1 1 0 1 1 1 1 1
-			1 1 0 0 0 0 0 1 1 1 0 0 0 1 0 0
-			1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1
-			1 1 1 0 0 0 0 0 0 1 1 1 0 1 0 1
-			1 1 1 0 1 1 1 1 0 1 1 1 0 1 0 1
-			1 1 1 0 1 1 1 1 0 0 0 0 0 1 0 1
-			1 1 1 0 1 1 1 1 1 1 1 1 1 1 0 1
-			1 1 1 0 1 1 1 1 1 1 1 1 1 1 0 1
-			1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1
-			1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-			1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-			1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-		</Layout>
-	</Level>
+    <Page> <!-- represents page 1 on the menu screen -->
+        
+        <Row> <!-- represents row one on page 1 on the menu screen -->
+            
+			<Level lvlName="Classic" img="levels/images/default_img.png"> <!-- represents column 1 row 1 on page 1 on the menu screen -->
+				<Layout>
+				   	1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+					0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1
+					1 1 0 1 1 1 0 0 0 0 0 1 1 1 1 1
+					1 1 0 1 1 1 0 1 1 1 0 1 1 1 1 1
+					1 1 0 1 1 1 0 1 1 1 0 1 1 1 1 1
+					1 1 0 0 0 0 0 1 1 1 0 0 0 1 0 0
+					1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1
+					1 1 1 0 0 0 0 0 0 1 1 1 0 1 0 1
+					1 1 1 0 1 1 1 1 0 1 1 1 0 1 0 1
+					1 1 1 0 1 1 1 1 0 0 0 0 0 1 0 1
+					1 1 1 0 1 1 1 1 1 1 1 1 1 1 0 1
+					1 1 1 0 1 1 1 1 1 1 1 1 1 1 0 1
+					1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1
+					1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+					1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+					1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+				</Layout>
+			</Level>
+			
+		</Row>
+		
+	</Page>
 	
 </Levels>

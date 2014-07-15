@@ -57,6 +57,25 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
+		this.setFocusable(true);
+		this.addKeyListener(new KeyListener()
+		{
+			public void keyTyped(KeyEvent e) {}
+			
+			public void keyPressed(KeyEvent e)
+			{
+				//pause game and open the shop
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+					if(isPaused())
+						unpause();
+					else
+						pause();
+				else if(!isPaused() && curTower == null && e.getKeyCode() == KeyEvent.VK_S) //open the shop screen
+					s.opened = !s.opened;
+			}
+			
+			public void keyReleased(KeyEvent e) {}
+		});
 		
 		Runnable r = () -> 
 		{
@@ -79,7 +98,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 			}
 		};
 		
-		m = new Mob(0, 50, 1);
+		m = new Mob(0, 50, 1, grid);
 		new Thread(r, "Game Thread").start();
 	}
 	

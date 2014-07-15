@@ -17,6 +17,7 @@ public class Mob
     public static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
     private boolean alive = true, diedOnce = true;
     private boolean[][][] usedDirs = new boolean[800][800][4]; //Boolean 3D array of which direction has already been tried
+    private Tile[][] grid;
     
 	private Image[][] sprites = 
 		{
@@ -30,8 +31,9 @@ public class Mob
 			}
 		};
     
-    public Mob(double speed, double x, double y, int damage, int level)
+    public Mob(double speed, double x, double y, int damage, int level, Tile[][] grid)
     {
+    	this.grid = grid;
     	this.sprite = sprites[level];
     	this.x = x;
     	this.y = y;
@@ -43,9 +45,9 @@ public class Mob
 
     }
     
-    public Mob(double x, double y,  int level)
+    public Mob(double x, double y,  int level, Tile[][] grid)
     {
-    	this(0.5, x, y, 1, level); //Default speed: 0.25, Default Damage: 1
+    	this(0.5, x, y, 1, level, grid); //Default speed: 0.25, Default Damage: 1
     }
     
     public void draw(Graphics2D g2)
@@ -142,19 +144,19 @@ public class Mob
 	    	else
 	    	{
 	    		if(direction == UP)
-	    			ret = CoreDefense.grid[((int)(y - speed)/50)][((int)x+1)/50].getType() == Tile.PATH 
+	    			ret = grid[((int)(y - speed)/50)][((int)x+1)/50].getType() == Tile.PATH 
 	    				&& !usedDirs[(int)x][(int)y][UP];
 	    		
 	    		else if(direction == RIGHT)
-	    			ret = CoreDefense.grid[((int)y + 1)/50][(((int)(x + speed)/50) + 1)].getType() == Tile.PATH 
+	    			ret = grid[((int)y + 1)/50][(((int)(x + speed)/50) + 1)].getType() == Tile.PATH 
 	    				&& !usedDirs[(int)x][(int)y][RIGHT];
 	    		
 	    		else if(direction == DOWN)
-	    			ret = CoreDefense.grid[(((int)(y + speed)/50) + 1)][((int)x+1)/50].getType() == Tile.PATH 
+	    			ret = grid[(((int)(y + speed)/50) + 1)][((int)x+1)/50].getType() == Tile.PATH 
 	    				&& !usedDirs[(int)x][(int)y][DOWN];
 	    		
 	    		else if(direction == LEFT)
-	    			ret = CoreDefense.grid[((int)y+1)/50][((int)(x - speed)/50)].getType() == Tile.PATH 
+	    			ret = grid[((int)y+1)/50][((int)(x - speed)/50)].getType() == Tile.PATH 
 	    					&& !usedDirs[(int)x][(int)y][LEFT];
 	    	}
     	}
