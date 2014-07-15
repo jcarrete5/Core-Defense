@@ -1,7 +1,5 @@
 package com.jasonalexllc.level;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -15,7 +13,7 @@ import com.jasonalexllc.main.Tile;
 /**
  * Levels are displayed in the order they appear in the file
  * @author Jason Carrete, Alex Berman
- * @since Jul 3, 2014
+ * @since Jul 15, 2014
  */
 public class Level
 {
@@ -80,7 +78,7 @@ public class Level
 	 */
 	public void load(JFrame frame)
 	{
-		d = option(0);
+		d = option(0, frame);
 		Game game = null;
 		Shop s = null;
 		if(d != -2)
@@ -96,14 +94,14 @@ public class Level
 		frame.getContentPane().add(game);
 	}
 	
-	private int option(int d)
+	private int option(int d, JFrame frame)
 	{
-		int option = JOptionPane.showOptionDialog(null, "Play on " + (d == Game.EASY ? "EASY" : d == Game.MEDIUM ? "MEDIUM" : d == Game.HARD ? "HARD" : "SANDBOX") + " ?",
+		int option = JOptionPane.showOptionDialog(frame, "Play on " + (d == Game.EASY ? "EASY" : d == Game.MEDIUM ? "MEDIUM" : d == Game.HARD ? "HARD" : "SANDBOX") + " ?",
 				"Difficulty Selection", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 		if(option == JOptionPane.YES_OPTION)
 			return d;
 		else if(option == JOptionPane.NO_OPTION && d != 3)
-			return option(d + 1);
+			return option(d + 1, frame);
 		else
 			return -2;
 	}

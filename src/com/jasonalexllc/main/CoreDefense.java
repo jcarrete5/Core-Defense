@@ -48,9 +48,9 @@ public class CoreDefense
 			Element pg = (Element)pgNodes.item(d);
 			for(int row = 0; row < pg.getChildNodes().getLength(); row++)
 			{
-				Element r = (Element)pg.getChildNodes().item(row);
+				Element r = (Element)pg.getElementsByTagName("Row").item(row);
 				for(int col = 0; col < r.getChildNodes().getLength(); col++)
-					levels[d][row][col] = new Level((Element)r.getChildNodes().item(col));
+					levels[d][row][col] = new Level((Element)r.getElementsByTagName("Level").item(col));
 			}
 		}
 		
