@@ -15,7 +15,7 @@ public abstract class Tower extends ImageIcon
 {
 	private static final long serialVersionUID = -3346762436378513557L;
 
-	public ArrayList<PickaxeAttack> attackQueue = new ArrayList<>();
+	public ArrayList<Attack> attackQueue = new ArrayList<>();
 	public boolean viewUpgradeScreen = false;
 
 	/**

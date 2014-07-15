@@ -71,6 +71,8 @@ public class Level
 			}
 		
 		scanLayout.close();
+		
+		//create the array of mobs for rounds
 	}
 	
 	/**

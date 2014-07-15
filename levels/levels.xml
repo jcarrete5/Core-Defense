@@ -11,10 +11,10 @@
 	<!ELEMENT Layout (#PCDATA)>
 	<!ELEMENT Waves (Wave+)>
 	<!ATTLIST Waves numOfWaves CDATA #REQUIRED>
-	<!ELEMENT Wave (MobType+)>
-	<!ELEMENT MobType EMPTY>
-	<!ATTLIST MobType rank (0|1) "0">
-	<!ATTLIST MobType amount CDATA "1">
+	<!ELEMENT Wave (Mob+)>
+	<!ELEMENT Mob EMPTY>
+	<!ATTLIST Mob rank (0|1) "0">
+	<!ATTLIST Mob amount CDATA "1">
 ]>
 
 <!-- 
@@ -65,7 +65,7 @@
 		
 		<Waves numOfWaves="1">
 			<Wave>
-				<MobType/> 1 rank 1 mob
+				<Mob/> 1 rank 1 mob
 			</Wave>
 		</Waves>
 	</Level>
@@ -73,13 +73,13 @@
 
 <Levels>
 
-    <Page> <!-- represents page 1 on the menu screen -->
-        
-        <Row> <!-- represents row one on page 1 on the menu screen -->
+	<Page> <!-- represents page 1 on the menu screen -->
+
+		<Row> <!-- represents row one on page 1 on the menu screen -->
             
 			<Level lvlName="Classic"> <!-- represents column 1 row 1 on page 1 on the menu screen -->
 				<Layout>
-				   	1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+				    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 					0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1
 					1 1 0 1 1 1 0 0 0 0 0 1 1 1 1 1
 					1 1 0 1 1 1 0 1 1 1 0 1 1 1 1 1
@@ -96,14 +96,14 @@
 					1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 					1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 				</Layout>
-				
+					
 				<Waves numOfWaves="1">
-				    <Wave>
-				        <MobType/>
-				    </Wave>
+					<Wave>
+						<Mob/>
+					</Wave>
 				</Waves>
 			</Level>
-			
+       		
 		</Row>
 		
 	</Page>
