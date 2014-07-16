@@ -101,7 +101,10 @@
 					
 				<Waves xStart="0" yStart="50">
 					<Wave>
-						<Mob amount="2"/>
+						<Mob amount="30"/>
+					</Wave>
+					<Wave>
+						<Mob amount="50" spawnTime="500"/>
 					</Wave>
 				</Waves>
 			</Level>

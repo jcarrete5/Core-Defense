@@ -30,4 +30,21 @@ public class Wave extends ArrayList<Mob>
 			}
 		}
 	}
+	
+	/**
+	 * If all mobs in the wave are dead, then the wave is completed
+	 * @return true if all mobs in the wave are dead, otherwise false
+	 */
+	public boolean isDone()
+	{
+		boolean result = false;
+		
+		for(Mob m : this)
+		{
+			if(result = m.isAlive())
+				break;
+		}
+		
+		return !result;
+	}
 }

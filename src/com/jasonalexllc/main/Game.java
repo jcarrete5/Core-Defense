@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import com.jasonalexllc.level.Wave;
 import com.jasonalexllc.tower.Attack;
@@ -24,6 +25,8 @@ import com.jasonalexllc.tower.Tower;
 public class Game extends JPanel implements MouseListener, MouseMotionListener
 {
 	private static final long serialVersionUID = -1168167031210268222L;
+	
+	private Thread gt;
 	
 	public static final int UNLIMITED = -1, EASY = 0, MEDIUM = 1, HARD = 2, SANDBOX = 3;
 	public static int lives;
@@ -92,7 +95,8 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		
 		Runnable r = () -> 
 		{
-			while(true)
+			boolean run = true;
+			while(run)
 			{
 				//when paused just infinitely repeat this loop until it is unpaused
 				while(paused)
@@ -107,12 +111,22 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 					e.printStackTrace();
 				}
 				
-				this.repaint();
+				if(waves.get(curWave).isDone())
+					curWave = curWave + 1 >= waves.size() ? -1 : curWave + 1;
+					
+				if(curWave != -1)
+					this.repaint();
+				else
+				{
+					JOptionPane.showMessageDialog(this, "You Won...", "Victory", JOptionPane.PLAIN_MESSAGE);
+					run = false;
+				}
 			}
 		};
 		
 		this.waves = waves;
-		new Thread(r, "Game Thread").start();
+		gt = new Thread(r, "Game Thread");
+		gt.start();
 	}
 	
 	public void pause()
