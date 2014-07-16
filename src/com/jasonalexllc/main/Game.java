@@ -1,10 +1,20 @@
  package com.jasonalexllc.main;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 import javax.swing.JPanel;
-import com.jasonalexllc.level.Mob;
-import com.jasonalexllc.tower.*;
+import com.jasonalexllc.level.Wave;
+import com.jasonalexllc.tower.Attack;
+import com.jasonalexllc.tower.Tower;
 
 /**
  * The main drawing thread
@@ -18,17 +28,20 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 	public static final int UNLIMITED = -1, EASY = 0, MEDIUM = 1, HARD = 2, SANDBOX = 3;
 	public static int lives;
 	public static int money;
-	
+
+	private ArrayList<Wave> waves;
 	private Tile[][] grid;
 	private Shop shop;
+	public static int clockSpd;
 	private boolean paused = false;
 	
 	public Tower curTower;
+	private int curWave = 0;
 	public static Point curMousePos;
-	private Mob m;
 	
-	public Game(int interval, Tile[][] grid, Shop s, int difficulty)
+	public Game(int interval, Tile[][] grid, Shop s, int difficulty, ArrayList<Wave> waves)
 	{
+		clockSpd = interval;
 		this.setDoubleBuffered(true);
 		this.setLayout(null);		
 		this.grid = grid;
@@ -98,7 +111,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 			}
 		};
 		
-		m = new Mob(0, 50, 1, grid);
+		this.waves = waves;
 		new Thread(r, "Game Thread").start();
 	}
 	
@@ -131,15 +144,25 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 
 		//draw attacks moving towards a mob if it is within a towers range
 		for(Tile[] row : grid)
-			for(Tile t : row)
-				if(t.hasTower())
+			for(Tile tile : row)
+				if(tile.hasTower())
 				{
-					t.getTower().attack(m, g2, t);
-					for(Attack a : t.getTower().attackQueue)
+					tile.getTower().attack(waves.get(curWave).get(0), g2, tile); //attack the first mob in the wave TODO possibly add different attack priorities
+					for(Attack a : tile.getTower().attackQueue)
 						a.draw(g2);
 				}
 
-		m.draw(g2);
+		//draw mobs that should be drawn at the current wave
+		for(int i = 0; i < waves.get(curWave).size(); i++)
+		{
+			if(!waves.get(curWave).get(i).isOnScreen())
+				waves.get(curWave).get(i).spawn();
+			
+			if(waves.get(curWave).get(i).isOnScreen())
+				waves.get(curWave).get(i).draw(g2);
+			else if(!waves.get(curWave).get(i).isAlive())
+				waves.get(curWave).remove(i);
+		}
 		
 		//draw upgrade screens if they are needed
 		outer: for(Tile[] row : grid)

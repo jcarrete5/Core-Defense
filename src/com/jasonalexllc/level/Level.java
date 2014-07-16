@@ -1,17 +1,20 @@
 package com.jasonalexllc.level;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import com.jasonalexllc.main.CoreDefense;
 import com.jasonalexllc.main.Game;
 import com.jasonalexllc.main.Shop;
 import com.jasonalexllc.main.Tile;
 
 /**
- * Levels are displayed in the order they appear in the file
+ * Levels are displayed in the order they appear in the file.
+ * This class aids in the creation of Game objects
  * @author Jason Carrete, Alex Berman
  * @since Jul 15, 2014
  */
@@ -21,6 +24,7 @@ public class Level
 	
 	private int d;
 	private Tile[][] grid = new Tile[16][16];
+	private ArrayList<Wave> waves;
 	private ImageIcon icon;
 	
 	public Level(Element lvlNode)
@@ -72,7 +76,13 @@ public class Level
 		
 		scanLayout.close();
 		
-		//create the array of mobs for rounds
+		//create an array of mobs that are spawned in order in the game
+		NodeList waves = lvlNode.getElementsByTagName("Waves").item(0).getChildNodes();
+		int x = Integer.parseInt(((Element)lvlNode.getElementsByTagName("Waves").item(0)).getAttribute("xStart"));
+		int y = Integer.parseInt(((Element)lvlNode.getElementsByTagName("Waves").item(0)).getAttribute("yStart"));
+		this.waves = new ArrayList<>(waves.getLength());
+		for(int i = 0; i < waves.getLength(); i++)
+			this.waves.add(new Wave(((Element)waves.item(i)), x, y, grid));
 	}
 	
 	/**
@@ -87,7 +97,7 @@ public class Level
 		{
 			frame.getContentPane().removeAll();
 			s = new Shop();
-			game = new Game(10, grid, s, d);
+			game = new Game(10, grid, s, d, waves);
 		}
 		else
 			return;
@@ -106,16 +116,6 @@ public class Level
 			return option(d + 1, frame);
 		else
 			return -2;
-	}
-	
-	public void setDifficulty(int d)
-	{
-		this.d = d;
-	}
-	
-	public int getDifficulty()
-	{
-		return d;
 	}
 	
 	public ImageIcon getImageIcon()

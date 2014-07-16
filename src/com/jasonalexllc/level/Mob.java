@@ -12,12 +12,19 @@ import java.awt.*;
 public class Mob 
 {
     private Image[] sprite;
-    private int damage, comingFrom, strength;
+    private int damage, comingFrom, rank;
     private double speed, x, y, indexOfSprite;
     public static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
     private boolean alive = true, diedOnce = true;
     private boolean[][][] usedDirs = new boolean[800][800][4]; //Boolean 3D array of which direction has already been tried
     private Tile[][] grid;
+    
+    private boolean isOnScreen = false;
+    private boolean wasOnScreen = false;
+    
+    private double spawnTime;
+    private static double[] mobSpeed = {0.3, 0.5};
+    private static int[] mobDamage = {1, 2};
     
 	private Image[][] sprites = 
 		{
@@ -31,23 +38,19 @@ public class Mob
 			}
 		};
     
-    public Mob(double speed, double x, double y, int damage, int level, Tile[][] grid)
+    public Mob(double x, double y, int rank, Tile[][] grid, double spawnTime)
     {
+    	this.spawnTime = spawnTime;
     	this.grid = grid;
-    	this.sprite = sprites[level];
+    	this.sprite = sprites[rank];
     	this.x = x;
     	this.y = y;
-    	this.speed = speed;
-    	this.damage = damage;
-    	this.strength = level;
+    	speed = mobSpeed[rank];
+    	damage = mobDamage[rank];
+    	this.rank = rank;
     	indexOfSprite = 0;
     	comingFrom = LEFT; //Starts moving from the left
 
-    }
-    
-    public Mob(double x, double y,  int level, Tile[][] grid)
-    {
-    	this(0.5, x, y, 1, level, grid); //Default speed: 0.25, Default Damage: 1
     }
     
     public void draw(Graphics2D g2)
@@ -169,7 +172,7 @@ public class Mob
     		}
     		
     		if(x >= 800 || y >= 800)
-    			alive = false;
+    			isOnScreen = alive = false;
     	}
     	
     	return ret;
@@ -212,12 +215,25 @@ public class Mob
     	return alive;
     }
     
+    public boolean isOnScreen()
+    {
+    	return isOnScreen;
+    }
+    
+    public void spawn()
+    {
+    	if(spawnTime <= 0 && !wasOnScreen)
+    		wasOnScreen = isOnScreen = true;
+    	else
+    		spawnTime -= Game.clockSpd;    		
+    }
+    
     public void hit()
     {
-    	strength--;
-    	if(strength == -1)
-    		alive = false;
+    	rank--;
+    	if(rank == -1)
+    		isOnScreen = alive = false;
     	else
-    		sprite = sprites[strength];
+    		sprite = sprites[rank];
     }
 }

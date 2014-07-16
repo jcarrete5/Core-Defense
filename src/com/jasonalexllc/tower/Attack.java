@@ -38,7 +38,8 @@ public class Attack
 		x1 = x;
 		y1 = y;
 		
-		/* sqrt((x2 - x1)^2 + (y2 - y1)^2) -- distance formula
+		/*
+		 *  sqrt((x2 - x1)^2 + (y2 - y1)^2) -- distance formula
 		 * m = (y2 - y1) / (x2 - x1) -- slope formula
 		 */
 		int yPrime = (m.getY() + 25) - (y1 + 25), xPrime = (m.getX() + 25) - (x1 + 25); //find the slope of the line between the mob and the tower
