@@ -1,29 +1,17 @@
 package com.jasonalexllc.main;
 
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.xml.parsers.*;
+import org.w3c.dom.*;
+import org.xml.sax.*;
 import com.jasonalexllc.level.Level;
 
 /**
  * A game where rock people are trying to blow up the core of the Earth and you have to defend the core with towers.
  * @author Jason Carrete, Alex Berman
- * @since Jun 21, 2014
+ * @since Jul 17, 2014
  */
 public class CoreDefense
 {	

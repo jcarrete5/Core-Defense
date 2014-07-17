@@ -7,7 +7,7 @@ import java.awt.*;
 /**
  * Handles mob generation in game
  * @author Jason Carrete, Alex Berman
- * @since Jun 20, 
+ * @since Jul 17, 2014
  */
 public class Mob 
 {

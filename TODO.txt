@@ -10,7 +10,7 @@ Layout:
 (Grid)
 
 TODO:
-- Fix loading times (SwingWorker)
+- Fix loading times (SwingWorker) ARGGGGGGUGHH
 - Lose scenario
 - Fast Forward
 - pause between waves

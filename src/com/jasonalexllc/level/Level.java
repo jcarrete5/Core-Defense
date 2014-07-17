@@ -1,23 +1,15 @@
 package com.jasonalexllc.level;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import com.jasonalexllc.main.CoreDefense;
-import com.jasonalexllc.main.Game;
-import com.jasonalexllc.main.Shop;
-import com.jasonalexllc.main.Tile;
+import java.util.*;
+import javax.swing.*;
+import org.w3c.dom.*;
+import com.jasonalexllc.main.*;
 
 /**
  * Levels are displayed in the order they appear in the file.
  * This class aids in the creation of Game objects
  * @author Jason Carrete, Alex Berman
- * @since Jul 15, 2014
+ * @since Jul 17, 2014
  */
 public class Level
 {
@@ -88,7 +80,8 @@ public class Level
 		int xStart = Integer.parseInt(wavesNode.getAttribute("xStart"));
 		int yStart = Integer.parseInt(wavesNode.getAttribute("yStart"));
 		waves = new ArrayList<>(waveNodes.getLength());
-		waves.add(new Wave(((Element)waveNodes.item(0)), xStart, yStart, grid));
+		for(int i = 0; i < waveNodes.getLength(); i++)
+			waves.add(new Wave(((Element)waveNodes.item(i)), xStart, yStart, grid));
 		
 		d = option(0, frame);
 		Game game = null;
@@ -104,10 +97,6 @@ public class Level
 		
 		game.setBounds(0, 0, 800, 800);
 		frame.getContentPane().add(game);
-		
-		for(int i = 1; i < waveNodes.getLength(); i++)
-			waves.add(new Wave(((Element)waveNodes.item(i)), xStart, yStart, grid));
-		
 	}
 	
 	private int option(int d, JFrame frame)

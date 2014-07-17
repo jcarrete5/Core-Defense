@@ -1,26 +1,16 @@
  package com.jasonalexllc.main;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 import com.jasonalexllc.level.Wave;
-import com.jasonalexllc.tower.Attack;
-import com.jasonalexllc.tower.Tower;
+import com.jasonalexllc.tower.*;
 
 /**
  * The main drawing thread
  * @author Jason Carrete, Alex Berman
- * @since Jun 21, 2014
+ * @since Jul 17, 2014
  */
 public class Game extends JPanel implements MouseListener, MouseMotionListener
 {
@@ -91,7 +81,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 			public void keyReleased(KeyEvent e) {}
 		});
 		
-		Runnable r = () -> 
+		Runnable r = () -> //TODO might have to re-think this thread
 		{
 			boolean run = true;
 			while(run)

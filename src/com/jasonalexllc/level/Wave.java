@@ -1,14 +1,13 @@
 package com.jasonalexllc.level;
 
 import java.util.ArrayList;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 import com.jasonalexllc.main.Tile;
 
 /**
  * Represents a single Wave in an array of Waves
  * @author Jason Carrete
- * @since Jul 15, 2014
+ * @since Jul 17, 2014
  */
 public class Wave extends ArrayList<Mob>
 {

@@ -7,7 +7,7 @@ import com.jasonalexllc.main.CoreDefense;
 /**
  * Represents an attack that is currently happening on the grid
  * @author Jason Carrete, Alex Berman
- * @since Jun 23, 2014
+ * @since Jul 17, 2014
  */
 public class Attack
 {
