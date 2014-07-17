@@ -5,6 +5,7 @@ import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import com.jasonalexllc.main.CoreDefense;
@@ -74,15 +75,7 @@ public class Level
 				grid[row][col] = new Tile(CoreDefense.getImage(imgPath), col * 50, row * 50, type);
 			}
 		
-		scanLayout.close();
-		
-		//create an array of mobs that are spawned in order in the game
-		NodeList waves = lvlNode.getElementsByTagName("Waves").item(0).getChildNodes();
-		int x = Integer.parseInt(((Element)lvlNode.getElementsByTagName("Waves").item(0)).getAttribute("xStart"));
-		int y = Integer.parseInt(((Element)lvlNode.getElementsByTagName("Waves").item(0)).getAttribute("yStart"));
-		this.waves = new ArrayList<>(waves.getLength());
-		for(int i = 0; i < waves.getLength(); i++)
-			this.waves.add(new Wave(((Element)waves.item(i)), x, y, grid));
+		scanLayout.close();		
 	}
 	
 	/**
@@ -90,6 +83,13 @@ public class Level
 	 */
 	public void load(JFrame frame)
 	{
+		Element wavesNode = (Element)lvlNode.getElementsByTagName("Waves").item(0);
+		NodeList waveNodes = wavesNode.getChildNodes();
+		int xStart = Integer.parseInt(wavesNode.getAttribute("xStart"));
+		int yStart = Integer.parseInt(wavesNode.getAttribute("yStart"));
+		waves = new ArrayList<>(waveNodes.getLength());
+		waves.add(new Wave(((Element)waveNodes.item(0)), xStart, yStart, grid));
+		
 		d = option(0, frame);
 		Game game = null;
 		Shop s = null;
@@ -104,6 +104,13 @@ public class Level
 		
 		game.setBounds(0, 0, 800, 800);
 		frame.getContentPane().add(game);
+		
+		Runnable r = () ->
+		{
+			for(int i = 1; i < waveNodes.getLength(); i++)
+				waves.add(new Wave(((Element)waveNodes.item(i)), xStart, yStart, grid));
+		};
+		SwingUtilities.invokeLater(r);
 	}
 	
 	private int option(int d, JFrame frame)

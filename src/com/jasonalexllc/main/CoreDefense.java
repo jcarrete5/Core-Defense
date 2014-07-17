@@ -36,6 +36,14 @@ public class CoreDefense
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setPreferredSize(new Dimension(800, 800));
 		
+//		boolean doneLoading = false;
+//		
+//		Runnable run = () ->
+//		{
+//			
+//		};
+//		new Thread(run, "Loading Screen").start();
+		
 		//use the levels.xml to display all of the levels that can be played
 		Document lvlDoc = getDocument("levels/levels.xml");
 		Element root = lvlDoc.getDocumentElement();
@@ -83,28 +91,7 @@ public class CoreDefense
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
 		
-//		Shop shop = new Shop();
-//		Game game = new Game(10, grid, shop, difficulty);
-//		game.setBounds(0, 0, 800, 800);
-//		
-//		frame.addKeyListener(new KeyListener()
-//		{
-//			public void keyTyped(KeyEvent e) {}
-//			
-//			public void keyPressed(KeyEvent e)
-//			{
-//				//pause game and open the shop
-//				if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
-//					if(game.isPaused())
-//						game.unpause();
-//					else
-//						game.pause();
-//				else if(!game.isPaused() && game.curTower == null && e.getKeyCode() == KeyEvent.VK_S) //open the shop screen
-//					shop.opened = !shop.opened;
-//			}
-//			
-//			public void keyReleased(KeyEvent e) {}
-//		});
+//		doneLoading = true;
 	}
 	
 	/**

@@ -10,4 +10,9 @@ Layout:
 (Grid)
 
 TODO:
-- Customizable levels
+- Lose scenario
+- pause between waves
+- generate money from killing mobs
+- return to main menu
+- pause menu
+- save game

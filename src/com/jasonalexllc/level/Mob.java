@@ -22,7 +22,7 @@ public class Mob
     private boolean isOnScreen = false;
     private boolean wasOnScreen = false;
     
-    private double spawnTime;
+    private int spawnTime;
     private static double[] mobSpeed = {0.3, 0.5};
     private static int[] mobDamage = {1, 2};
     
@@ -38,7 +38,7 @@ public class Mob
 			}
 		};
     
-    public Mob(double x, double y, int rank, Tile[][] grid, double spawnTime)
+    public Mob(double x, double y, int rank, Tile[][] grid, int spawnTime)
     {
     	this.spawnTime = spawnTime;
     	this.grid = grid;

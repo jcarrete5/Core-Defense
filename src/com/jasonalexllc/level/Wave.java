@@ -22,7 +22,7 @@ public class Wave extends ArrayList<Mob>
 		{
 			int rank = Integer.parseInt(((Element)mobs.item(i)).getAttribute("rank"));
 			int amount = Integer.parseInt(((Element)mobs.item(i)).getAttribute("amount"));
-			double spawnTime =Double.parseDouble(((Element)mobs.item(i)).getAttribute("spawnTime"));
+			double spawnTime = Double.parseDouble(((Element)mobs.item(i)).getAttribute("spawnTime"));
 			for(int j = 0; j < amount; j++)
 			{
 				this.add(new Mob(x, y, rank, grid, totalSpawnTime));
