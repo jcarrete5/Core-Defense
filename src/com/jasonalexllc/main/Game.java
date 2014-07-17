@@ -26,8 +26,6 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 {
 	private static final long serialVersionUID = -1168167031210268222L;
 	
-	private Thread gt;
-	
 	public static final int UNLIMITED = -1, EASY = 0, MEDIUM = 1, HARD = 2, SANDBOX = 3;
 	public static int lives;
 	public static int money;
@@ -114,19 +112,23 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 				if(waves.get(curWave).isDone())
 					curWave = curWave + 1 >= waves.size() ? -1 : curWave + 1;
 					
-				if(curWave != -1)
-					this.repaint();
-				else
+				if(curWave == -1) //TODO win scenario
 				{
 					JOptionPane.showMessageDialog(this, "You Won...", "Victory", JOptionPane.PLAIN_MESSAGE);
 					run = false;
 				}
+				else if(lives <= 0) //TODO lose scenario
+				{
+					JOptionPane.showMessageDialog(this, "You Lose...", "Failure", JOptionPane.PLAIN_MESSAGE);
+					run = false;
+				}
+				else
+					this.repaint();
 			}
 		};
 		
 		this.waves = waves;
-		gt = new Thread(r, "Game Thread");
-		gt.start();
+		new Thread(r, "Game Thread").start();
 	}
 	
 	public void pause()

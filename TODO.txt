@@ -10,7 +10,9 @@ Layout:
 (Grid)
 
 TODO:
+- Fix loading times (SwingWorker)
 - Lose scenario
+- Fast Forward
 - pause between waves
 - generate money from killing mobs
 - return to main menu

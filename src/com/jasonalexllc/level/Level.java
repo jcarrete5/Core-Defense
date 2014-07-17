@@ -105,12 +105,9 @@ public class Level
 		game.setBounds(0, 0, 800, 800);
 		frame.getContentPane().add(game);
 		
-		Runnable r = () ->
-		{
-			for(int i = 1; i < waveNodes.getLength(); i++)
-				waves.add(new Wave(((Element)waveNodes.item(i)), xStart, yStart, grid));
-		};
-		SwingUtilities.invokeLater(r);
+		for(int i = 1; i < waveNodes.getLength(); i++)
+			waves.add(new Wave(((Element)waveNodes.item(i)), xStart, yStart, grid));
+		
 	}
 	
 	private int option(int d, JFrame frame)
