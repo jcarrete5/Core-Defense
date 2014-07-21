@@ -92,7 +92,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 				
 				try
 				{
-					Thread.sleep(interval);
+					Thread.sleep(clockSpd);
 				}
 				catch(InterruptedException e)
 				{
@@ -119,6 +119,11 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		
 		this.waves = waves;
 		new Thread(r, "Game Thread").start();
+	}
+	
+	public void start()
+	{
+		
 	}
 	
 	public void pause()

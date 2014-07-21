@@ -80,8 +80,36 @@ public class Level
 		int xStart = Integer.parseInt(wavesNode.getAttribute("xStart"));
 		int yStart = Integer.parseInt(wavesNode.getAttribute("yStart"));
 		waves = new ArrayList<>(waveNodes.getLength());
-		for(int i = 0; i < waveNodes.getLength(); i++)
-			waves.add(new Wave(((Element)waveNodes.item(i)), xStart, yStart, grid));
+		waves.add(new Wave(((Element)waveNodes.item(0)), xStart, yStart, grid));
+		
+		SwingWorker<Void, Wave> worker = new SwingWorker<Void, Wave>()
+		{
+			@Override
+			protected void done()
+			{
+				System.out.println("Done loading waves");
+			}
+
+			@Override
+			protected Void doInBackground() throws Exception
+			{
+				for(int i = 1; i < waveNodes.getLength(); i++)
+				{
+					Wave wave = new Wave(((Element)waveNodes.item(i)), xStart, yStart, grid);
+					publish(wave);
+				}
+				
+				return null;
+			}
+
+			@Override
+			protected void process(List<Wave> chunks)
+			{
+				for(int i = 0; i < chunks.size(); i++)
+					waves.add(chunks.get(i));
+			}
+		};
+		worker.execute();
 		
 		d = option(0, frame);
 		Game game = null;
