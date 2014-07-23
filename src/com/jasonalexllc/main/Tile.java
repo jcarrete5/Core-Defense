@@ -1,7 +1,7 @@
 package com.jasonalexllc.main;
 
 import java.awt.Graphics2D;
-import java.net.URL;
+import java.awt.Image;
 import javax.swing.ImageIcon;
 import com.jasonalexllc.tower.Tower;
 
@@ -13,14 +13,14 @@ import com.jasonalexllc.tower.Tower;
 public class Tile extends ImageIcon
 {
 	private static final long serialVersionUID = 2780222818493615777L;
-	public static final int PATH = 0, STONE = 1, MOUND = 2, FAULT = 3;
+	public static final int PATH = 0, STONE = 1, PLATE = 2, FAULT = 3;
 
 	private int x, y, type;
 	private Tower tower;
 	
-	public Tile(URL path, int x, int y, int type)
+	public Tile(Image img, int x, int y, int type)
 	{
-		super(path);
+		this.setImage(img);
 		this.x = x;
 		this.y = y;
 		this.type = type;
@@ -54,7 +54,8 @@ public class Tile extends ImageIcon
 	public void addTower(Tower t)
 	{
 		tower = t;
-		Game.money -= t != null ? t.getCost() : 0;
+		if(Game.money != Game.UNLIMITED)
+			Game.money -= t != null ? t.getCost() : 0;
 	}
 	
 	public void removeTower()

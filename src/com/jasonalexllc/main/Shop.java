@@ -34,15 +34,18 @@ public class Shop
 			//update the info screen depending on which tower is currently being hovered over
 			if(row >= 0 && col >= 0 && row < towers.length && col < towers[0].length && towers[row][col] != null)
 			{
-				//TODO update this when adding new towers
+				//TODO update this when adding new towers TODO also fix this instanceof because it isn't needed
 				if(towers[row][col] instanceof PickaxeTower)
 					drawInfo(g2, "Pickaxe Tower", towers[row][col].getCost(), "This tower will throw pickaxes at its foes.");
 				else if(towers[row][col] instanceof CraneTower)
 					drawInfo(g2, "Crane Tower", towers[row][col].getCost(), "Redneck swings his giant wrecking ball at his foes.");
 				
-				//highlight the tower currently being hovered over
-				g2.setColor(new Color(255, 255, 255, 100));
-				g2.fillRect(col * 50 + 200, row * 50 + 700, 50, 50);
+				//highlight the tower currently being hovered over if u have enough money to buy it
+				if(Game.money >= towers[row][col].getCost())
+				{
+					g2.setColor(new Color(255, 255, 255, 100));
+					g2.fillRect(col * 50 + 200, row * 50 + 700, 50, 50);
+				}
 			}
 			
 			//draw towers in the shop
@@ -51,7 +54,7 @@ public class Shop
 					if(towers[r][c] != null)
 					{
 						g2.drawImage(towers[r][c].getImage(), c * 50 + 200, r * 50 + 700, null);
-						if(Game.money < towers[r][c].getCost())
+						if(Game.money < towers[r][c].getCost() && !(Game.money == Game.UNLIMITED))
 						{
 							g2.setColor(new Color(255, 0, 0, 100));
 							g2.fillRect(c * 50 + 200, r * 50 + 700, 50, 50);
@@ -67,6 +70,7 @@ public class Shop
 		g2.drawString(name, 5, 715);
 		g2.drawString("Cost: " + cost, 5, 730);
 		
+		//make sure the desc doesn't go over the designated space
 		String[] s = new String[desc.length() / 19 + 1];
 		for (int j = 0; j < s.length; j++)
 			s[j] = "";
@@ -88,7 +92,7 @@ public class Shop
 	
 	public Tower buyTower(int row, int col)
 	{
-		if(towers[row][col] != null && Game.money >= towers[row][col].getCost())
+		if(towers[row][col] != null && (Game.money >= towers[row][col].getCost() || Game.money == Game.UNLIMITED))
 			return towers[row][col].getInstance();
 		else
 			return null;

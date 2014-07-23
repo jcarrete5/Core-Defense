@@ -10,3 +10,10 @@ Layout:
 (Grid)
 
 TODO:
+- Fix loading times (SwingWorker) (Maybe try to just use a regular thread)
+- Fast Forward
+- pause between waves
+- generate money from killing mobs
+- return to main menu
+- pause menu
+- save game

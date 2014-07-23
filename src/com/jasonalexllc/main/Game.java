@@ -2,40 +2,43 @@
 
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.JPanel;
-import com.jasonalexllc.level.Mob;
+import java.util.ArrayList;
+import javax.swing.*;
+import com.jasonalexllc.level.Wave;
 import com.jasonalexllc.tower.*;
 
 /**
  * The main drawing thread
  * @author Jason Carrete, Alex Berman
- * @since Jun 21, 2014
+ * @since Jul 17, 2014
  */
 public class Game extends JPanel implements MouseListener, MouseMotionListener
 {
 	private static final long serialVersionUID = -1168167031210268222L;
-	private Thread thread;
 	
 	public static final int UNLIMITED = -1, EASY = 0, MEDIUM = 1, HARD = 2, SANDBOX = 3;
 	public static int lives;
 	public static int money;
-	public static int fps;
-	
+
+	private ArrayList<Wave> waves;
 	private Tile[][] grid;
 	private Shop shop;
+	public static int clockSpd;
 	private boolean paused = false;
 	
 	public Tower curTower;
+	private int curWave = 0;
 	public static Point curMousePos;
-	private Mob m;
 	
-	public Game(Tile[][] grid, Shop s, int difficulty)
+	public Game(int interval, Tile[][] grid, Shop s, int difficulty, ArrayList<Wave> waves)
 	{
+		clockSpd = interval;
+		this.setDoubleBuffered(true);
 		this.setLayout(null);		
 		this.grid = grid;
 		shop = s;
 		
-		//apply the difficulty
+		//apply the difficulty TODO eventually remove the difficulty setting in the lvl1.txt and have the user specify the level/difficulty
 		switch(difficulty)
 		{
 		case EASY:
@@ -52,21 +55,36 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 			break;
 		case SANDBOX:
 			lives = UNLIMITED;
-			money = 100000000; //TODO change to UNLIMITED later
+			money = UNLIMITED;
 			break;
 		}
 		
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
-	}
-	
-	public Game(int interval, Tile[][] grid, Shop s, int difficulty)
-	{
-		this(grid, s, difficulty);
-		
-		Runnable r = () -> 
+		this.setFocusable(true);
+		this.addKeyListener(new KeyListener()
 		{
-			while(true)
+			public void keyTyped(KeyEvent e) {}
+			
+			public void keyPressed(KeyEvent e)
+			{
+				//pause game and open the shop
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+					if(isPaused())
+						unpause();
+					else
+						pause();
+				else if(!isPaused() && curTower == null && e.getKeyCode() == KeyEvent.VK_S) //open the shop screen
+					s.opened = !s.opened;
+			}
+			
+			public void keyReleased(KeyEvent e) {}
+		});
+		
+		Runnable r = () -> //TODO might have to re-think this thread
+		{
+			boolean run = true;
+			while(run)
 			{
 				//when paused just infinitely repeat this loop until it is unpaused
 				while(paused)
@@ -74,24 +92,38 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 				
 				try
 				{
-					Thread.sleep(interval);
+					Thread.sleep(clockSpd);
 				}
 				catch(InterruptedException e)
 				{
 					e.printStackTrace();
 				}
 				
-				this.repaint();
+				if(waves.get(curWave).isDone())
+					curWave = curWave + 1 >= waves.size() ? -1 : curWave + 1;
+					
+				if(curWave == -1) //TODO win scenario
+				{
+					JOptionPane.showMessageDialog(this, "You Won...", "Victory", JOptionPane.PLAIN_MESSAGE);
+					run = false;
+				}
+				else if(lives <= 0) //TODO lose scenario
+				{
+					JOptionPane.showMessageDialog(this, "You Lose...", "Failure", JOptionPane.PLAIN_MESSAGE);
+					run = false;
+				}
+				else
+					this.repaint();
 			}
 		};
 		
-		m = new Mob(0, 50, 1);
-		thread = new Thread(r, "Game Thread");
+		this.waves = waves;
+		new Thread(r, "Game Thread").start();
 	}
 	
 	public void start()
 	{
-		thread.start();
+		
 	}
 	
 	public void pause()
@@ -123,15 +155,25 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 
 		//draw attacks moving towards a mob if it is within a towers range
 		for(Tile[] row : grid)
-			for(Tile t : row)
-				if(t.hasTower())
+			for(Tile tile : row)
+				if(tile.hasTower())
 				{
-					t.getTower().attack(m, g2, t);
-					for(Attack a : t.getTower().attackQueue)
+					tile.getTower().attack(waves.get(curWave).get(0), g2, tile); //attack the first mob in the wave TODO possibly add different attack priorities
+					for(Attack a : tile.getTower().attackQueue)
 						a.draw(g2);
 				}
 
-		m.draw(g2);
+		//draw mobs that should be drawn at the current wave
+		for(int i = 0; i < waves.get(curWave).size(); i++)
+		{
+			if(!waves.get(curWave).get(i).isOnScreen())
+				waves.get(curWave).get(i).spawn();
+			
+			if(waves.get(curWave).get(i).isOnScreen())
+				waves.get(curWave).get(i).draw(g2);
+			else if(!waves.get(curWave).get(i).isAlive())
+				waves.get(curWave).remove(i);
+		}
 		
 		//draw upgrade screens if they are needed
 		outer: for(Tile[] row : grid)
@@ -151,9 +193,8 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		
 		//draw lives and money
 		g2.setColor(Color.white);
-		g2.drawString("Lives: " + lives, 5, 10);
-		g2.drawString("Money: " + money, 5, 25);
-		g2.drawString("fps: " + fps, 5, 40);
+		g2.drawString("Lives: " + (lives == UNLIMITED ? "infinite" : lives), 5, 10);
+		g2.drawString("Money: " + (money == UNLIMITED ? "infinite" : money), 5, 25);
 		
 	}
 
@@ -167,8 +208,8 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 			{
 				curTower = shop.buyTower(row, col);
 				
-				//if you have less money than the tower is worth after clicking, then leave the shop open
-				shop.opened = shop.towers[row][col] != null && money < shop.towers[row][col].getCost() ? true : false;
+				//if you have less money than the tower is worth (unless in sandbox) after clicking, then leave the shop open
+				shop.opened = shop.towers[row][col] != null && (money < shop.towers[row][col].getCost() && !(money == UNLIMITED)) ? true : false;
 			}
 		}
 		else if(curTower != null)

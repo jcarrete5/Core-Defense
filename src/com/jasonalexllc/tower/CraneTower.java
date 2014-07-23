@@ -15,7 +15,7 @@ public class CraneTower extends Tower
 
 	public CraneTower()
 	{
-		super(1, 10, .01, 300, "assets/towers/crane_idle.png");
+		super(1, 1, .01, 300, "assets/towers/crane_idle.png");
 	}
 	
 	public void attack(Mob m, Graphics2D g2, Tile tile)

@@ -7,18 +7,18 @@ import com.jasonalexllc.main.CoreDefense;
 /**
  * Represents an attack that is currently happening on the grid
  * @author Jason Carrete, Alex Berman
- * @since Jun 23, 2014
+ * @since Jul 17, 2014
  */
 public class Attack
 {
-	private Image[] anim;
-	
+	protected Image[] anim;
+
 	/**
 	 * Attack's current coordinates
 	 */
-	private int x1, y1;
-	private double r, ySpeed, xSpeed;
-	private Mob target;
+	protected int x1, y1;
+	protected double r, ySpeed, xSpeed;
+	protected Mob target;
 	
 	/**
 	 * Creates a new attack that can be thrown by a tower
@@ -38,7 +38,8 @@ public class Attack
 		x1 = x;
 		y1 = y;
 		
-		/* sqrt((x2 - x1)^2 + (y2 - y1)^2) -- distance formula
+		/*
+		 *  sqrt((x2 - x1)^2 + (y2 - y1)^2) -- distance formula
 		 * m = (y2 - y1) / (x2 - x1) -- slope formula
 		 */
 		int yPrime = (m.getY() + 25) - (y1 + 25), xPrime = (m.getX() + 25) - (x1 + 25); //find the slope of the line between the mob and the tower
@@ -74,7 +75,7 @@ public class Attack
 		boolean result = false;
 		
 		Rectangle targetHitBox = new Rectangle(target.getX(), target.getY(), 50, 50);
-		Rectangle atkHitBox = new Rectangle(x1, y1, 25, 25);
+		Rectangle atkHitBox = new Rectangle(x1 + 12, y1 + 12, 1, 1);
 		result = targetHitBox.intersects(atkHitBox);
 		
 		return result;

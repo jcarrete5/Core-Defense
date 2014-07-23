@@ -7,23 +7,31 @@ import java.awt.*;
 /**
  * Handles mob generation in game
  * @author Jason Carrete, Alex Berman
- * @since Jun 20, 
+ * @since Jul 17, 2014
  */
 public class Mob 
 {
     private Image[] sprite;
-    private int damage, comingFrom, level;
+    private int damage, comingFrom, rank;
     private double speed, x, y, indexOfSprite;
     public static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
     private boolean alive = true, diedOnce = true;
     private boolean[][][] usedDirs = new boolean[800][800][4]; //Boolean 3D array of which direction has already been tried
     private int[][] path;
+    private Tile[][] grid;
+    
+    private boolean isOnScreen = false;
+    private boolean wasOnScreen = false;
+    
+    private int spawnTime;
+    private static double[] mobSpeed = {0.3, 0.5};
+    private static int[] mobDamage = {1, 2};
     
 	private Image[][] sprites = 
 		{
 			{
 				CoreDefense.getImage("assets/mobs/dirtman_1.png"), CoreDefense.getImage("assets/mobs/dirtman_2_4.png"), CoreDefense.getImage("assets/mobs/dirtman_3.png"),
-				CoreDefense.getImage("assets/mobs/dirtman_2_4.png") 
+				CoreDefense.getImage("assets/mobs/dirtman_2_4.png")
 			},
 			{
 				CoreDefense.getImage("assets/mobs/stoneman_1.png"), CoreDefense.getImage("assets/mobs/stoneman_2_4.png"), CoreDefense.getImage("assets/mobs/stoneman_3.png"),
@@ -31,17 +39,16 @@ public class Mob
 			}
 		};
     
-    public Mob(double speed, double x, double y, int damage, int level)
+    public Mob(double x, double y, int rank, Tile[][] grid, int spawnTime)
     {
-    	this.sprite = sprites[level];
+    	this.spawnTime = spawnTime;
+    	this.grid = grid;
+    	this.sprite = sprites[rank];
     	this.x = x;
     	this.y = y;
-    	this.speed = speed;
-    	this.damage = damage;
-    	this.level = level;
-    	double origx = this.x;
-    	double origy = this.y;
-    	//this.pathFind(this.getX(), this.getY(), new boolean[800][800][4]);
+    	speed = mobSpeed[rank];
+    	damage = mobDamage[rank];
+    	this.rank = rank;
     	indexOfSprite = 0;
     	comingFrom = LEFT; //Starts moving from the left
     	path = new int[16][16];
@@ -51,11 +58,6 @@ public class Mob
     			path[i][j] = -1;
     	}
 
-    }
-    
-    public Mob(double x, double y,  int level)
-    {
-    	this(0.5, x, y, 1, level); //Default speed: 0.25, Default Damage: 1
     }
     
     public void draw(Graphics2D g2)
@@ -96,7 +98,7 @@ public class Mob
     /**
      * Moves the mob in a direction if possible.
      * @param direction
-     * @return Whether or not the move is successful
+     * @return true if the move was successful, otherwise false
      */
     public boolean move(int direction)
     {
@@ -139,7 +141,7 @@ public class Mob
     /**
      * 
      * @param direction
-     * @return Whether it can move in the specified direction
+     * @return true if it can move in the specified direction, otherwise false
      */
     private boolean canMove(int direction)
     {
@@ -152,19 +154,19 @@ public class Mob
 	    	else
 	    	{
 	    		if(direction == UP)
-	    			ret = CoreDefense.grid[((int)(y - speed)/50)][((int)x+1)/50].getType() == Tile.PATH 
+	    			ret = grid[((int)(y - speed)/50)][((int)x+1)/50].getType() == Tile.PATH 
 	    				&& !usedDirs[(int)x][(int)y][UP];
 	    		
 	    		else if(direction == RIGHT)
-	    			ret = CoreDefense.grid[((int)y + 1)/50][(((int)(x + speed)/50) + 1)].getType() == Tile.PATH 
+	    			ret = grid[((int)y + 1)/50][(((int)(x + speed)/50) + 1)].getType() == Tile.PATH 
 	    				&& !usedDirs[(int)x][(int)y][RIGHT];
 	    		
 	    		else if(direction == DOWN)
-	    			ret = CoreDefense.grid[(((int)(y + speed)/50) + 1)][((int)x+1)/50].getType() == Tile.PATH 
+	    			ret = grid[(((int)(y + speed)/50) + 1)][((int)x+1)/50].getType() == Tile.PATH 
 	    				&& !usedDirs[(int)x][(int)y][DOWN];
 	    		
 	    		else if(direction == LEFT)
-	    			ret = CoreDefense.grid[((int)y+1)/50][((int)(x - speed)/50)].getType() == Tile.PATH 
+	    			ret = grid[((int)y+1)/50][((int)(x - speed)/50)].getType() == Tile.PATH 
 	    					&& !usedDirs[(int)x][(int)y][LEFT];
 	    	}
     	}
@@ -177,7 +179,7 @@ public class Mob
     		}
     		
     		if(x >= 800 || y >= 800)
-    			alive = false;
+    			isOnScreen = alive = false;
     	}
     	
     	return ret;
@@ -220,13 +222,26 @@ public class Mob
     	return alive;
     }
     
+    public boolean isOnScreen()
+    {
+    	return isOnScreen;
+    }
+    
+    public void spawn()
+    {
+    	if(spawnTime <= 0 && !wasOnScreen)
+    		wasOnScreen = isOnScreen = true;
+    	else
+    		spawnTime -= Game.clockSpd;    		
+    }
+    
     public void hit()
     {
-    	level--;
-    	if(level == -1)
-    		alive = false;
+    	rank--;
+    	if(rank == -1)
+    		isOnScreen = alive = false;
     	else
-    		sprite = sprites[level];
+    		sprite = sprites[rank];
     }
     
 //    public boolean pathFind(int x, int y, boolean[][][] used)

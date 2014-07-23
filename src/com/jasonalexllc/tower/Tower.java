@@ -43,17 +43,12 @@ public abstract class Tower extends ImageIcon
 		this.cost = cost;
 	}
 	
-	/**
-	 * Fires the projectile at the specified coordinates
-	 * @param x
-	 * @param y
-	 */
 	public abstract void attack(Mob m, Graphics2D g2, Tile tile);
 	
 	/**
 	 * 
 	 * @param u
-	 * @return true if the upgrade is completely, false if the upgrade can't be completed
+	 * @return true if the upgrade is completed, false if the upgrade can't be completed
 	 */
 	public boolean upgrade(int upgradePath)
 	{

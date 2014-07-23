@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This is basically the syntax of the file -->
+<!DOCTYPE Levels
+[
+	<!ELEMENT Levels (Page+)>
+	<!ELEMENT Page ((Row, Row, Row) | (Row, Row) | (Row))>
+	<!ELEMENT Row ((Level, Level, Level) | (Level, Level) | (Level))>
+	<!ELEMENT Level (Layout, Waves)>
+	<!ATTLIST Level lvlName CDATA #REQUIRED>
+	<!ATTLIST Level img CDATA "levels/images/default_img.png">
+	<!ELEMENT Layout (#PCDATA)>
+	<!ELEMENT Waves (Wave+)>
+	<!ATTLIST Waves xStart CDATA #REQUIRED>
+	<!ATTLIST Waves yStart CDATA #REQUIRED>
+	<!ELEMENT Wave (Mob+)>
+	<!ELEMENT Mob EMPTY>
+	<!ATTLIST Mob rank (0|1) "0">
+	<!ATTLIST Mob amount CDATA "1">
+	<!ATTLIST Mob spawnTime CDATA "1000">
+]>
+
+<!-- 
+	This file is used to define any levels in the game and their positions on the menus.
+	
+	ABOUT THE TILE TYPES:
+		PATH tiles are the tiles the mob will follow.
+		STONE tiles are default tiles that towers can be placed on.
+		PLATE tiles enhance the tower placed on them in some way.
+		FAULT tiles are tiles that cannot support a tower.
+		
+	TILE TYPES:
+		0 - Represents PATH tiles.
+		1 - Represents STONE tiles.
+		2 - Represents PLATE tiles.
+		3 - Represents FAULT tiles.
+		
+	MOB RANKS:
+		0 - Dirt man
+		1 - Stone man
+		
+	ADDITIONAL NOTES:
+		ALL LAYOUTS MUST BE 16 by 16 AND MUST USE VALUES: {0, 1, 2, 3}!
+		ALL IMAGES MUST BE 100px by 100px!
+		ANY TILE TYPE VALUES AFTER THE 256th POSITION WILL BE IGNORED!
+		
+	EXAMPLE ENTRY:
+	
+	<Level lvlName="example" img="levels/images/example.png"> 
+		<Layout>              ^ === if ommited the "img" value will be defaulted to: "levels/images/default_img.png"
+		   	1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+			0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1
+			1 1 0 1 1 1 0 0 0 0 0 1 1 1 1 1
+			1 1 0 1 1 1 0 1 1 1 0 1 1 1 1 1
+			1 1 0 1 1 1 0 1 1 1 0 1 1 1 1 1
+			1 1 0 0 0 0 0 1 1 1 0 0 0 1 0 0
+			1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1
+			1 1 1 0 0 0 0 0 0 1 1 1 0 1 0 1
+			1 1 1 0 1 1 1 1 0 1 1 1 0 1 0 1
+			1 1 1 0 1 1 1 1 0 0 0 0 0 1 0 1
+			1 1 1 0 1 1 1 1 1 1 1 1 1 1 0 1
+			1 1 1 0 1 1 1 1 1 1 1 1 1 1 0 1
+			1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1
+			1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+			1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+			1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+		</Layout>
+		
+		<Waves numOfWaves="1">
+			<Wave>
+				<Mob/> 1 rank 1 mob
+			</Wave>
+		</Waves>
+	</Level>
+ -->
+
+<Levels>
+
+	<Page> <!-- represents page 1 on the menu screen -->
+
+		<Row> <!-- represents row one on page 1 on the menu screen -->
+            
+			<Level lvlName="Classic"> <!-- represents column 1 row 1 on page 1 on the menu screen -->
+				<Layout>
+				    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+					0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1
+					1 1 0 1 1 1 0 0 0 0 0 1 1 1 1 1
+					1 1 0 1 1 1 0 1 1 1 0 1 1 1 1 1
+					1 1 0 1 1 1 0 1 1 1 0 1 1 1 1 1
+					1 1 0 0 0 0 0 1 1 1 0 0 0 1 0 0
+					1 1 1 1 1 1 1 1 1 1 1 1 0 1 0 1
+					1 1 1 0 0 0 0 0 0 1 1 1 0 1 0 1
+					1 1 1 0 1 1 1 1 0 1 1 1 0 1 0 1
+					1 1 1 0 1 1 1 1 0 0 0 0 0 1 0 1
+					1 1 1 0 1 1 1 1 1 1 1 1 1 1 0 1
+					1 1 1 0 1 1 1 1 1 1 1 1 1 1 0 1
+					1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1
+					1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+					1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+					1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+				</Layout>
+					
+				<Waves xStart="0" yStart="50">
+					<Wave>
+						<Mob amount="30"/>
+					</Wave>
+					<Wave>
+					    <Mob amount="50"/>
+					</Wave>
+				</Waves>
+			</Level>
+       		
+		</Row>
+		
+	</Page>
+	
+</Levels>
