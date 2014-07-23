@@ -101,11 +101,11 @@
 					
 				<Waves xStart="0" yStart="50">
 					<Wave>
-						<Mob amount="30"/>
+						<Mob amount="10"/>
 					</Wave>
-					<Wave>
-					    <Mob amount="50"/>
-					</Wave>
+<!-- 					<Wave> -->
+<!-- 					    <Mob amount="50"/> -->
+<!-- 					</Wave> -->
 				</Waves>
 			</Level>
        		

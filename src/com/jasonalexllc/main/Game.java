@@ -1,11 +1,23 @@
  package com.jasonalexllc.main;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
-import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import com.jasonalexllc.level.Wave;
-import com.jasonalexllc.tower.*;
+import com.jasonalexllc.tower.Attack;
+import com.jasonalexllc.tower.Tower;
 
 /**
  * The main drawing thread
@@ -195,7 +207,10 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		g2.setColor(Color.white);
 		g2.drawString("Lives: " + (lives == UNLIMITED ? "infinite" : lives), 5, 10);
 		g2.drawString("Money: " + (money == UNLIMITED ? "infinite" : money), 5, 25);
-		
+		// play/fast-forward button
+		Shape s = new Ellipse2D.Float(770, 5, 25, 25);
+		g2.setColor(new Color(0, 0, 0, 100));
+		g2.fill(s);
 	}
 
 	public void mouseClicked(MouseEvent e)

@@ -50,7 +50,6 @@ public class Mob
     	this.rank = rank;
     	indexOfSprite = 0;
     	comingFrom = LEFT; //Starts moving from the left
-
     }
     
     public void draw(Graphics2D g2)
