@@ -17,6 +17,7 @@ public class Mob
     public static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
     private boolean alive = true, diedOnce = true;
     private boolean[][][] usedDirs = new boolean[800][800][4]; //Boolean 3D array of which direction has already been tried
+    private int[][] path;
     private Tile[][] grid;
     
     private boolean isOnScreen = false;
@@ -50,6 +51,12 @@ public class Mob
     	this.rank = rank;
     	indexOfSprite = 0;
     	comingFrom = LEFT; //Starts moving from the left
+    	path = new int[16][16];
+    	for(int  i = 0; i < path[0].length; i++)
+    	{
+    		for(int j = 0; j < path.length; j++)
+    			path[i][j] = -1;
+    	}
     }
     
     public void draw(Graphics2D g2)
@@ -235,4 +242,15 @@ public class Mob
     	else
     		sprite = sprites[rank];
     }
+    
+//    public boolean pathFind(int x, int y, boolean[][][] used)
+//    {
+//    	boolean ret = false;
+//    	Random rand = new Random();
+//    	int nextX = x, nextY = y;
+//    	this.x = x;
+//    	this.y = y;
+//    	path[y/50][x/50] = ret && pathFind( x, y, used);
+//    	return ret && pathFind( x, y, used);
+//    }
 }
