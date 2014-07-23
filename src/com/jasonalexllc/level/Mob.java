@@ -17,13 +17,17 @@ public class Mob
     public static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
     private boolean alive = true, diedOnce = true;
     private boolean[][][] usedDirs = new boolean[800][800][4]; //Boolean 3D array of which direction has already been tried
+    private int[][] path;
     
 	private Image[][] sprites = 
 		{
-			{ CoreDefense.getImage("assets/towers/crane_idle.png") },
 			{
 				CoreDefense.getImage("assets/mobs/dirtman_1.png"), CoreDefense.getImage("assets/mobs/dirtman_2_4.png"), CoreDefense.getImage("assets/mobs/dirtman_3.png"),
-				CoreDefense.getImage("assets/mobs/dirtman_2_4.png")
+				CoreDefense.getImage("assets/mobs/dirtman_2_4.png") 
+			},
+			{
+				CoreDefense.getImage("assets/mobs/stoneman_1.png"), CoreDefense.getImage("assets/mobs/stoneman_2_4.png"), CoreDefense.getImage("assets/mobs/stoneman_3.png"),
+				CoreDefense.getImage("assets/mobs/stoneman_2_4.png")
 			}
 		};
     
@@ -35,8 +39,17 @@ public class Mob
     	this.speed = speed;
     	this.damage = damage;
     	this.level = level;
+    	double origx = this.x;
+    	double origy = this.y;
+    	//this.pathFind(this.getX(), this.getY(), new boolean[800][800][4]);
     	indexOfSprite = 0;
     	comingFrom = LEFT; //Starts moving from the left
+    	path = new int[16][16];
+    	for(int  i = 0; i < path[0].length; i++)
+    	{
+    		for(int j = 0; j < path.length; j++)
+    			path[i][j] = -1;
+    	}
 
     }
     
@@ -215,4 +228,15 @@ public class Mob
     	else
     		sprite = sprites[level];
     }
+    
+//    public boolean pathFind(int x, int y, boolean[][][] used)
+//    {
+//    	boolean ret = false;
+//    	Random rand = new Random();
+//    	int nextX = x, nextY = y;
+//    	this.x = x;
+//    	this.y = y;
+//    	path[y/50][x/50] = ret && pathFind( x, y, used);
+//    	return ret && pathFind( x, y, used);
+//    }
 }
