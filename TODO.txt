@@ -10,9 +10,7 @@ Layout:
 (Grid)
 
 TODO:
-- Fix loading times (SwingWorker) (Maybe try to just use a regular thread)
-- pause between waves
-- Fast Forward
+- Fix loading times PROBLEM SOLVED (alex has to get rid of his .6MB array)
 - generate money from killing mobs
 - return to main menu
 - pause menu

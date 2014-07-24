@@ -16,11 +16,12 @@
 	<!ELEMENT Mob EMPTY>
 	<!ATTLIST Mob rank (0|1) "0">
 	<!ATTLIST Mob amount CDATA "1">
-	<!ATTLIST Mob spawnTime CDATA "1000">
+	<!ATTLIST Mob spawnTime CDATA "100">
 ]>
 
 <!-- 
 	This file is used to define any levels in the game and their positions on the menus.
+	spawnTime is in ticks not ms
 	
 	ABOUT THE TILE TYPES:
 		PATH tiles are the tiles the mob will follow.
@@ -101,11 +102,11 @@
 					
 				<Waves xStart="0" yStart="50">
 					<Wave>
-						<Mob amount="10"/>
+						<Mob amount="5"/>
 					</Wave>
-<!-- 					<Wave> -->
-<!-- 					    <Mob amount="50"/> -->
-<!-- 					</Wave> -->
+					<Wave>
+					    <Mob amount="5"/>
+					</Wave>
 				</Waves>
 			</Level>
        		
