@@ -1,11 +1,10 @@
 TODO:
-- Fix loading times (SwingWorker) (Maybe try to just use a regular thread)
-- pause between waves
-- Fast Forward
+- Fix loading times (over-sized array in mob.java  )
 - return to main menu
 - pause menu
 - save game
 - add a scroll button to the main menu screen
+- display range of towers when u place them
 - tower attack priorities
 - incorporate upgrades
 - add towers and mobs

@@ -44,6 +44,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 	public Tower curTower;
 	private int curWave = 0;
 	public static Point curMousePos;
+	private boolean run = true;
 	
 	public Game(int interval, Tile[][] grid, Shop s, int difficulty, ArrayList<Wave> waves)
 	{
@@ -98,7 +99,6 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		
 		Runnable r = () ->
 		{
-			boolean run = true;
 			while(run)
 			{
 				//when paused just infinitely repeat this loop until it is unpaused
@@ -135,15 +135,13 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 				else
 					this.repaint();
 			}
+			
+			//bring the player back to the main menu
+			CoreDefense.mainMenu();
 		};
 		
 		this.waves = waves;
 		new Thread(r, "Game Thread").start();
-	}
-	
-	public void start()
-	{
-		
 	}
 	
 	public void pause()
@@ -166,8 +164,8 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 	{
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		super.paintComponent(g2);
-		
+		super.paintComponent(g2);			
+			
 		//draw the grid and draw towers if any are on the grid
 		for(Tile[] row : grid)
 			for(Tile t : row)

@@ -42,7 +42,7 @@ public class PickaxeTower extends Tower
 			if(imgSwap >= 0.2)
 				this.setImage(CoreDefense.getImage("assets/towers/pickaxeTower_idle.png"));
 			
-			float f = 0.007f; //lower value = longer duration of the atk image
+			float f = 0.01f; //lower value = longer duration of the atk image
 			imgSwap = imgSwap < 0.2 ? imgSwap += f : 0;
 			
 			atk = atk < 1 ? atk + atkSpeed : 0;

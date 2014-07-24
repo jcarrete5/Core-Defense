@@ -14,13 +14,17 @@ import com.jasonalexllc.level.Level;
  * @since Jul 17, 2014
  */
 public class CoreDefense
-{	
+{
+	private static Level[][][] levels;
+	private static JButton[][][] lvlButtons;
+	private static JFrame frame;
+	
 	public static void main(String[] args)
 	{
 		Runnable thread = () ->
 		{
 			//Create the game window
-			JFrame frame = new JFrame("Core Defense");
+			frame = new JFrame("Core Defense");
 			frame.setLayout(null);
 			frame.setIconImage(getImage("assets/icon.png"));
 			frame.setResizable(false);
@@ -33,7 +37,7 @@ public class CoreDefense
 			NodeList pgNodes = root.getElementsByTagName("Page");
 			
 			//take the NodeList of the levels and make it into a 3D Level array
-			Level[][][] levels = new Level[pgNodes.getLength()][3][3];
+			levels = new Level[pgNodes.getLength()][3][3];
 			for(int d = 0; d < levels.length; d++)
 			{
 				Element pg = (Element)pgNodes.item(d);
@@ -46,7 +50,7 @@ public class CoreDefense
 			}
 			
 			//display each level on the first page TODO add a button that scrolls through the pages
-			JButton[][][] lvlButtons = new JButton[levels.length][levels[0].length][levels[0][0].length];
+			lvlButtons = new JButton[levels.length][levels[0].length][levels[0][0].length];
 			for(int row = 0; row < levels[0].length; row++)
 				for(int col = 0; col < levels[0][0].length; col++)
 					if(levels[0][row][col] != null)
@@ -76,6 +80,25 @@ public class CoreDefense
 		};
 		
 		SwingUtilities.invokeLater(thread);
+	}
+	
+	public static void mainMenu()
+	{
+		frame.getContentPane().removeAll();
+		
+		for(int row = 0; row < lvlButtons[0].length; row++)
+			for(int col = 0; col < lvlButtons[0][0].length; col++)
+				if(lvlButtons[0][row][col] != null)
+				{
+					JLabel title = new JLabel(levels[0][row][col].toString());
+					title.setBounds(250 * col + 100, 250 * row + 210, 100, 15);
+					
+					frame.getContentPane().add(lvlButtons[0][row][col]);
+					frame.getContentPane().add(title);
+				}
+		
+		frame.repaint();
+		frame.pack();
 	}
 	
 	/**
