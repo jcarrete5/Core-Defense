@@ -46,7 +46,7 @@
 		
 	EXAMPLE ENTRY:
 	
-	<Level lvlName="example" img="levels/images/example.png"> 
+	<Level lvlName="example" img="levels/images/example.png">
 		<Layout>              ^ === if ommited the "img" value will be defaulted to: "levels/images/default_img.png"
 		   	1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 			0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1

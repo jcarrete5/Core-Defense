@@ -236,6 +236,7 @@ public class Mob
     
     public void hit()
     {
+    	Game.money++;
     	rank--;
     	if(rank == -1)
     		isOnScreen = alive = false;
