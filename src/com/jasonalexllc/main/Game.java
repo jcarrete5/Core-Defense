@@ -31,11 +31,14 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 	public static final int UNLIMITED = -1, EASY = 0, MEDIUM = 1, HARD = 2, SANDBOX = 3;
 	public static int lives;
 	public static int money;
+	private final Color SPD_COLOR = new Color(255, 0, 0, 125); //default speed solor
 
 	private ArrayList<Wave> waves;
+	private boolean startWave = false;
 	private Tile[][] grid;
 	private Shop shop;
 	public static int clockSpd;
+	private Color spdColor = SPD_COLOR;
 	private boolean paused = false;
 	
 	public Tower curTower;
@@ -112,7 +115,12 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 				}
 				
 				if(waves.get(curWave).isDone())
+				{
 					curWave = curWave + 1 >= waves.size() ? -1 : curWave + 1;
+					startWave = false;
+					clockSpd = 10;
+					spdColor = SPD_COLOR;
+				}
 					
 				if(curWave == -1) //TODO win scenario
 				{
@@ -176,16 +184,17 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 				}
 
 		//draw mobs that should be drawn at the current wave
-		for(int i = 0; i < waves.get(curWave).size(); i++)
-		{
-			if(!waves.get(curWave).get(i).isOnScreen())
-				waves.get(curWave).get(i).spawn();
-			
-			if(waves.get(curWave).get(i).isOnScreen())
-				waves.get(curWave).get(i).draw(g2);
-			else if(!waves.get(curWave).get(i).isAlive())
-				waves.get(curWave).remove(i);
-		}
+		if(startWave)
+			for(int i = 0; i < waves.get(curWave).size(); i++)
+			{
+				if(!waves.get(curWave).get(i).isOnScreen())
+					waves.get(curWave).get(i).spawn();
+				
+				if(waves.get(curWave).get(i).isOnScreen())
+					waves.get(curWave).get(i).draw(g2);
+				else if(!waves.get(curWave).get(i).isAlive())
+					waves.get(curWave).remove(i);
+			}
 		
 		//draw upgrade screens if they are needed
 		outer: for(Tile[] row : grid)
@@ -207,10 +216,23 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		g2.setColor(Color.white);
 		g2.drawString("Lives: " + (lives == UNLIMITED ? "infinite" : lives), 5, 10);
 		g2.drawString("Money: " + (money == UNLIMITED ? "infinite" : money), 5, 25);
+		
 		// play/fast-forward button
 		Shape s = new Ellipse2D.Float(770, 5, 25, 25);
 		g2.setColor(new Color(0, 0, 0, 100));
 		g2.fill(s);
+		g2.setColor(spdColor);
+		if(startWave)
+		{
+			//draw fast-forward button
+			g2.fillPolygon(new int[] {776, 776, 783}, new int[] {11, 24, 17}, 3);
+			g2.fillPolygon(new int[] {783, 783, 790}, new int[] {11, 24, 17}, 3);
+		}
+		else
+		{
+			//draw play button
+			g2.fillPolygon(new int[] {777, 777, 789}, new int[] {11, 24, 17}, 3);
+		}
 	}
 
 	public void mouseClicked(MouseEvent e)
@@ -235,6 +257,22 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 				grid[row][col].addTower(curTower);
 			
 			curTower = null;
+		}
+		else if(e.getPoint().x >= 770 && e.getPoint().x < 795 && e.getPoint().y >= 5 && e.getPoint().y < 30)
+		{
+			if(startWave) //button is fast-forward
+				if(clockSpd == 10)
+				{
+					clockSpd = 5;
+					spdColor = new Color(255, 0, 0, 175);
+				}
+				else
+				{
+					clockSpd = 10;
+					spdColor = SPD_COLOR;
+				}
+			else //button is play
+				startWave = true;
 		}
 		else
 		{

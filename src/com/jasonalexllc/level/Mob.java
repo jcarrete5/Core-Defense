@@ -231,7 +231,7 @@ public class Mob
     	if(spawnTime <= 0 && !wasOnScreen)
     		wasOnScreen = isOnScreen = true;
     	else
-    		spawnTime -= Game.clockSpd;    		
+    		spawnTime -= 1;    		
     }
     
     public void hit()

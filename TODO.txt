@@ -13,7 +13,6 @@ TODO:
 - Fix loading times (SwingWorker) (Maybe try to just use a regular thread)
 - pause between waves
 - Fast Forward
-- generate money from killing mobs
 - return to main menu
 - pause menu
 - save game
