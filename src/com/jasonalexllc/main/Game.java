@@ -53,7 +53,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		this.grid = grid;
 		shop = s;
 		
-		//apply the difficulty TODO eventually remove the difficulty setting in the lvl1.txt and have the user specify the level/difficulty
+		//apply the difficulty
 		switch(difficulty)
 		{
 		case EASY:
@@ -96,7 +96,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 			public void keyReleased(KeyEvent e) {}
 		});
 		
-		Runnable r = () -> //TODO might have to re-think this thread
+		Runnable r = () ->
 		{
 			boolean run = true;
 			while(run)
@@ -178,7 +178,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 			for(Tile tile : row)
 				if(tile.hasTower())
 				{
-					tile.getTower().attack(waves.get(curWave).get(0), g2, tile); //attack the first mob in the wave TODO possibly add different attack priorities
+					tile.getTower().attack(waves.get(curWave).get(0), g2, tile); //attack the first mob in the wave array
 					for(Attack a : tile.getTower().attackQueue)
 						a.draw(g2);
 				}

@@ -22,7 +22,7 @@ public abstract class Tower extends ImageIcon
 	 * Denotes when the next attack should start from the tower 1 = should attack, {x in R | 0 <= x < 1} = shouldn't attack
 	 */
 	protected double atk = 1, imgSwap;
-	protected int range, dmg, cost, p1Next = -1, p2Next = -1;
+	protected int range, dmg, cost, p1Next = -1, p2Next = -1, resaleVal;
 	protected double atkSpeed;
 	protected Upgrade[] path1, path2;
 	
@@ -41,9 +41,16 @@ public abstract class Tower extends ImageIcon
 		this.dmg = dmg;
 		this.atkSpeed = atkSpeed;
 		this.cost = cost;
+		resaleVal = cost / 2;
 	}
 	
 	public abstract void attack(Mob m, Graphics2D g2, Tile tile);
+	
+	public abstract Tower getInstance();
+	
+	public abstract String getName();
+	
+	public abstract String getDesc();
 	
 	/**
 	 * 
@@ -70,7 +77,7 @@ public abstract class Tower extends ImageIcon
 			return false;
 	}
 	
-	public int getRangePixels()
+	public final int getRangePixels()
 	{
 		return range * 50;
 	}
@@ -97,8 +104,6 @@ public abstract class Tower extends ImageIcon
 		
 		return viewUpgradeScreen;
 	}
-	
-	public abstract Tower getInstance();
 	
 	public int getCost()
 	{

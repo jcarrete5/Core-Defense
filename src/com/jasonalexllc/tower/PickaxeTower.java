@@ -65,4 +65,14 @@ public class PickaxeTower extends Tower
 	{
 		return new PickaxeTower();
 	}
+	
+	public String getName()
+	{
+		return "Pickaxe Tower";
+	}
+	
+	public String getDesc()
+	{
+		return "This tower will throw pickaxes at its foes.";
+	}
 }

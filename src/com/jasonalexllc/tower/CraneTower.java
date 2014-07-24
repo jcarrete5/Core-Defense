@@ -27,4 +27,14 @@ public class CraneTower extends Tower
 	{
 		return new CraneTower();
 	}
+	
+	public String getName()
+	{
+		return "Crane Tower";
+	}
+	
+	public String getDesc()
+	{
+		return "Redneck swings his giant wrecking ball at his foes.";
+	}
 }

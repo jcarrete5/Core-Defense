@@ -34,11 +34,7 @@ public class Shop
 			//update the info screen depending on which tower is currently being hovered over
 			if(row >= 0 && col >= 0 && row < towers.length && col < towers[0].length && towers[row][col] != null)
 			{
-				//TODO update this when adding new towers TODO also fix this instanceof because it isn't needed
-				if(towers[row][col] instanceof PickaxeTower)
-					drawInfo(g2, "Pickaxe Tower", towers[row][col].getCost(), "This tower will throw pickaxes at its foes.");
-				else if(towers[row][col] instanceof CraneTower)
-					drawInfo(g2, "Crane Tower", towers[row][col].getCost(), "Redneck swings his giant wrecking ball at his foes.");
+				drawInfo(g2, towers[row][col].getName(), towers[row][col].getCost(), towers[row][col].getDesc());
 				
 				//highlight the tower currently being hovered over if u have enough money to buy it
 				if(Game.money >= towers[row][col].getCost())
