@@ -1,6 +1,5 @@
 TODO:
-- Fix loading times (over-sized array in mob.java  )
-- return to main menu
+- Fix loading times (over-sized array in mob.java)
 - pause menu
 - save game
 - add a scroll button to the main menu screen
