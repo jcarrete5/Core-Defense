@@ -16,7 +16,7 @@ public class Mob
     private double speed, x, y, indexOfSprite;
     public static final int UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
     private boolean alive = true, diedOnce = true;
-    private boolean[][][] usedDirs = new boolean[800][800][4]; //Boolean 3D array of which direction has already been tried
+    //private boolean[][][] usedDirs = new boolean[800][800][4]; //Boolean 3D array of which direction has already been tried
     private int[][] path;
     private Tile[][] grid;
     
@@ -110,28 +110,28 @@ public class Mob
     	{
 			y -= speed;
 			ret = true;
-			usedDirs[(int)x/50][(int)y/50][UP] = true;
+			//usedDirs[(int)x/50][(int)y/50][UP] = true;
     	}
 		
     	else if(direction == RIGHT && canMove(RIGHT))
     	{
 			x += speed;
 			ret = true;
-			usedDirs[(int)x/50][(int)y/50][RIGHT] = true;
+			//usedDirs[(int)x/50][(int)y/50][RIGHT] = true;
     	}
     	
     	else if(direction == DOWN && canMove(DOWN))
     	{
 			y += speed;
 			ret = true;
-			usedDirs[(int)x/50][(int)y/50][DOWN] = true;
+			//usedDirs[(int)x/50][(int)y/50][DOWN] = true;
     	}
 	
 		else if(direction == LEFT && canMove(LEFT))
 		{
 			x -= speed;
 			ret = true;
-			usedDirs[(int)x/50][(int)y/50][LEFT] = true;
+			//usedDirs[(int)x/50][(int)y/50][LEFT] = true;
 		}
     	
     	return ret;
@@ -153,20 +153,20 @@ public class Mob
 	    	else
 	    	{
 	    		if(direction == UP)
-	    			ret = grid[((int)(y - speed)/50)][((int)x+1)/50].getType() == Tile.PATH 
-	    				&& !usedDirs[(int)x][(int)y][UP];
+	    			ret = grid[((int)(y - speed)/50)][((int)x+1)/50].getType() == Tile.PATH; 
+	    				//&& !usedDirs[(int)x][(int)y][UP];
 	    		
 	    		else if(direction == RIGHT)
-	    			ret = grid[((int)y + 1)/50][(((int)(x + speed)/50) + 1)].getType() == Tile.PATH 
-	    				&& !usedDirs[(int)x][(int)y][RIGHT];
+	    			ret = grid[((int)y + 1)/50][(((int)(x + speed)/50) + 1)].getType() == Tile.PATH;
+	    				//&& !usedDirs[(int)x][(int)y][RIGHT];
 	    		
 	    		else if(direction == DOWN)
-	    			ret = grid[(((int)(y + speed)/50) + 1)][((int)x+1)/50].getType() == Tile.PATH 
-	    				&& !usedDirs[(int)x][(int)y][DOWN];
+	    			ret = grid[(((int)(y + speed)/50) + 1)][((int)x+1)/50].getType() == Tile.PATH; 
+	    				//&& !usedDirs[(int)x][(int)y][DOWN];
 	    		
 	    		else if(direction == LEFT)
-	    			ret = grid[((int)y+1)/50][((int)(x - speed)/50)].getType() == Tile.PATH 
-	    					&& !usedDirs[(int)x][(int)y][LEFT];
+	    			ret = grid[((int)y+1)/50][((int)(x - speed)/50)].getType() == Tile.PATH; 
+	    					//&& !usedDirs[(int)x][(int)y][LEFT];
 	    	}
     	}
     	catch(ArrayIndexOutOfBoundsException ex)
