@@ -26,14 +26,6 @@ public abstract class Tower extends ImageIcon
 	protected double atkSpeed;
 	protected Upgrade[] path1, path2;
 	
-	/**
-	 * 
-	 * @param range
-	 * @param dmg
-	 * @param atkSpeed
-	 * @param cost
-	 * @param imgPath
-	 */
 	protected Tower(int range, int dmg, double atkSpeed, int cost, String imgPath)
 	{
 		super(CoreDefense.class.getResource(imgPath));

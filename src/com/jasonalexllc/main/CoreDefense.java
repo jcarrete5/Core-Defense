@@ -1,11 +1,27 @@
 package com.jasonalexllc.main;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.xml.parsers.*;
-import org.w3c.dom.*;
-import org.xml.sax.*;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 import com.jasonalexllc.level.Level;
 
 /**
@@ -77,6 +93,13 @@ public class CoreDefense
 			frame.pack();
 			frame.setVisible(true);
 			frame.setLocationRelativeTo(null);
+			
+			//Play the music
+			Runnable musicThread = () ->
+			{
+				playMusic();
+			};
+			new Thread(musicThread, "Music Thread").start();
 		};
 		
 		SwingUtilities.invokeLater(thread);
@@ -101,6 +124,27 @@ public class CoreDefense
 		frame.pack();
 	}
 	
+	private static void playMusic()
+	{
+		//get all songs in the songs folder
+		File music = new File("music");
+		File[] songs = music.listFiles();
+		int songNum = 0;
+		
+		try
+		{
+			AudioInputStream ais = AudioSystem.getAudioInputStream(songs[songNum]);
+			Clip clip = AudioSystem.getClip();
+			clip.open(ais);
+			clip.loop(-1);
+			Thread.sleep(64500);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Used as a shortcut to get an image for the game
 	 * @param imgPath
@@ -118,6 +162,7 @@ public class CoreDefense
 			public void warning(SAXParseException exception) throws SAXException
 			{
 				System.out.println("SAX Warning");
+				throw new SAXException();
 			}
 
 			public void error(SAXParseException exception) throws SAXException
