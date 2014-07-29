@@ -126,11 +126,13 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 				{
 					JOptionPane.showMessageDialog(this, "You Won...", "Victory", JOptionPane.PLAIN_MESSAGE);
 					run = false;
+					removeAllTowers();
 				}
 				else if(lives <= 0) //TODO lose scenario
 				{
 					JOptionPane.showMessageDialog(this, "You Lose...", "Failure", JOptionPane.PLAIN_MESSAGE);
 					run = false;
+					removeAllTowers();
 				}
 				else
 					this.repaint();
@@ -142,6 +144,13 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		
 		this.waves = waves;
 		new Thread(r, "Game Thread").start();
+	}
+	
+	private void removeAllTowers()
+	{
+		for(int row = 0; row < grid.length; row++)
+			for(int col = 0; col < grid[0].length; col++)
+				grid[row][col].removeTower();
 	}
 	
 	public void pause()

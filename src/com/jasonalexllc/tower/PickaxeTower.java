@@ -43,9 +43,9 @@ public class PickaxeTower extends Tower
 				this.setImage(CoreDefense.getImage("assets/towers/pickaxeTower_idle.png"));
 			
 			float f = 0.01f; //lower value = longer duration of the atk image
-			imgSwap = imgSwap < 0.2 ? imgSwap += f : 0;
+			imgSwap = imgSwap < 0.2 ? imgSwap += f : 0.0;
 			
-			atk = atk < 1 ? atk + atkSpeed : 0;
+			atk = atk < 1 ? atk + atkSpeed : 0.0;
 			
 			//remove attacks from the attackQueue that are off the screen
 			for(Attack atk : attackQueue.toArray(new Attack[attackQueue.size()])) //convert to a regular array to avoid ConcurrentModificationException
