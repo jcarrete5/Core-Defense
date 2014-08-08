@@ -1,4 +1,5 @@
 TODO:
+- use spritesheets instead of individual .png's
 - music/sounds
 - pause menu
 - save game

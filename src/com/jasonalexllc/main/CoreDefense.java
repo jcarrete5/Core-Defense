@@ -140,7 +140,6 @@ public class CoreDefense
 				clip.open(ais);
 				clip.start();
 				int tts = (int)(clip.getFrameLength() / clip.getFormat().getFrameRate() * 1000);
-				System.out.println(tts);
 				Thread.sleep(tts + 500);
 				songNum = songNum == songs.length - 1 ? 0 : songNum + 1;
 			}

@@ -3,6 +3,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Shape;
@@ -31,7 +32,10 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 	public static final int UNLIMITED = -1, EASY = 0, MEDIUM = 1, HARD = 2, SANDBOX = 3;
 	public static int lives;
 	public static int money;
-	private final Color SPD_COLOR = new Color(255, 0, 0, 125); //default speed solor
+	public static final int options = 1;
+	
+	private static final Color SPD_COLOR = new Color(255, 0, 0, 125); //default speed color
+	public static final Color BG_COLOR = new Color(0, 0, 0, 100); //background color. (slightly transparent black)
 
 	private ArrayList<Wave> waves;
 	private boolean startWave = false;
@@ -44,13 +48,15 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 	public Tower curTower;
 	private int curWave = 0;
 	public static Point curMousePos;
+	
+	private boolean flag = true;
 	private boolean run = true;
 	
 	public Game(int interval, Tile[][] grid, Shop s, int difficulty, ArrayList<Wave> waves)
 	{
+		super(null);
 		clockSpd = interval;
-		this.setDoubleBuffered(true);
-		this.setLayout(null);		
+		this.setDoubleBuffered(true);	
 		this.grid = grid;
 		shop = s;
 		
@@ -100,11 +106,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		Runnable r = () ->
 		{
 			while(run)
-			{
-				//when paused just infinitely repeat this loop until it is unpaused
-				while(paused)
-					Thread.yield();
-				
+			{				
 				try
 				{
 					Thread.sleep(clockSpd);
@@ -172,73 +174,93 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D)g;
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		super.paintComponent(g2);			
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);		
+		
+		if(!isPaused())
+		{
+			super.paintComponent(g2);	
+			flag = true;
 			
-		//draw the grid and draw towers if any are on the grid
-		for(Tile[] row : grid)
-			for(Tile t : row)
-				t.draw(g2);
-
-		//draw attacks moving towards a mob if it is within a towers range
-		for(Tile[] row : grid)
-			for(Tile tile : row)
-				if(tile.hasTower())
+			//draw the grid and draw towers if any are on the grid
+			for(Tile[] row : grid)
+				for(Tile t : row)
+					t.draw(g2);
+	
+			//draw attacks moving towards a mob if it is within a towers range
+			for(Tile[] row : grid)
+				for(Tile tile : row)
+					if(tile.hasTower())
+					{
+						tile.getTower().attack(waves.get(curWave).get(0), g2, tile); //attack the first mob in the wave array
+						for(Attack a : tile.getTower().attackQueue)
+							a.draw(g2);
+					}
+	
+			//draw mobs that should be drawn at the current wave
+			if(startWave)
+				for(int i = 0; i < waves.get(curWave).size(); i++)
 				{
-					tile.getTower().attack(waves.get(curWave).get(0), g2, tile); //attack the first mob in the wave array
-					for(Attack a : tile.getTower().attackQueue)
-						a.draw(g2);
+					if(!waves.get(curWave).get(i).isOnScreen())
+						waves.get(curWave).get(i).spawn();
+					
+					if(waves.get(curWave).get(i).isOnScreen())
+						waves.get(curWave).get(i).draw(g2);
+					else if(!waves.get(curWave).get(i).isAlive())
+						waves.get(curWave).remove(i);
 				}
-
-		//draw mobs that should be drawn at the current wave
-		if(startWave)
-			for(int i = 0; i < waves.get(curWave).size(); i++)
+			
+			//draw upgrade screens if they are needed
+			outer: for(Tile[] row : grid)
+				for(Tile t : row)
+					if(t.hasTower())
+					{
+						boolean b = t.getTower().drawUpgradeScreen(g2);
+						if(b) break outer; //only show one upgrade screen at a time and save time by breaking when it displays the upgrade screen
+					}
+			
+			//drag tower when selected from the shop
+			if(curTower != null)
+				g2.drawImage(curTower.getImage(), curMousePos.x - 25, curMousePos.y - 25, this);
+			
+			//open the shop
+			shop.open(g2);
+			
+			//draw lives and money
+			g2.setColor(Color.white);
+			g2.drawString("Lives: " + (lives == UNLIMITED ? "infinite" : lives), 5, 10);
+			g2.drawString("Money: " + (money == UNLIMITED ? "infinite" : money), 5, 25);
+			
+			// play/fast-forward button
+			Shape s = new Ellipse2D.Float(770, 5, 25, 25);
+			g2.setColor(BG_COLOR);
+			g2.fill(s);
+			g2.setColor(spdColor);
+			if(startWave)
 			{
-				if(!waves.get(curWave).get(i).isOnScreen())
-					waves.get(curWave).get(i).spawn();
-				
-				if(waves.get(curWave).get(i).isOnScreen())
-					waves.get(curWave).get(i).draw(g2);
-				else if(!waves.get(curWave).get(i).isAlive())
-					waves.get(curWave).remove(i);
+				//draw fast-forward button
+				g2.fillPolygon(new int[] {776, 776, 783}, new int[] {11, 24, 17}, 3);
+				g2.fillPolygon(new int[] {783, 783, 790}, new int[] {11, 24, 17}, 3);
 			}
-		
-		//draw upgrade screens if they are needed
-		outer: for(Tile[] row : grid)
-			for(Tile t : row)
-				if(t.hasTower())
-				{
-					boolean b = t.getTower().drawUpgradeScreen(g2);
-					if(b) break outer;
-				}
-		
-		//drag tower when selected from the shop
-		if(curTower != null)
-			g2.drawImage(curTower.getImage(), curMousePos.x - 25, curMousePos.y - 25, this);
-		
-		//open the shop
-		shop.open(g2);
-		
-		//draw lives and money
-		g2.setColor(Color.white);
-		g2.drawString("Lives: " + (lives == UNLIMITED ? "infinite" : lives), 5, 10);
-		g2.drawString("Money: " + (money == UNLIMITED ? "infinite" : money), 5, 25);
-		
-		// play/fast-forward button
-		Shape s = new Ellipse2D.Float(770, 5, 25, 25);
-		g2.setColor(new Color(0, 0, 0, 100));
-		g2.fill(s);
-		g2.setColor(spdColor);
-		if(startWave)
-		{
-			//draw fast-forward button
-			g2.fillPolygon(new int[] {776, 776, 783}, new int[] {11, 24, 17}, 3);
-			g2.fillPolygon(new int[] {783, 783, 790}, new int[] {11, 24, 17}, 3);
+			else
+			{
+				//draw play button
+				g2.fillPolygon(new int[] {777, 777, 789}, new int[] {11, 24, 17}, 3);
+			}
 		}
-		else
+		else //if the game is paused
 		{
-			//draw play button
-			g2.fillPolygon(new int[] {777, 777, 789}, new int[] {11, 24, 17}, 3);
+			if(flag)
+			{
+				g2.setColor(BG_COLOR);
+				g2.fillRect(0, 0, 800, 800);
+				
+				JPanel optionsPane = new JPanel(new GridLayout(1, options));
+				optionsPane.setBackground(new Color(0, 0, 0, 0));
+				optionsPane.setBounds(0, 0, 800, 800);
+				this.add(optionsPane);
+				
+				flag = false;
+			}
 		}
 	}
 
@@ -265,7 +287,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 			
 			curTower = null;
 		}
-		else if(e.getPoint().x >= 770 && e.getPoint().x < 795 && e.getPoint().y >= 5 && e.getPoint().y < 30)
+		else if(e.getPoint().x >= 770 && e.getPoint().x < 795 && e.getPoint().y >= 5 && e.getPoint().y < 30) //play/fast-forward is pressed
 		{
 			if(startWave) //button is fast-forward
 				if(clockSpd == 10)
