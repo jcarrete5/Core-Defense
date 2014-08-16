@@ -234,15 +234,4 @@ public class Mob
     	else
     		sprite = sprites[rank];
     }
-    
-//    public boolean pathFind(int x, int y, boolean[][][] used)
-//    {
-//    	boolean ret = false;
-//    	Random rand = new Random();
-//    	int nextX = x, nextY = y;
-//    	this.x = x;
-//    	this.y = y;
-//    	path[y/50][x/50] = ret && pathFind( x, y, used);
-//    	return ret && pathFind( x, y, used);
-//    }
 }

@@ -53,7 +53,7 @@ public class Attack
 	public void draw(Graphics2D g2)
 	{
 		g2.drawImage(anim[(int)r], x1 + 6, y1 + 6, null);
-		r = r > anim.length - 0.8 ? 0 : r + 0.2; //controls how long each rotation is visible for. lower numbers = slower rotation
+		r = r > anim.length - 0.8 ? 0 : r + 0.5; //controls how long each rotation is visible for. lower numbers = slower rotation
 		
 		x1 += (int)xSpeed;
 		y1 += (int)ySpeed;

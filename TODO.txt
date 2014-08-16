@@ -1,6 +1,7 @@
 TODO:
 - use spritesheets instead of individual .png's
 - music/sounds
+- Money at the end of a wave
 - pause menu
 - save game
 - add a scroll button to the main menu screen

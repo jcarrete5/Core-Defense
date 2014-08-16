@@ -22,6 +22,7 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import com.jasonalexllc.io.XML;
 import com.jasonalexllc.level.Level;
 
 /**
@@ -48,7 +49,17 @@ public class CoreDefense
 			frame.getContentPane().setPreferredSize(new Dimension(800, 800));
 			
 			//use the levels.xml to display all of the levels that can be played
-			Document lvlDoc = getDocument("levels/levels.xml");
+			XML lvlDoc = null;
+			try
+			{
+				lvlDoc = new XML("levels/levels.xml");
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+				System.exit(1);
+			}
+			
 			Element root = lvlDoc.getDocumentElement();
 			NodeList pgNodes = root.getElementsByTagName("Page");
 			
@@ -158,50 +169,5 @@ public class CoreDefense
 	public static Image getImage(String imgPath)
 	{
 		return new ImageIcon(CoreDefense.class.getResource(imgPath)).getImage();
-	}
-	
-	private static ErrorHandler getErrorHandler()
-	{
-		return new ErrorHandler()
-		{
-			public void warning(SAXParseException exception) throws SAXException
-			{
-				System.out.println("SAX Warning");
-				throw new SAXException();
-			}
-
-			public void error(SAXParseException exception) throws SAXException
-			{
-				exception.printStackTrace();
-				throw new SAXException();
-			}
-
-			public void fatalError(SAXParseException exception) throws SAXException
-			{
-				exception.printStackTrace();
-				throw new SAXException();
-			}
-		};
-	}
-	
-	public static Document getDocument(String path)
-	{
-		try
-		{
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			factory.setIgnoringComments(true);
-			factory.setIgnoringElementContentWhitespace(true);
-			factory.setValidating(true);
-			DocumentBuilder builder = factory.newDocumentBuilder();
-			builder.setErrorHandler(getErrorHandler());
-			return builder.parse(new InputSource(path));
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			System.exit(1);
-		}
-		
-		return null;
 	}
 }

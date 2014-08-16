@@ -110,6 +110,12 @@
 					<Wave>
 					    <Mob amount="10"/> <Mob amount="20" rank="1"/> <Mob amount="10"/>
 					</Wave>
+					<Wave>
+					    <Mob amount="50" rank="1"/>
+					</Wave>
+					<Wave>
+					    <Mob amount="30" spawnTime="50"/> <Mob amount="30" spawnTime="50" rank="1"/>
+					</Wave>
 				</Waves>
 			</Level>
        		
