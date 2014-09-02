@@ -1,27 +1,21 @@
 package com.jasonalexllc.main;
 
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import com.jasonalexllc.io.Resource;
 import com.jasonalexllc.io.XML;
 import com.jasonalexllc.level.Level;
 
@@ -36,14 +30,19 @@ public class CoreDefense
 	private static JButton[][][] lvlButtons;
 	private static JFrame frame;
 	
+	public static BufferedImage[][] sprites;
+	public static int TILE = 0, MOB = 1, TOWER = 2, ATTACK = 3;
+	
 	public static void main(String[] args)
 	{
 		Runnable thread = () ->
 		{
+			initSprites();
+			
 			//Create the game window
 			frame = new JFrame("Core Defense");
 			frame.setLayout(null);
-			frame.setIconImage(getImage("assets/icon.png"));
+			frame.setIconImage(Resource.getImage(CoreDefense.class, "icon.png"));
 			frame.setResizable(false);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.getContentPane().setPreferredSize(new Dimension(800, 800));
@@ -162,12 +161,23 @@ public class CoreDefense
 	}
 	
 	/**
-	 * Used as a shortcut to get an image for the game
-	 * @param imgPath
-	 * @return an image that is used element of Core Defense
+	 * Initializes sprites for the game.
 	 */
-	public static Image getImage(String imgPath)
+	private static void initSprites()
 	{
-		return new ImageIcon(CoreDefense.class.getResource(imgPath)).getImage();
+		try
+		{
+			BufferedImage spriteSheet = Resource.getSpriteSheet(CoreDefense.class, "assets.png");
+			sprites = new BufferedImage[spriteSheet.getHeight() / 50][spriteSheet.getWidth() / 50];
+			for(int row = 0; row < sprites.length; row++)
+				for(int col = 0; col < sprites[0].length; col++)
+					sprites[row][col] = spriteSheet.getSubimage(col * 50, row * 50, 50, 50);
+		}
+		catch(IOException e)
+		{
+			System.out.println("Failed to load sprites");
+			e.printStackTrace();
+			System.exit(1);
+		}
 	}
 }

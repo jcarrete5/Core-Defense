@@ -42,20 +42,20 @@ public class Level
 				}
 				
 				int type = Integer.parseInt(scanLayout.next());
-				String imgPath = "";
+				int imgIndex = 0;
 				switch(type)
 				{
 				case Tile.PATH:
-					imgPath = "assets/path.png";
+					imgIndex = 3;
 					break;
 				case Tile.STONE:
-					imgPath = "assets/stone.png";
+					imgIndex = 0;
 					break;
 				case Tile.PLATE:
-					imgPath = "assets/plate.png";
+					imgIndex = 1;
 					break;
 				case Tile.FAULT:
-					imgPath = "assets/fault.png";
+					imgIndex = 2;
 					break;
 				default: //handle what happens if the level creator uses an invalid Tile Type
 					JOptionPane.showMessageDialog(null, "Invalid XML Level Element - lvlName=\"" + this + "\":\nRogue Tile type of: " + type, "Error", JOptionPane.ERROR_MESSAGE);
@@ -63,8 +63,7 @@ public class Level
 					break;
 				}
 				
-				
-				grid[row][col] = new Tile(CoreDefense.getImage(imgPath), col * 50, row * 50, type);
+				grid[row][col] = new Tile(CoreDefense.sprites[imgIndex][CoreDefense.TILE], col * 50, row * 50, type);
 			}
 		
 		scanLayout.close();		

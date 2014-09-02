@@ -1,7 +1,7 @@
 package com.jasonalexllc.tower;
 
-import java.awt.Graphics2D;
 import com.jasonalexllc.level.Mob;
+import com.jasonalexllc.main.CoreDefense;
 import com.jasonalexllc.main.Tile;
 
 /**
@@ -15,10 +15,10 @@ public class CraneTower extends Tower
 
 	public CraneTower()
 	{
-		super(1, 1, .01, 300, "assets/towers/crane_idle.png");
+		super(1, 1, .01, 300, CoreDefense.sprites[2][CoreDefense.TOWER]);
 	}
 	
-	public void attack(Mob m, Graphics2D g2, Tile tile)
+	public void attack(Mob m, Tile tile)
 	{
 		
 	}

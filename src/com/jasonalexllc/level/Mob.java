@@ -29,12 +29,10 @@ public class Mob
 	private Image[][] sprites = 
 		{
 			{
-				CoreDefense.getImage("assets/mobs/dirtman_1.png"), CoreDefense.getImage("assets/mobs/dirtman_2_4.png"), CoreDefense.getImage("assets/mobs/dirtman_3.png"),
-				CoreDefense.getImage("assets/mobs/dirtman_2_4.png")
+				CoreDefense.sprites[0][CoreDefense.MOB], CoreDefense.sprites[1][CoreDefense.MOB], CoreDefense.sprites[2][CoreDefense.MOB], CoreDefense.sprites[1][CoreDefense.MOB]
 			},
 			{
-				CoreDefense.getImage("assets/mobs/stoneman_1.png"), CoreDefense.getImage("assets/mobs/stoneman_2_4.png"), CoreDefense.getImage("assets/mobs/stoneman_3.png"),
-				CoreDefense.getImage("assets/mobs/stoneman_2_4.png")
+				CoreDefense.sprites[3][CoreDefense.MOB], CoreDefense.sprites[4][CoreDefense.MOB], CoreDefense.sprites[5][CoreDefense.MOB], CoreDefense.sprites[4][CoreDefense.MOB]
 			}
 		};
     
@@ -190,9 +188,9 @@ public class Mob
     	if(!works)
     	{
    			boolean[] directions = new boolean[4];
-   			for(int ryanC = 0; ryanC < directions.length; ryanC++)
-    			if(canMove(ryanC) && ryanC != comingFrom && ryanC != (comingFrom + 2 <= 4 ? comingFrom + 2 : comingFrom - 2))
-    				directions[ryanC] = true;
+   			for(int i = 0; i < directions.length; i++)
+    			if(canMove(i) && i != comingFrom && i != (comingFrom + 2 <= 4 ? comingFrom + 2 : comingFrom - 2))
+    				directions[i] = true;
    			
    			Random rand = new Random();
        		int randIndex = rand.nextInt(directions.length);

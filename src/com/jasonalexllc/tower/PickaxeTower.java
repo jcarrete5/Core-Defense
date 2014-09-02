@@ -1,6 +1,6 @@
 package com.jasonalexllc.tower;
 
-import java.awt.Graphics2D;
+import java.awt.Image;
 import com.jasonalexllc.level.Mob;
 import com.jasonalexllc.main.CoreDefense;
 import com.jasonalexllc.main.Tile;
@@ -16,10 +16,10 @@ public class PickaxeTower extends Tower
 	
 	public PickaxeTower()
 	{
-		super(2, 5, .01, 250, "assets/towers/pickaxeTower_idle.png");
+		super(2, 5, .01, 250, CoreDefense.sprites[0][CoreDefense.TOWER]);
 	}
 	
-	public void attack(Mob m, Graphics2D g2, Tile tile)
+	public void attack(Mob m, Tile tile)
 	{		
 		if
 		(
@@ -33,19 +33,15 @@ public class PickaxeTower extends Tower
 			//throw a new Attack
 			if((int)atk == 1)
 			{
-				this.setImage(CoreDefense.getImage("assets/towers/pickaxeTower_atk.png"));
+				this.setImage(CoreDefense.sprites[1][CoreDefense.TOWER]);
 				
-				attackQueue.add(new Attack(new String[] {"assets/attacks/pickaxe_1.png", "assets/attacks/pickaxe_2.png", "assets/attacks/pickaxe_3.png",
-						"assets/attacks/pickaxe_4.png"}, tile.getX(), tile.getY(), m));
+				attackQueue.add(new Attack(new Image[] {CoreDefense.sprites[0][CoreDefense.ATTACK]}, tile.getX(), tile.getY(), m));
 			}
 			
-			if(imgSwap >= 0.2)
-				this.setImage(CoreDefense.getImage("assets/towers/pickaxeTower_idle.png"));
+			atk = atk < 1 ? atk + atkSpeed : atk - 1.0;
 			
-			float f = 0.01f; //lower value = longer duration of the atk image
-			imgSwap = imgSwap < 0.2 ? imgSwap += f : 0.0;
-			
-			atk = atk < 1 ? atk + atkSpeed : 0.0;
+			if(atk >= 0.25)
+				this.setImage(CoreDefense.sprites[0][CoreDefense.TOWER]);
 			
 			//remove attacks from the attackQueue that are off the screen
 			for(Attack atk : attackQueue.toArray(new Attack[attackQueue.size()])) //convert to a regular array to avoid ConcurrentModificationException
@@ -58,7 +54,7 @@ public class PickaxeTower extends Tower
 				}
 		}
 		else
-			this.setImage(CoreDefense.getImage("assets/towers/pickaxeTower_idle.png"));
+			this.setImage(CoreDefense.sprites[0][CoreDefense.TOWER]);
 	}
 	
 	public Tower getInstance()

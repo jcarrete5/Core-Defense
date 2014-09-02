@@ -26,9 +26,9 @@ public abstract class Tower extends ImageIcon
 	protected double atkSpeed;
 	protected Upgrade[] path1, path2;
 	
-	protected Tower(int range, int dmg, double atkSpeed, int cost, String imgPath)
+	protected Tower(int range, int dmg, double atkSpeed, int cost, Image img)
 	{
-		super(CoreDefense.class.getResource(imgPath));
+		super(img);
 		this.range = range;
 		this.dmg = dmg;
 		this.atkSpeed = atkSpeed;
@@ -36,7 +36,7 @@ public abstract class Tower extends ImageIcon
 		resaleVal = cost / 2;
 	}
 	
-	public abstract void attack(Mob m, Graphics2D g2, Tile tile);
+	public abstract void attack(Mob m, Tile tile);
 	
 	public abstract Tower getInstance();
 	

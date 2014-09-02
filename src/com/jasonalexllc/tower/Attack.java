@@ -1,8 +1,9 @@
 package com.jasonalexllc.tower;
 
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
 import com.jasonalexllc.level.Mob;
-import com.jasonalexllc.main.CoreDefense;
 
 /**
  * Represents an attack that is currently happening on the grid
@@ -27,11 +28,10 @@ public class Attack
 	 * @param y starting position of the Attack
 	 * @param m
 	 */
-	public Attack(String[] anim, int x, int y, Mob m)
+	public Attack(Image[] anim, int x, int y, Mob m)
 	{
 		this.anim = new Image[anim.length];
-		for(int i = 0; i < anim.length; i++)
-			this.anim[i] = CoreDefense.getImage(anim[i]);
+		this.anim = anim;
 		
 		target = m;
 		
@@ -58,6 +58,13 @@ public class Attack
 		x1 += (int)xSpeed;
 		y1 += (int)ySpeed;
 		
+		//after redrawing attack, recalculate the path of the attack to make it more accurate
+		int yPrime = (target.getY() + 25) - (y1 + 25), xPrime = (target.getX() + 25) - (x1 + 25); //find the slope of the line between the mob and the tower
+		
+		//higher numbers = slower movement
+		float pPer10ms = 10f;
+		xSpeed = xPrime / pPer10ms;
+		ySpeed = yPrime / pPer10ms;
 	}
 	
 	public int getX()
@@ -72,12 +79,9 @@ public class Attack
 	
 	public boolean hasHitMob()
 	{
-		boolean result = false;
-		
 		Rectangle targetHitBox = new Rectangle(target.getX(), target.getY(), 50, 50);
 		Rectangle atkHitBox = new Rectangle(x1 + 12, y1 + 12, 1, 1);
-		result = targetHitBox.intersects(atkHitBox);
 		
-		return result;
+		return targetHitBox.intersects(atkHitBox);
 	}
 }

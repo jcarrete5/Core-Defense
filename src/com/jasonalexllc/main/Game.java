@@ -191,7 +191,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 				for(Tile tile : row)
 					if(tile.hasTower())
 					{
-						tile.getTower().attack(waves.get(curWave).get(0), g2, tile); //attack the first mob in the wave array
+						tile.getTower().attack(waves.get(curWave).get(0), tile); //attack the first mob in the wave array
 						for(Attack a : tile.getTower().attackQueue)
 							a.draw(g2);
 					}
