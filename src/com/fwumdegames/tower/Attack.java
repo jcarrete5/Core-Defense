@@ -1,9 +1,9 @@
-package com.jasonalexllc.tower;
+package com.fwumdegames.tower;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
-import com.jasonalexllc.level.Mob;
+import com.fwumdegames.level.Mob;
 
 /**
  * Represents an attack that is currently happening on the grid
@@ -52,7 +52,7 @@ public class Attack
 	
 	public void draw(Graphics2D g2)
 	{
-		g2.drawImage(anim[(int)r], x1 + 6, y1 + 6, null);
+		g2.drawImage(anim[(int)r], x1 + 25, y1 + 25, null);
 		r = r > anim.length - 0.8 ? 0 : r + 0.5; //controls how long each rotation is visible for. lower numbers = slower rotation
 		
 		x1 += (int)xSpeed;
@@ -80,7 +80,7 @@ public class Attack
 	public boolean hasHitMob()
 	{
 		Rectangle targetHitBox = new Rectangle(target.getX(), target.getY(), 50, 50);
-		Rectangle atkHitBox = new Rectangle(x1 + 12, y1 + 12, 1, 1);
+		Rectangle atkHitBox = new Rectangle(x1 + 25, y1 + 25, 1, 1);
 		
 		return targetHitBox.intersects(atkHitBox);
 	}

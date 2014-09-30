@@ -1,9 +1,9 @@
-package com.jasonalexllc.level;
+package com.fwumdegames.level;
 
 import java.util.*;
 import javax.swing.*;
 import org.w3c.dom.*;
-import com.jasonalexllc.main.*;
+import com.fwumdegames.main.*;
 
 /**
  * Levels are displayed in the order they appear in the file.

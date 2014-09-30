@@ -1,4 +1,4 @@
- package com.jasonalexllc.main;
+ package com.fwumdegames.main;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -16,9 +16,9 @@ import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import com.jasonalexllc.level.Wave;
-import com.jasonalexllc.tower.Attack;
-import com.jasonalexllc.tower.Tower;
+import com.fwumdegames.level.Wave;
+import com.fwumdegames.tower.Attack;
+import com.fwumdegames.tower.Tower;
 
 /**
  * The main drawing thread

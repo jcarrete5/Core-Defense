@@ -1,9 +1,9 @@
-package com.jasonalexllc.tower;
+package com.fwumdegames.tower;
 
 import java.awt.Image;
-import com.jasonalexllc.level.Mob;
-import com.jasonalexllc.main.CoreDefense;
-import com.jasonalexllc.main.Tile;
+import com.fwumdegames.level.Mob;
+import com.fwumdegames.main.CoreDefense;
+import com.fwumdegames.main.Tile;
 
 /**
  * Basic tower that throws pickaxes at its foes
@@ -35,7 +35,8 @@ public class PickaxeTower extends Tower
 			{
 				this.setImage(CoreDefense.sprites[1][CoreDefense.TOWER]);
 				
-				attackQueue.add(new Attack(new Image[] {CoreDefense.sprites[0][CoreDefense.ATTACK]}, tile.getX(), tile.getY(), m));
+				attackQueue.add(new Attack(new Image[] {CoreDefense.sprites[0][CoreDefense.ATTACK], CoreDefense.sprites[1][CoreDefense.ATTACK],
+						CoreDefense.sprites[2][CoreDefense.ATTACK], CoreDefense.sprites[3][CoreDefense.ATTACK]}, tile.getX(), tile.getY(), m));
 			}
 			
 			atk = atk < 1 ? atk + atkSpeed : atk - 1.0;

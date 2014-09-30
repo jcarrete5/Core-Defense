@@ -1,8 +1,8 @@
-package com.jasonalexllc.main;
+package com.fwumdegames.main;
 
 import java.awt.*;
 import java.util.Scanner;
-import com.jasonalexllc.tower.*;
+import com.fwumdegames.tower.*;
 
 /**
  * Has all the towers that can be bought in the game

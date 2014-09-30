@@ -1,9 +1,9 @@
-package com.jasonalexllc.main;
+package com.fwumdegames.main;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import com.jasonalexllc.tower.Tower;
+import com.fwumdegames.tower.Tower;
 
 /**
  * Keeps track of the tiles in the game

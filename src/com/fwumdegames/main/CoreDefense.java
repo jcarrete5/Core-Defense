@@ -1,4 +1,4 @@
-package com.jasonalexllc.main;
+package com.fwumdegames.main;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -15,9 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import com.jasonalexllc.io.Resource;
-import com.jasonalexllc.io.XML;
-import com.jasonalexllc.level.Level;
+import com.fwumdegames.io.Resource;
+import com.fwumdegames.io.XML;
+import com.fwumdegames.level.Level;
 
 /**
  * A game where rock people are trying to blow up the core of the Earth and you have to defend the core with towers.

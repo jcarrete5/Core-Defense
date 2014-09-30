@@ -1,10 +1,10 @@
-package com.jasonalexllc.tower;
+package com.fwumdegames.tower;
 
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
-import com.jasonalexllc.level.Mob;
-import com.jasonalexllc.main.*;
+import com.fwumdegames.level.Mob;
+import com.fwumdegames.main.*;
 
 /**
  * Abstract class that defines how all towers in the game should function
@@ -56,7 +56,6 @@ public abstract class Tower extends ImageIcon
 			u = path1[p1Next++];
 		else if(upgradePath == 2 && p2Next < path2.length - 1)
 			u = path2[p2Next++];
-		
 		if(u != null && u.getCost() <= Game.money)
 		{
 			range += u.getRngInc();
