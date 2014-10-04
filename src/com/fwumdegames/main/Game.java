@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -106,7 +107,8 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		Runnable r = () ->
 		{
 			while(run)
-			{				
+			{
+				System.out.println(ZonedDateTime.now());
 				try
 				{
 					Thread.sleep(clockSpd);

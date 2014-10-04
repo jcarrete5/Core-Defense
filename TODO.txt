@@ -1,6 +1,4 @@
 TODO:
-- use spritesheets instead of individual .png's
-- music/sounds
 - Money at the end of a wave
 - pause menu
 - save game
