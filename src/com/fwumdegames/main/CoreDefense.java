@@ -167,7 +167,7 @@ public class CoreDefense
 	{
 		try
 		{
-			BufferedImage spriteSheet = Resource.getSpriteSheet(CoreDefense.class, "assets.png");
+			BufferedImage spriteSheet = Resource.getImageResource(CoreDefense.class, "assets.png");
 			sprites = new BufferedImage[spriteSheet.getHeight() / 50][spriteSheet.getWidth() / 50];
 			for(int row = 0; row < sprites.length; row++)
 				for(int col = 0; col < sprites[0].length; col++)
