@@ -42,7 +42,15 @@ public class CoreDefense
 			//Create the game window
 			frame = new JFrame("Core Defense");
 			frame.setLayout(null);
-			frame.setIconImage(Resource.getImage(CoreDefense.class, "icon.png"));
+			try
+			{
+				frame.setIconImage(Resource.getImageAsResource(CoreDefense.class, "icon.png"));
+			}
+			catch(IOException ex)
+			{
+				System.out.println("Unable to load icon image");
+				ex.printStackTrace();
+			}
 			frame.setResizable(false);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.getContentPane().setPreferredSize(new Dimension(800, 800));
@@ -167,7 +175,7 @@ public class CoreDefense
 	{
 		try
 		{
-			BufferedImage spriteSheet = Resource.getImageResource(CoreDefense.class, "assets.png");
+			BufferedImage spriteSheet = Resource.getImageAsResource(CoreDefense.class, "assets.png");
 			sprites = new BufferedImage[spriteSheet.getHeight() / 50][spriteSheet.getWidth() / 50];
 			for(int row = 0; row < sprites.length; row++)
 				for(int col = 0; col < sprites[0].length; col++)
