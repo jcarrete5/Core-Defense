@@ -108,7 +108,6 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 		{
 			while(run)
 			{
-				System.out.println(ZonedDateTime.now());
 				try
 				{
 					Thread.sleep(clockSpd);

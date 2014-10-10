@@ -15,8 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import com.fwumdegames.io.Resource;
-import com.fwumdegames.io.XML;
+import com.fwumdegames.api.io.Resource;
+import com.fwumdegames.api.io.XML;
 import com.fwumdegames.level.Level;
 
 /**
