@@ -7,6 +7,7 @@ import com.fwumdegames.tower.Tower;
 
 /**
  * Keeps track of the tiles in the game
+ * 
  * @author Jason Carrete, Alex Berman
  * @since Jun 21, 2014
  */
@@ -17,7 +18,7 @@ public class Tile extends ImageIcon
 
 	private int x, y, type;
 	private Tower tower;
-	
+
 	public Tile(Image img, int x, int y, int type)
 	{
 		this.setImage(img);
@@ -25,51 +26,51 @@ public class Tile extends ImageIcon
 		this.y = y;
 		this.type = type;
 	}
-	
+
 	public int getType()
 	{
 		return type;
 	}
-	
+
 	public int getX()
 	{
 		return x;
 	}
-	
+
 	public int getY()
 	{
 		return y;
 	}
-	
+
 	public Tower getTower()
 	{
 		return tower;
 	}
-	
+
 	public boolean hasTower()
 	{
 		return tower != null;
 	}
-	
+
 	public void addTower(Tower t)
 	{
 		tower = t;
 		if(Game.money != Game.UNLIMITED)
 			Game.money -= t != null ? t.getCost() : 0;
 	}
-	
+
 	public void removeTower()
 	{
 		tower = null;
 	}
-	
+
 	public void draw(Graphics2D g2)
 	{
 		g2.drawImage(this.getImage(), x, y, null);
 		if(hasTower())
 			g2.drawImage(tower.getImage(), x, y, null);
 	}
-	
+
 	public String toString()
 	{
 		return "x pos: " + x + "\ny pos: " + y;

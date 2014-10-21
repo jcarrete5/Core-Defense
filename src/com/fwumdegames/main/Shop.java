@@ -6,71 +6,78 @@ import com.fwumdegames.tower.*;
 
 /**
  * Has all the towers that can be bought in the game
+ * 
  * @author Jason Carrete, Alex Berman
  * @since Jun 19, 2014
  */
 public class Shop
 {
 	public boolean opened = false;
-	
+
 	public Tower[][] towers = new Tower[2][8];
-	
+
 	public Shop()
 	{
 		towers[0][0] = new PickaxeTower();
 		towers[0][1] = new CraneTower();
 	}
-	
+
 	public void open(Graphics2D g2)
 	{
 		if(opened)
 		{
-			//draws shop background
+			// draws shop background
 			g2.setColor(new Color(0, 0, 0, 100));
 			g2.fillRect(200, 700, 400, 200);
-			
+
 			int col = Game.curMousePos.x / 50 - 4, row = Game.curMousePos.y / 50 - 14;
-			
-			//update the info screen depending on which tower is currently being hovered over
-			if(row >= 0 && col >= 0 && row < towers.length && col < towers[0].length && towers[row][col] != null)
+
+			// update the info screen depending on which tower is currently
+			// being hovered over
+			if(row >= 0 && col >= 0 && row < towers.length
+					&& col < towers[0].length && towers[row][col] != null)
 			{
-				drawInfo(g2, towers[row][col].getName(), towers[row][col].getCost(), towers[row][col].getDesc());
-				
-				//highlight the tower currently being hovered over if u have enough money to buy it
+				drawInfo(g2, towers[row][col].getName(),
+						towers[row][col].getCost(), towers[row][col].getDesc());
+
+				// highlight the tower currently being hovered over if u have
+				// enough money to buy it
 				if(Game.money >= towers[row][col].getCost())
 				{
 					g2.setColor(new Color(255, 255, 255, 100));
 					g2.fillRect(col * 50 + 200, row * 50 + 700, 50, 50);
 				}
 			}
-			
-			//draw towers in the shop
-			for(int r = 0; r < towers.length; r++)
-				for(int c = 0; c < towers[0].length; c++)
+
+			// draw towers in the shop
+			for (int r = 0; r < towers.length; r++)
+				for (int c = 0; c < towers[0].length; c++)
 					if(towers[r][c] != null)
 					{
-						g2.drawImage(towers[r][c].getImage(), c * 50 + 200, r * 50 + 700, null);
-						if(Game.money < towers[r][c].getCost() && !(Game.money == Game.UNLIMITED))
+						g2.drawImage(towers[r][c].getImage(), c * 50 + 200,
+								r * 50 + 700, null);
+						if(Game.money < towers[r][c].getCost()
+								&& !(Game.money == Game.UNLIMITED))
 						{
 							g2.setColor(new Color(255, 0, 0, 100));
 							g2.fillRect(c * 50 + 200, r * 50 + 700, 50, 50);
 						}
-					}		
+					}
 		}
 	}
-	
+
 	private void drawInfo(Graphics2D g2, String name, int cost, String desc)
 	{
 		g2.fillRect(0, 700, 150, 100);
 		g2.setColor(Color.white);
 		g2.drawString(name, 5, 715);
 		g2.drawString("Cost: " + cost, 5, 730);
-		
-		//make sure the desc doesn't go over the designated space
+
+		// make sure the desc doesn't go over the designated space
 		String[] s = new String[desc.length() / 19 + 1];
 		for (int j = 0; j < s.length; j++)
 			s[j] = "";
-			
+
 		int index = 0;
 		Scanner scanDesc = new Scanner(desc);
 		while(scanDesc.hasNext())
@@ -79,16 +86,17 @@ public class Shop
 			if(s[index].length() - 1 >= 19)
 				index++;
 		}
-		
-		for(int i = 0, p = 745; i < s.length; i++, p += 15)
+
+		for (int i = 0, p = 745; i < s.length; i++, p += 15)
 			g2.drawString(s[i], 5, p);
-			
+
 		scanDesc.close();
 	}
-	
+
 	public Tower buyTower(int row, int col)
 	{
-		if(towers[row][col] != null && (Game.money >= towers[row][col].getCost() || Game.money == Game.UNLIMITED))
+		if(towers[row][col] != null
+				&& (Game.money >= towers[row][col].getCost() || Game.money == Game.UNLIMITED))
 			return towers[row][col].getInstance();
 		else
 			return null;

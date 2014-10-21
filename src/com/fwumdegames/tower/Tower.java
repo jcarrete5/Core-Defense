@@ -8,6 +8,7 @@ import com.fwumdegames.main.*;
 
 /**
  * Abstract class that defines how all towers in the game should function
+ * 
  * @author Jason Carrete, Alex Berman
  * @since Jun 18, 2014
  */
@@ -19,13 +20,14 @@ public abstract class Tower extends ImageIcon
 	public boolean viewUpgradeScreen = false;
 
 	/**
-	 * Denotes when the next attack should start from the tower 1 = should attack, {x in R | 0 <= x < 1} = shouldn't attack
+	 * Denotes when the next attack should start from the tower 1 = should
+	 * attack, {x in R | 0 <= x < 1} = shouldn't attack
 	 */
 	protected double atk = 1, imgSwap;
 	protected int range, dmg, cost, p1Next = -1, p2Next = -1, resaleVal;
 	protected double atkSpeed;
 	protected Upgrade[] path1, path2;
-	
+
 	protected Tower(int range, int dmg, double atkSpeed, int cost, Image img)
 	{
 		super(img);
@@ -35,27 +37,29 @@ public abstract class Tower extends ImageIcon
 		this.cost = cost;
 		resaleVal = cost / 2;
 	}
-	
+
 	public abstract void attack(Mob m, Tile tile);
-	
+
 	public abstract Tower getInstance();
-	
+
 	public abstract String getName();
-	
+
 	public abstract String getDesc();
-	
+
 	/**
 	 * 
 	 * @param u
-	 * @return true if the upgrade is completed, false if the upgrade can't be completed
+	 * @return true if the upgrade is completed, false if the upgrade can't be
+	 *         completed
 	 */
 	public boolean upgrade(int upgradePath)
 	{
 		Upgrade u = null;
 		if(upgradePath == 1 && p1Next < path1.length - 1)
 			u = path1[p1Next++];
-		else if(upgradePath == 2 && p2Next < path2.length - 1)
-			u = path2[p2Next++];
+		else
+			if(upgradePath == 2 && p2Next < path2.length - 1)
+				u = path2[p2Next++];
 		if(u != null && u.getCost() <= Game.money)
 		{
 			range += u.getRngInc();
@@ -67,35 +71,35 @@ public abstract class Tower extends ImageIcon
 		else
 			return false;
 	}
-	
+
 	public final int getRangePixels()
 	{
 		return range * 50;
 	}
-	
+
 	public boolean drawUpgradeScreen(Graphics2D g2)
 	{
 		if(viewUpgradeScreen)
 		{
 			Stroke s = g2.getStroke();
-			
-			//draw the background
+
+			// draw the background
 			g2.setColor(new Color(0, 0, 0, 100));
 			g2.fillRect(100, 0, 600, 200);
-			
-			//draw the X
+
+			// draw the X
 			g2.setColor(Color.white);
 			g2.setStroke(new BasicStroke(3));
 			g2.drawLine(675, 5, 695, 25); // \
 			g2.drawLine(695, 5, 675, 25); // /
-			
-			//reset the stroke change from drawing any upgrade screens
+
+			// reset the stroke change from drawing any upgrade screens
 			g2.setStroke(s);
 		}
-		
+
 		return viewUpgradeScreen;
 	}
-	
+
 	public int getCost()
 	{
 		return cost;
