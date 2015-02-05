@@ -88,7 +88,7 @@ public class CoreDefense
 				}
 			}
 
-			// display each level on the first page TODO add a button that scrolls through the pages
+			// display each level on the first page
 			lvlButtons = new JButton[levels.length][levels[0].length][levels[0][0].length];
 			for (int row = 0; row < levels[0].length; row++)
 				for (int col = 0; col < levels[0][0].length; col++)

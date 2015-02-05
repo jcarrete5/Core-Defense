@@ -139,7 +139,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 					spdColor = SPD_COLOR;
 				}
 
-				if(curWave == -1) // TODO win scenario
+				if(curWave == -1)
 				{
 					JOptionPane.showMessageDialog(this, "You Won...",
 							"Victory", JOptionPane.PLAIN_MESSAGE);
@@ -147,7 +147,7 @@ public class Game extends JPanel implements MouseListener, MouseMotionListener
 					removeAllTowers();
 				}
 				else
-					if(lives <= 0) // TODO lose scenario
+					if(lives <= 0)
 					{
 						JOptionPane.showMessageDialog(this, "You Lose...",
 								"Failure", JOptionPane.PLAIN_MESSAGE);
