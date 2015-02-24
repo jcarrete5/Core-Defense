@@ -15,9 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import com.fwumdegames.api.io.Resource;
-import com.fwumdegames.api.io.XML;
 import com.fwumdegames.level.Level;
+import com.fwumdesoft.api.io.Resource;
+import com.fwumdesoft.api.io.XML;
 
 /**
  * A game where rock people are trying to blow up the core of the Earth and you
