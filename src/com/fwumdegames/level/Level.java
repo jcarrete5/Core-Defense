@@ -106,8 +106,7 @@ public class Level
 			{
 				for (int i = 1; i < waveNodes.getLength(); i++)
 				{
-					Wave wave = new Wave(((Element) waveNodes.item(i)), xStart,
-							yStart, grid);
+					Wave wave = new Wave(((Element) waveNodes.item(i)), xStart, yStart, grid);
 					publish(wave);
 				}
 
